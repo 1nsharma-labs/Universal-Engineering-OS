@@ -10,8 +10,9 @@ Welcome to **UNIFORGE (Universal Engineering OS)** — an open-source engineerin
 - **Universal Wiki & 60+ Tech Profiles**: [`docs/wiki/README.md`](docs/wiki/README.md) · [`docs/wiki/INDEX.md`](docs/wiki/INDEX.md)
 - **Plugin SDK & Official Plugins**: [`packages/plugin-sdk/`](packages/plugin-sdk/) · [`plugins/README.md`](plugins/README.md)
 - **UNIFORGE Cloud & Marketplace**: [`cloud/README.md`](cloud/README.md) · [`marketplace/README.md`](marketplace/README.md)
+- **Go-To-Market Launch Kit**: [`docs/launch/LANDING_PAGE.md`](docs/launch/LANDING_PAGE.md) · [`docs/launch/PRODUCT_HUNT_HN_KIT.md`](docs/launch/PRODUCT_HUNT_HN_KIT.md) · [`docs/launch/PITCH_DECK_OUTLINE.md`](docs/launch/PITCH_DECK_OUTLINE.md)
 - **Commercial, Enterprise & Sponsors**: [`ENTERPRISE.md`](ENTERPRISE.md) · [`COMMERCIAL_LICENSE.md`](COMMERCIAL_LICENSE.md) · [`SPONSORS.md`](SPONSORS.md)
-- **Roadmap**: [`ROADMAP.md`](ROADMAP.md)
+- **Roadmap (Milestones 1–8 Complete)**: [`ROADMAP.md`](ROADMAP.md)
 - **License**: Apache-2.0 ([`LICENSE`](LICENSE) & [`NOTICE`](NOTICE))
 - **Community & Governance**: [`CONTRIBUTING.md`](CONTRIBUTING.md) · [`GOVERNANCE.md`](GOVERNANCE.md) · [`SECURITY.md`](SECURITY.md) · [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md)
 
@@ -81,14 +82,29 @@ Universal-Dev-Hub/ (UNIFORGE — uniforge-os / Universal-Engineering-OS)
 
 ## Quick-Start & Verification Commands
 
-### 1. Launch the UNIFORGE Operational Studio Dashboard (`:7000`)
-Launch the live Control Plane (AI Brain, Monaco LSP, PTY Terminal, API Studio, 60+ Wiki Profiles, Plugins, Marketplace & UNIFORGE Cloud):
+### 1. Launch the UNIFORGE v2.0 Operational Studio Dashboard (`:7000`)
+Launch the live Control Plane (**5-Layer AI Software Factory**, Autonomous AI Team, Offline Local RAG Brain, Visual Node Compiler & Live Creative Studio, Monaco LSP, PTY Terminal, API Studio, 60+ Wiki Profiles, Plugins, Marketplace & UNIFORGE Cloud):
 ```bash
 python devhub.py studio
 # Windows PowerShell: .\devhub.ps1 studio
 ```
 
-### 2. Validate All Manifests, Plugins & Run End-to-End Tests
+### 2. Run Phase 2 Autonomous & Factory CLI Commands
+```bash
+# Run the 5-Layer Self-Assembling AI Software Factory
+python devhub.py factory "Build a video editing app in Python and React with AI" --cloud gcp --approve
+
+# Run Autonomous Architect -> Coder -> Tester pipeline
+python devhub.py agent-build "Build a telemetry API" --stack fastapi
+
+# Query Offline Local RAG Brain across all 60 Wiki profiles & cheatsheets
+python devhub.py rag "PostgreSQL pgvector HNSW index"
+
+# One-Click Multi-Cloud Deploy Planner (gcp | aws | cloudflare | uniforge-cloud)
+python devhub.py deploy --provider gcp --service uniforge-prod
+```
+
+### 3. Validate All Manifests, Plugins & Run End-to-End Tests
 ```bash
 python devhub.py validate
 python devhub.py plugin verify
@@ -97,7 +113,7 @@ python devhub.py test
 python -m pytest 09-testing-and-security/tests/test_milestones_e2e.py
 ```
 
-### 3. Workspace Initialization
+### 4. Workspace Initialization
 Verify your local toolchains and generate your master environment configuration:
 ```bash
 python devhub.py init

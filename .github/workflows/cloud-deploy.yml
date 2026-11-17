@@ -21,7 +21,7 @@ jobs:
 
       - name: Build Orchestrator Cloud Image
         run: |
-          docker build -t uniforge/control-plane:latest -f 00-universal-control-plane/orchestrator-api/Dockerfile 00-universal-control-plane/orchestrator-api
+          docker build -t uniforge/control-plane:latest -f 00-universal-control-plane/orchestrator-api/Dockerfile 00-universal-control-plane
 
       - name: Lint Kubernetes Helm Charts
         run: |
