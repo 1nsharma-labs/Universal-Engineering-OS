@@ -256,6 +256,22 @@ def cmd_sync_opensource(_args):
     sys.exit(run_cmd([sys.executable, "06-open-source-datasets/sync_open_source_collections.py"]))
 
 
+def cmd_workbench(args):
+    wb_dir = ROOT.parent / "bin" / "bolt.diy"
+    if not wb_dir.exists():
+        print(f"[ERROR] UNIFORGE AI Workbench not found at {wb_dir}")
+        sys.exit(1)
+    pnpm_bin = "pnpm.cmd" if platform.system() == "Windows" else "pnpm"
+    if not shutil.which(pnpm_bin):
+        pnpm_bin = "npm.cmd" if platform.system() == "Windows" else "npm"
+    if args.prod:
+        rc = run_cmd([pnpm_bin, "run", "build"], cwd=wb_dir)
+        if rc != 0:
+            sys.exit(rc)
+        sys.exit(run_cmd([pnpm_bin, "run", "start"], cwd=wb_dir))
+    sys.exit(run_cmd([pnpm_bin, "run", "dev"], cwd=wb_dir))
+
+
 def cmd_test(_args):
     sys.exit(run_cmd([sys.executable, "-m", "pytest", "09-testing-and-security/tests/"]))
 
@@ -399,6 +415,10 @@ def main():
     sub.add_parser("agents", help="Execute all 5 AI agent orchestration demos").set_defaults(func=cmd_agents)
     sub.add_parser("datasets", help="List curated open-source datasets").set_defaults(func=cmd_datasets)
     sub.add_parser("sync-opensource", help="Fetch live open-source metadata from PyPI, npm, Hugging Face & GitHub").set_defaults(func=cmd_sync_opensource)
+
+    p_wb = sub.add_parser("workbench", help="Launch UNIFORGE AI Workbench (port 5173)")
+    p_wb.add_argument("--prod", action="store_true", help="Build and run in production preview mode")
+    p_wb.set_defaults(func=cmd_workbench)
     sub.add_parser("test", help="Run automated pytest verification suite").set_defaults(func=cmd_test)
     sub.add_parser("validate", help="Validate syntax of all JSON & YAML configs").set_defaults(func=cmd_validate)
 
