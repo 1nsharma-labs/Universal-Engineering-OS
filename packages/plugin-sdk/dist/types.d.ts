@@ -3,7 +3,7 @@
  * Defines manifest structures, zero-trust capability permissions, studio views,
  * commands, MCP tool bridges, and marketplace monetization metadata.
  */
-export declare const VALID_PLUGIN_PERMISSIONS: readonly ["network:outbound", "network:inbound", "process:exec", "storage:read", "storage:write", "secrets:read", "docker:control", "database:query", "ai:inference"];
+export declare const VALID_PLUGIN_PERMISSIONS: readonly ['network:outbound', 'network:inbound', 'process:exec', 'storage:read', 'storage:write', 'secrets:read', 'docker:control', 'database:query', 'ai:inference'];
 export type PluginPermission = (typeof VALID_PLUGIN_PERMISSIONS)[number];
 export type PricingTier = 'free' | 'freemium' | 'paid_monthly' | 'enterprise';
 export interface MarketplacePricing {
