@@ -1,7 +1,7 @@
 # UNIFORGE Landing Page Copy (`uniforge.io`)
 
 ## Hero Section
-- **Eyebrow Badge**: `OPEN-SOURCE • APACHE 2.0 • v2.0 LIVE`
+- **Eyebrow Badge**: `OPEN-SOURCE • APACHE 2.0 • v2.1.0 LIVE`
 - **Hero Headline**: **The Self-Hosted, AI-Native Universal Engineering OS.**
 - **Subheadline**: Everything from Polyglot Runtimes, Monaco LSP & PTY Terminals to Autonomous AI Engineering Agents, Offline Local RAG Memory, Visual Node Architecture Compilers, and One-Click Multi-Cloud Deploy — unified in one zero-bloat workspace.
 - **Primary CTA**: `Launch Locally in 30 Seconds` (`python devhub.py studio`)

@@ -82,7 +82,7 @@ Universal-Dev-Hub/ (UNIFORGE — uniforge-os / Universal-Engineering-OS)
 
 ## Quick-Start & Verification Commands
 
-### 1. Launch the UNIFORGE v2.0 Operational Studio Dashboard (`:7000`)
+### 1. Launch the UNIFORGE v2.1.0 Operational Studio Dashboard (`:7000`)
 Launch the live Control Plane (**5-Layer AI Software Factory**, Autonomous AI Team, Offline Local RAG Brain, Visual Node Compiler & Live Creative Studio, Monaco LSP, PTY Terminal, API Studio, 60+ Wiki Profiles, Plugins, Marketplace & UNIFORGE Cloud):
 ```bash
 python devhub.py studio

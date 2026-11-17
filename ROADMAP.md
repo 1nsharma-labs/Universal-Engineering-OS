@@ -41,3 +41,18 @@
 - [x] Decentralized Community Plugin Registry with schema & capability validation (`/api/v1/community/plugins/submit`)
 - [x] Zero-Config One-Click Multi-Cloud Deployer (`devhub.py deploy` / `/api/v1/deploy/plan`) targeting GCP Cloud Run, AWS App Runner, Cloudflare Pages, and UNIFORGE Cloud Helm
 - [x] Go-To-Market Launch Kit (`docs/launch/LANDING_PAGE.md`, `PRODUCT_HUNT_HN_KIT.md`, `PITCH_DECK_OUTLINE.md`)
+
+---
+
+## Phase 3 (v2.1.0): Trending Release — Polished, Verified & Published — COMPLETED
+
+### Milestone 9: v2.1.0 Final Release Hardening
+- [x] Root controller bumped to `VERSION = "2.1.0"` (`devhub.py version`) with README & Landing Page badges synced
+- [x] React + TypeScript Control Center compiles with 0 TS errors (`vite-env.d.ts` hardened)
+- [x] GitHub Trending GTM kit refreshed (Show HN, Product Hunt copy, launch checklist)
+- [x] Signed Git tag `v2.1.0` published with full release notes on GitHub Releases
+
+### Next Up (v2.2.0 — In Planning)
+- [ ] Plugin hot-reload & watch mode in the Studio UI
+- [ ] Community registry leaderboard & weekly trending plugins feed
+- [ ] Terraform module gallery under `08-devops-cloud-and-iac/`
