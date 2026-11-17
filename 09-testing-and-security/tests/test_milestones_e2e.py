@@ -287,3 +287,32 @@ def test_milestone8_deploy_community_hub_and_launch_kit():
     ):
         assert (HUB_ROOT / rel).exists(), f"Missing launch kit doc: {rel}"
 
+
+def test_five_layer_software_factory_pipeline():
+    from fastapi.testclient import TestClient
+    import main as control_plane
+
+    client = TestClient(control_plane.app)
+
+    r_asm = client.post(
+        "/api/v1/factory/assemble",
+        json={"prompt": "Build a video editing app in Python and React with AI", "target_cloud": "gcp"},
+    )
+    assert r_asm.status_code == 200
+    job = r_asm.json()
+    assert job["ok"] is True
+    assert len(job["layers"]) == 5
+    assert job["pipeline_status"] == "AWAITING_HUMAN_APPROVAL"
+    assert len(job["layers"][2]["ephemeral_workers"]) == 3
+    assert "services:" in job["layers"][2]["docker_compose_yaml"]
+
+    r_app = client.post(
+        "/api/v1/factory/approve",
+        json={"job_id": job["job_id"], "approver": "architect-reviewer"},
+    )
+    assert r_app.status_code == 200
+    dist = r_app.json()
+    assert dist["ok"] is True
+    assert dist["pipeline_status"] == "DISTRIBUTED_LIVE"
+    assert dist["layer5_distribution"]["status"] == "DISTRIBUTED"
+

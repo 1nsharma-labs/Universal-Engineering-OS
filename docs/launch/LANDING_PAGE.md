@@ -31,3 +31,4 @@
 | Multi-Tenant Managed Workspaces (`*.workspaces.uniforge.io`) | Self-Hosted | Up to 10 Workspaces | Unlimited + Dedicated VPC |
 | SAML 2.0 / Okta SSO, SOC 2 Pack & Immutable SIEM Logs | — | — | Included |
 | Support SLA | GitHub Community | 24h Business Support | 24/7 P1 SLA (1h Response) |
+

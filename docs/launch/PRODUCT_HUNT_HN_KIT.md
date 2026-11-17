@@ -40,3 +40,4 @@
 3. **Offline RAG + Autonomous Agents**: Indexes all 60 tech profiles + cheatsheets locally for instant semantic answers (zero API cost) + an Architect→Coder→Tester team & Self-Healing SRE patch engine.
 4. **Plugin Ecosystem**: Shipped `@uniforge/plugin-sdk` with Zero-Trust capability permissions + 5 official plugins (Docker, pgvector, p5.js, Spring Boot, Ollama) & 70/30 marketplace rev-share.
 5. **CTA**: 100% Apache-2.0 open core with multi-tenant Kubernetes Helm charts ready for production. Star, fork & build your first plugin today: https://github.com/1nsharma-labs/Universal-Engineering-OS
+

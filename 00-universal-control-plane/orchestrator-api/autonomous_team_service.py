@@ -286,3 +286,4 @@ def run_self_healing_sre(error_log: str, service_name: str = "control-plane") ->
 
 def list_agent_runs() -> Dict[str, Any]:
     return {"count": len(_AGENT_RUNS), "runs": _AGENT_RUNS}
+

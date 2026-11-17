@@ -153,3 +153,4 @@ def compile_visual_graph(nodes: List[Dict[str, Any]], edges: List[Dict[str, Any]
         "docker_compose_yaml": "\n".join(compose_lines),
         "env_template": "\n".join(dict.fromkeys(env_lines)),
     }
+

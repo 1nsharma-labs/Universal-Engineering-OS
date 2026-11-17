@@ -35,6 +35,7 @@ from lsp_service import analyze_diagnostics, format_code, get_completions
 from project_unifier import unify_project
 from rag_brain_service import build_rag_index, get_rag_stats, query_rag_brain
 from sandbox_runner import execute_in_sandbox
+from software_factory_service import approve_and_distribute, list_factory_jobs, run_software_factory
 from studio_services import (
     check_marketplace_license,
     create_cloud_tenant,
@@ -84,6 +85,7 @@ def get_system_overview() -> Dict[str, Any]:
             "local_rag_brain": "READY",
             "visual_node_canvas": "READY",
             "multi_cloud_deployer": "READY",
+            "software_factory_5layer": "READY",
         },
         "status": "OPERATIONAL",
     }
@@ -183,6 +185,16 @@ try:
         project_path: str = "."
         service_name: str = "uniforge-app"
         region: str = "us-central1"
+
+    class FactoryAssembleRequest(BaseModel):
+        prompt: str
+        target_cloud: str = "gcp"
+        write_artifacts: bool = False
+
+    class FactoryApproveRequest(BaseModel):
+        job_id: str
+        approver: str = "lead-engineer"
+        target_cloud: str = ""
 
     @app.get("/", response_class=HTMLResponse)
     def serve_studio():
@@ -356,6 +368,19 @@ try:
     def api_deploy_plan(req: DeployPlanRequest):
         return plan_one_click_deploy(req.provider, req.project_path, req.service_name, req.region)
 
+    # --- 5-Layer Self-Assembling AI Software Factory ---
+    @app.get("/api/v1/factory/jobs")
+    def api_factory_jobs():
+        return list_factory_jobs()
+
+    @app.post("/api/v1/factory/assemble")
+    def api_factory_assemble(req: FactoryAssembleRequest):
+        return run_software_factory(req.prompt, target_cloud=req.target_cloud, write_artifacts=req.write_artifacts)
+
+    @app.post("/api/v1/factory/approve")
+    def api_factory_approve(req: FactoryApproveRequest):
+        return approve_and_distribute(req.job_id, approver=req.approver, target_cloud=req.target_cloud)
+
     FASTAPI_AVAILABLE = True
 except ImportError:
     app = None
@@ -423,6 +448,8 @@ class FallbackHandler(BaseHTTPRequestHandler):
             return self._send_json(get_canvas_catalog())
         if parsed.path == "/api/v1/community/plugins":
             return self._send_json(list_community_plugins())
+        if parsed.path == "/api/v1/factory/jobs":
+            return self._send_json(list_factory_jobs())
         return self._send_json({"error": "Not found"}, 404)
 
     def do_POST(self):
@@ -465,6 +492,10 @@ class FallbackHandler(BaseHTTPRequestHandler):
             return self._send_json(submit_community_plugin(payload.get("manifest", {}), payload.get("repo_url", "")))
         if self.path == "/api/v1/deploy/plan":
             return self._send_json(plan_one_click_deploy(payload.get("provider", "gcp"), payload.get("project_path", "."), payload.get("service_name", "uniforge-app"), payload.get("region", "us-central1")))
+        if self.path == "/api/v1/factory/assemble":
+            return self._send_json(run_software_factory(payload.get("prompt", ""), target_cloud=payload.get("target_cloud", "gcp"), write_artifacts=bool(payload.get("write_artifacts", False))))
+        if self.path == "/api/v1/factory/approve":
+            return self._send_json(approve_and_distribute(payload.get("job_id", ""), approver=payload.get("approver", "lead-engineer"), target_cloud=payload.get("target_cloud", "")))
         return self._send_json({"error": "Not found"}, 404)
 
 

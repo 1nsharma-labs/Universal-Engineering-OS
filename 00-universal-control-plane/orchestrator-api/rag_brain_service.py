@@ -217,3 +217,4 @@ def query_rag_brain(query: str, top_k: int = 5, use_ollama: bool = False, model:
         "answer": llm_synthesis,
         "matches": matches,
     }
+

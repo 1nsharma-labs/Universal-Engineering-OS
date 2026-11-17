@@ -170,6 +170,15 @@ def cmd_deploy(args):
     print(json.dumps(res, indent=2))
 
 
+def cmd_factory(args):
+    from software_factory_service import approve_and_distribute, run_software_factory
+    job = run_software_factory(" ".join(args.prompt), target_cloud=args.cloud, write_artifacts=args.write)
+    if args.approve:
+        dist = approve_and_distribute(job["job_id"], approver=args.approver, target_cloud=args.cloud)
+        job["approval_result"] = dist
+    print(json.dumps(job, indent=2))
+
+
 def cmd_unify(args):
     from project_unifier import unify_project
     print(json.dumps(unify_project(args.target), indent=2))
@@ -354,6 +363,14 @@ def main():
     p_dep.add_argument("--region", "-r", default="us-central1")
     p_dep.add_argument("--path", default=".")
     p_dep.set_defaults(func=cmd_deploy)
+
+    p_fac = sub.add_parser("factory", help="Run the 5-Layer Self-Assembling AI Software Factory")
+    p_fac.add_argument("prompt", nargs="+", help="Product / architecture idea")
+    p_fac.add_argument("--cloud", default="gcp", choices=["gcp", "aws", "cloudflare", "uniforge-cloud"])
+    p_fac.add_argument("--write", action="store_true", help="Write assembled code + docker-compose.factory.yml to workspaces/software-factory/")
+    p_fac.add_argument("--approve", action="store_true", help="Auto-approve Human-in-the-Loop Layer 4 gate to unlock Layer 5 Distribution")
+    p_fac.add_argument("--approver", default="cli-lead-engineer")
+    p_fac.set_defaults(func=cmd_factory)
 
     p_uni = sub.add_parser("unify", help="Analyze & unify a GitHub URL or local project path")
     p_uni.add_argument("target", help="GitHub repo URL or local directory")

@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "1.0.0",
+  "submissions": [
+    {
+      "id": "@community/kafka-visualizer",
+      "name": "Kafka Stream Visualizer",
+      "version": "1.0.0",
+      "category": "devops",
+      "description": "",
+      "license": "Apache-2.0",
+      "permissions": [
+        "network:outbound"
+      ],
+      "repo_url": "https://github.com/1nsharma-labs/Universal-Engineering-OS",
+      "status": "VERIFIED_COMMUNITY",
+      "submitted_at": 1794941982
+    }
+  ]
+}

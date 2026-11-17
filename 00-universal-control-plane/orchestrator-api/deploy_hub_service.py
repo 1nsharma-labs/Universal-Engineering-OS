@@ -160,3 +160,4 @@ def plan_one_click_deploy(target_provider: str = "gcp", project_path: str = ".",
         "zero_config_ready": True,
         **chosen,
     }
+
