@@ -20,6 +20,7 @@ yarn-error.log*
 .pnpm-store/
 02-frameworks-and-templates/**/dist/
 apps/**/dist/
+workspaces/
 
 # Java / Rust / Go build artifacts
 target/

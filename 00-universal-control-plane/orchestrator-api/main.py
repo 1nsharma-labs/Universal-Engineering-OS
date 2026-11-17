@@ -30,6 +30,22 @@ if str(CURRENT_DIR) not in sys.path:
 from api_studio_service import execute_api_request
 from autonomous_team_service import list_agent_runs, run_autonomous_build, run_self_healing_sre
 from brain import architect_solution, load_registry, search_registry
+from cognitive_brain_service import (
+    cognitive_brain_think,
+    crawl_web_url,
+    create_managed_project,
+    forget_memory,
+    list_crawled_pages,
+    list_managed_projects,
+    list_skills,
+    read_managed_project_file,
+    recall_memories,
+    remember_memory,
+    search_open_web,
+    toggle_skill,
+    upsert_skill,
+    write_managed_project_file,
+)
 from core_os_layer import (
     check_permission,
     create_project,
@@ -113,6 +129,7 @@ def get_system_overview() -> Dict[str, Any]:
             "secrets_vault": "READY",
             "observability_engine": "READY",
             "uniforge_workbench_v2": "READY",
+            "cognitive_brain_memory_skills_webcrawl": "READY",
         },
         "status": "OPERATIONAL",
     }
@@ -273,6 +290,51 @@ try:
     class WorkbenchGitImportRequest(BaseModel):
         repo_url: str
         max_files: int = 12
+
+    class BrainMemoryRequest(BaseModel):
+        content: str
+        category: str = "semantic"
+        tags: str = ""
+        namespace: str = "global"
+        importance: int = 5
+
+    class BrainSkillRequest(BaseModel):
+        id: str = ""
+        name: str
+        instructions: str
+        category: str = "custom"
+        enabled: bool = True
+
+    class BrainSkillToggleRequest(BaseModel):
+        enabled: bool
+
+    class BrainCrawlRequest(BaseModel):
+        url: str
+        save_to_memory: bool = True
+
+    class BrainWebSearchRequest(BaseModel):
+        query: str
+
+    class ManagedProjectCreateRequest(BaseModel):
+        name: str
+        stack: str = "React + FastAPI"
+        files: Optional[Dict[str, str]] = None
+
+    class ManagedProjectFileRequest(BaseModel):
+        file_path: str
+        content: str
+
+    class CognitiveThinkRequest(BaseModel):
+        prompt: str
+        provider: str = "uniforge-local"
+        model: str = "uniforge-architect-v2"
+        chat_mode: str = "build"
+        api_key: str = ""
+        ollama_url: str = "http://localhost:11434"
+        project_slug: str = ""
+        auto_crawl_urls: bool = True
+        web_search: bool = False
+        files: Optional[Dict[str, str]] = None
 
     @app.get("/", response_class=HTMLResponse)
     def serve_studio():
@@ -537,6 +599,74 @@ try:
     @app.post("/api/v1/workbench/import-github")
     def api_workbench_import_github(req: WorkbenchGitImportRequest):
         return import_github_repository(req.repo_url, max_files=req.max_files)
+
+    # --- Cognitive Brain: Memory, Skills, Internet Web Crawler, Project Handler & Multi-LLM ---
+    @app.get("/api/v1/brain/memory")
+    def api_brain_memory_list(q: str = "", namespace: str = "", limit: int = 15):
+        return recall_memories(query=q, namespace=namespace, limit=limit)
+
+    @app.post("/api/v1/brain/memory")
+    def api_brain_memory_add(req: BrainMemoryRequest):
+        return remember_memory(req.content, req.category, req.tags, req.namespace, req.importance)
+
+    @app.delete("/api/v1/brain/memory/{memory_id}")
+    def api_brain_memory_delete(memory_id: str):
+        return forget_memory(memory_id)
+
+    @app.get("/api/v1/brain/skills")
+    def api_brain_skills_list(enabled_only: bool = False):
+        return list_skills(only_enabled=enabled_only)
+
+    @app.post("/api/v1/brain/skills")
+    def api_brain_skills_upsert(req: BrainSkillRequest):
+        return upsert_skill(req.id, req.name, req.instructions, req.category, req.enabled)
+
+    @app.patch("/api/v1/brain/skills/{skill_id}")
+    def api_brain_skills_toggle(skill_id: str, req: BrainSkillToggleRequest):
+        return toggle_skill(skill_id, req.enabled)
+
+    @app.post("/api/v1/brain/crawl")
+    def api_brain_crawl(req: BrainCrawlRequest):
+        return crawl_web_url(req.url, save_to_memory=req.save_to_memory)
+
+    @app.get("/api/v1/brain/crawl/history")
+    def api_brain_crawl_history(limit: int = 15):
+        return list_crawled_pages(limit=limit)
+
+    @app.post("/api/v1/brain/web-search")
+    def api_brain_web_search(req: BrainWebSearchRequest):
+        return search_open_web(req.query)
+
+    @app.get("/api/v1/brain/projects")
+    def api_brain_projects_list():
+        return list_managed_projects()
+
+    @app.post("/api/v1/brain/projects")
+    def api_brain_projects_create(req: ManagedProjectCreateRequest):
+        return create_managed_project(req.name, req.stack, req.files)
+
+    @app.post("/api/v1/brain/projects/{slug}/files")
+    def api_brain_project_write_file(slug: str, req: ManagedProjectFileRequest):
+        return write_managed_project_file(slug, req.file_path, req.content)
+
+    @app.get("/api/v1/brain/projects/{slug}/files")
+    def api_brain_project_read_file(slug: str, path: str):
+        return read_managed_project_file(slug, path)
+
+    @app.post("/api/v1/brain/think")
+    def api_brain_think(req: CognitiveThinkRequest):
+        return cognitive_brain_think(
+            prompt=req.prompt,
+            provider=req.provider,
+            model=req.model,
+            chat_mode=req.chat_mode,
+            api_key=req.api_key,
+            ollama_url=req.ollama_url,
+            project_slug=req.project_slug,
+            auto_crawl_urls=req.auto_crawl_urls,
+            web_search=req.web_search,
+            files=req.files,
+        )
 
     FASTAPI_AVAILABLE = True
 except ImportError:

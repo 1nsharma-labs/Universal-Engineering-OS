@@ -179,6 +179,45 @@ def cmd_factory(args):
     print(json.dumps(job, indent=2))
 
 
+def cmd_memory(args):
+    from cognitive_brain_service import recall_memories, remember_memory
+    if args.add:
+        print(json.dumps(remember_memory(" ".join(args.add), category=args.category, tags=args.tags), indent=2))
+    else:
+        print(json.dumps(recall_memories(query=args.query, limit=args.limit), indent=2))
+
+
+def cmd_skills(args):
+    from cognitive_brain_service import list_skills, toggle_skill
+    if args.enable:
+        print(json.dumps(toggle_skill(args.enable, True), indent=2))
+    elif args.disable:
+        print(json.dumps(toggle_skill(args.disable, False), indent=2))
+    else:
+        print(json.dumps(list_skills(), indent=2))
+
+
+def cmd_crawl(args):
+    from cognitive_brain_service import crawl_web_url, search_open_web
+    if args.search:
+        print(json.dumps(search_open_web(" ".join(args.target)), indent=2))
+    else:
+        print(json.dumps(crawl_web_url(args.target[0], save_to_memory=not args.no_save), indent=2))
+
+
+def cmd_brain_think(args):
+    from cognitive_brain_service import cognitive_brain_think
+    res = cognitive_brain_think(
+        prompt=" ".join(args.prompt),
+        provider=args.provider,
+        model=args.model,
+        chat_mode=args.mode,
+        project_slug=args.project,
+        web_search=args.web_search,
+    )
+    print(json.dumps(res, indent=2))
+
+
 def cmd_unify(args):
     from project_unifier import unify_project
     print(json.dumps(unify_project(args.target), indent=2))
@@ -395,6 +434,34 @@ def main():
     p_fac.add_argument("--approve", action="store_true", help="Auto-approve Human-in-the-Loop Layer 4 gate to unlock Layer 5 Distribution")
     p_fac.add_argument("--approver", default="cli-lead-engineer")
     p_fac.set_defaults(func=cmd_factory)
+
+    p_mem = sub.add_parser("memory", help="Query or store items in Cognitive Brain Long-Term Memory")
+    p_mem.add_argument("--query", "-q", default="")
+    p_mem.add_argument("--add", nargs="+", help="Memory text to store persistently")
+    p_mem.add_argument("--category", default="semantic")
+    p_mem.add_argument("--tags", default="")
+    p_mem.add_argument("--limit", type=int, default=12)
+    p_mem.set_defaults(func=cmd_memory)
+
+    p_sk = sub.add_parser("skills", help="List or toggle Cognitive Brain AI Skills")
+    p_sk.add_argument("--enable", default="")
+    p_sk.add_argument("--disable", default="")
+    p_sk.set_defaults(func=cmd_skills)
+
+    p_cr = sub.add_parser("crawl", help="Crawl a live internet URL or search the open web into Brain Memory")
+    p_cr.add_argument("target", nargs="+", help="URL to crawl (or search query with --search)")
+    p_cr.add_argument("--search", action="store_true", help="Run DuckDuckGo + Wikipedia web search")
+    p_cr.add_argument("--no-save", action="store_true")
+    p_cr.set_defaults(func=cmd_crawl)
+
+    p_bt = sub.add_parser("brain-think", help="Run unified Cognitive Brain (Memory + Skills + Crawl + Project + Multi-LLM)")
+    p_bt.add_argument("prompt", nargs="+")
+    p_bt.add_argument("--provider", default="uniforge-local")
+    p_bt.add_argument("--model", default="uniforge-architect-v2")
+    p_bt.add_argument("--mode", default="build", choices=["build", "discuss"])
+    p_bt.add_argument("--project", default="")
+    p_bt.add_argument("--web-search", action="store_true")
+    p_bt.set_defaults(func=cmd_brain_think)
 
     p_uni = sub.add_parser("unify", help="Analyze & unify a GitHub URL or local project path")
     p_uni.add_argument("target", help="GitHub repo URL or local directory")

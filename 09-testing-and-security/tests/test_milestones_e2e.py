@@ -388,3 +388,58 @@ def test_uniforge_workbench_v2_reverse_engineered_engine():
     assert "<uniforge-quick-actions>" in chat["response"]
     assert "bolt" not in chat["response"].lower()
 
+
+def test_cognitive_brain_memory_skills_crawler_project_handler():
+    from fastapi.testclient import TestClient
+    import main as control_plane
+
+    client = TestClient(control_plane.app)
+
+    # 1. Persistent Long-Term Memory
+    m_add = client.post(
+        "/api/v1/brain/memory",
+        json={"content": "Use PostgreSQL pgvector with HNSW for RAG retrieval", "category": "architecture", "tags": "pgvector,rag"},
+    ).json()
+    assert m_add["ok"] is True
+    mem_id = m_add["memory"]["id"]
+    m_rec = client.get("/api/v1/brain/memory?q=pgvector").json()
+    assert m_rec["count"] >= 1
+
+    # 2. Modular AI Skills
+    sk_list = client.get("/api/v1/brain/skills").json()
+    assert sk_list["count"] >= 8
+    sk_custom = client.post(
+        "/api/v1/brain/skills",
+        json={"name": "Rust Systems Expert", "instructions": "Prefer zero-copy safe Rust patterns.", "category": "systems"},
+    ).json()
+    assert sk_custom["ok"] is True
+
+    # 3. Managed Disk Project Handler
+    proj = client.post(
+        "/api/v1/brain/projects",
+        json={"name": "Brain Test Workspace", "stack": "FastAPI + React", "files": {"hello.py": "def hi():\n    return 'ok'\n"}},
+    ).json()
+    assert proj["ok"] is True
+    slug = proj["slug"]
+    read_back = client.get(f"/api/v1/brain/projects/{slug}/files?path=hello.py").json()
+    assert read_back["ok"] is True
+    assert "def hi()" in read_back["content"]
+
+    # 4. Unified Cognitive Brain Think + Auto-Save to Project
+    thought = client.post(
+        "/api/v1/brain/think",
+        json={
+            "prompt": "Build a modern SaaS telemetry dashboard with pgvector",
+            "provider": "uniforge-local",
+            "project_slug": slug,
+            "auto_crawl_urls": False,
+        },
+    ).json()
+    assert thought["ok"] is True
+    assert thought["cognitive_trace"]["active_skills_count"] >= 8
+    assert len(thought["cognitive_trace"]["saved_to_project_files"]) >= 1
+    assert "<uniforgeArtifact" in thought["response"]
+
+    # Cleanup test memory
+    client.delete(f"/api/v1/brain/memory/{mem_id}")
+

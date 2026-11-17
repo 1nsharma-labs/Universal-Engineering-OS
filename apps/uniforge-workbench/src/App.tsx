@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
+  Brain,
   CheckCircle2,
   Cloud,
   Code2,
@@ -33,6 +34,7 @@ import { useWorkbenchStore } from './store/useWorkbenchStore';
 import { DiffView } from './components/DiffView';
 import { SettingsModal } from './components/SettingsModal';
 import { SidebarHistory } from './components/SidebarHistory';
+import { CognitiveBrainModal } from './components/CognitiveBrainModal';
 
 export default function App() {
   const store = useWorkbenchStore();
@@ -47,6 +49,8 @@ export default function App() {
   const [termCmd, setTermCmd] = useState('python devhub.py version');
   const [deployProvider, setDeployProvider] = useState('gcp');
   const [deployPlan, setDeployPlan] = useState('');
+  const [brainModalOpen, setBrainModalOpen] = useState(false);
+  const [activeProjectSlug, setActiveProjectSlug] = useState('');
 
   const srcDoc = useMemo(
     () => composePreviewHtml(files, store.inspectorEnabled),
@@ -93,7 +97,7 @@ export default function App() {
     store.setIsBuilding(true);
 
     try {
-      const res = await fetch('/api/v1/workbench/chat', {
+      const res = await fetch('/api/v1/brain/think', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -103,6 +107,8 @@ export default function App() {
           chat_mode: store.chatMode,
           api_key: store.apiKey,
           ollama_url: store.ollamaUrl,
+          project_slug: activeProjectSlug,
+          auto_crawl_urls: true,
           files,
         }),
       });
@@ -130,7 +136,11 @@ export default function App() {
         store.setRightView('preview');
       }
 
-      const meta = `${data.provider}/${data.model} • ${data.duration_ms}ms${data.fallback_note ? ` • ${data.fallback_note}` : ''}`;
+      const trace = data.cognitive_trace;
+      const traceSummary = trace
+        ? ` • ${trace.active_skills_count} skills • ${trace.memories_recalled?.length || 0} memories`
+        : '';
+      const meta = `${data.provider}/${data.model} • ${data.duration_ms}ms${traceSummary}${data.fallback_note ? ` • ${data.fallback_note}` : ''}`;
       store.addMessage({
         role: 'assistant',
         content: parsed.displayMarkdown || 'Workspace updated.',
@@ -221,6 +231,13 @@ export default function App() {
     <div className="h-screen flex flex-col bg-slate-950 text-slate-100 overflow-hidden">
       <SidebarHistory />
       <SettingsModal />
+      <CognitiveBrainModal
+        open={brainModalOpen}
+        onClose={() => setBrainModalOpen(false)}
+        activeProjectSlug={activeProjectSlug}
+        onSelectProjectSlug={setActiveProjectSlug}
+        currentFiles={files}
+      />
 
       {/* 1-Click Cloud Deploy Modal */}
       {store.deployOpen && (
@@ -288,6 +305,13 @@ export default function App() {
         </div>
 
         <div className="flex items-center gap-1.5">
+          <button
+            onClick={() => setBrainModalOpen(true)}
+            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-indigo-600/20 hover:bg-indigo-600/35 text-xs font-semibold text-indigo-300 border border-indigo-500/40"
+            title="Open Cognitive Brain: Long-Term Memory, Skills, Web Crawler & Project Handler"
+          >
+            <Brain className="w-3.5 h-3.5" /> Brain OS{activeProjectSlug ? ` (${activeProjectSlug})` : ''}
+          </button>
           <button
             onClick={() => store.setSettingsOpen(true)}
             className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-950 hover:bg-slate-800 text-[11px] font-mono text-sky-300 border border-slate-700"
