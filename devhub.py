@@ -12,7 +12,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-VERSION = "2.0.0"
+VERSION = "2.1.0"
 ORG = "1nsharma-labs / Universal-Engineering-OS"
 ROOT = Path(__file__).resolve().parent
 ORCH_DIR = ROOT / "00-universal-control-plane" / "orchestrator-api"
