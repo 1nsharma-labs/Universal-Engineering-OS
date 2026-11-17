@@ -1,0 +1,13 @@
+{
+  "name": "universal-hub/laravel-starter",
+  "description": "Minimal High-Speed PHP / Laravel API Starter",
+  "type": "project",
+  "require": {
+    "php": "^8.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    }
+  }
+}

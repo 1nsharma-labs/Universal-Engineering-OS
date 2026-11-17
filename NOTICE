@@ -1,0 +1,17 @@
+UNIFORGE — The Universal Engineering OS
+Copyright 2026 UNIFORGE Contributors
+
+This product includes software developed as part of the UNIFORGE
+(Universal Engineering OS) open-source ecosystem.
+
+Third-Party Dependencies:
+All external programming languages, runtimes, container images, SDKs,
+and libraries referenced in the Technology Registry or DevContainers
+remain the property of their respective copyright holders and are
+governed by their individual open-source licenses.
+
+Trademarks:
+"UNIFORGE" and associated logos are trademarks of the UNIFORGE project.
+Use of these trademarks is subject to the project's brand and trademark
+guidelines and is separate from the Apache-2.0 code license.
+

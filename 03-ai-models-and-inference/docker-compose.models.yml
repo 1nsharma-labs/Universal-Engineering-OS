@@ -1,0 +1,90 @@
+version: '3.8'
+
+services:
+  # Ollama: Lightweight CPU/GPU local LLM runner
+  ollama:
+    image: ollama/ollama:latest
+    container_name: devhub-ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_models:/root/.ollama
+    environment:
+      - OLLAMA_KEEP_ALIVE=24h
+      - OLLAMA_HOST=0.0.0.0
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  # vLLM: High-throughput OpenAI-compatible inference engine
+  vllm:
+    image: vllm/vllm-openai:latest
+    container_name: devhub-vllm
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - huggingface_cache:/root/.cache/huggingface
+    environment:
+      - MODEL=Qwen/Qwen2.5-Coder-7B-Instruct
+      - MAX_MODEL_LEN=8192
+      - GPU_MEMORY_UTILIZATION=0.9
+    command: ["--model", "Qwen/Qwen2.5-Coder-7B-Instruct", "--port", "8000", "--host", "0.0.0.0"]
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  # LocalAI: Drop-in REST replacement for OpenAI APIs (Audio, Vision, Text)
+  localai:
+    image: localai/localai:latest
+    container_name: devhub-localai
+    restart: unless-stopped
+    ports:
+      - "8089:8080"
+    volumes:
+      - localai_models:/build/models
+    environment:
+      - DEBUG=true
+      - THREADS=4
+
+  # Faster-Whisper: Ultra-fast Speech-to-Text inference
+  whisper-stt:
+    image: fedirz/faster-whisper-server:latest
+    container_name: devhub-whisper
+    restart: unless-stopped
+    ports:
+      - "9000:8000"
+    environment:
+      - WHISPER_MODEL=large-v3
+      - WHISPER_DEVICE=cuda
+
+  # ComfyUI: Modular Graph-based Stable Diffusion & Flux image generation
+  comfyui:
+    image: yanwk/comfyui-boot:latest
+    container_name: devhub-comfyui
+    restart: unless-stopped
+    ports:
+      - "8188:8188"
+    volumes:
+      - comfyui_storage:/root/ComfyUI
+    environment:
+      - CLI_ARGS=--listen 0.0.0.0 --port 8188
+
+volumes:
+  ollama_models:
+  huggingface_cache:
+  localai_models:
+  comfyui_storage:
+
+networks:
+  default:
+    name: universal-dev-network

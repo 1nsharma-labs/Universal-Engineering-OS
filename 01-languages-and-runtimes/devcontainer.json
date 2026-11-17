@@ -1,0 +1,70 @@
+{
+  "name": "Universal Polyglot DevContainer",
+  "image": "mcr.microsoft.com/devcontainers/universal:2-linux",
+  "features": {
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "21",
+      "installMaven": "true",
+      "installGradle": "true"
+    },
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20",
+      "installPnpm": "true",
+      "installYarn": "true"
+    },
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.11",
+      "installTools": "true"
+    },
+    "ghcr.io/devcontainers/features/rust:1": {
+      "version": "latest",
+      "profile": "complete"
+    },
+    "ghcr.io/devcontainers/features/go:1": {
+      "version": "1.22"
+    },
+    "ghcr.io/devcontainers/features/php:1": {
+      "version": "8.3",
+      "installComposer": "true"
+    },
+    "ghcr.io/devcontainers/features/ruby:1": {
+      "version": "3.3"
+    },
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "version": "latest",
+      "enableDockerBuildx": "true"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vscjava.vscode-java-pack",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "rust-lang.rust-analyzer",
+        "golang.go",
+        "ms-vscode.cpptools",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "ms-azuretools.vscode-docker",
+        "redhat.vscode-yaml",
+        "tamasfe.even-better-toml",
+        "hashicorp.terraform"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "python.formatting.provider": "black",
+        "java.configuration.runtimes": [
+          { "name": "JavaSE-1.8", "path": "/usr/lib/jvm/java-8-openjdk" },
+          { "name": "JavaSE-11", "path": "/usr/lib/jvm/java-11-openjdk" },
+          { "name": "JavaSE-17", "path": "/usr/lib/jvm/java-17-openjdk" },
+          { "name": "JavaSE-21", "path": "/usr/lib/jvm/java-21-openjdk", "default": true }
+        ]
+      }
+    }
+  },
+  "forwardPorts": [3000, 8000, 8080, 8081, 9090, 5432],
+  "postCreateCommand": "bash 01-languages-and-runtimes/setup-languages.sh"
+}

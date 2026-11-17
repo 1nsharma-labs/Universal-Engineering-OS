@@ -1,0 +1,11 @@
+apiVersion: v2
+name: uniforge-cloud
+description: Multi-tenant Kubernetes Helm Chart for UNIFORGE Cloud Hosted Workspaces
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+home: https://github.com/uniforge-os/Universal-Engineering-OS
+maintainers:
+  - name: UNIFORGE Cloud Team
+    email: cloud@uniforge.io
+

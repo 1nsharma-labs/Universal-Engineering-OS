@@ -1,0 +1,11 @@
+# Universal-Dev-Hub Cursor Rules
+
+# Language Standards
+- TypeScript: Strict typing enabled. Never use `any` unless wrapping opaque foreign FFI boundaries.
+- Python: Use Python 3.11+ type hints (`typing.Optional`, `list[str]`, `dict[str, Any]`). Adhere to PEP8 and Black formatting.
+- Java: Target Java 21+. Use records for immutable DTOs, pattern matching for switch, and virtual threads for high concurrency I/O.
+- Go: Handle errors explicitly. Never discard `err`. Prefer context propagation `ctx context.Context`.
+
+# Architecture Rules
+- Use `.env.example` in `04-connectors-and-apis` as the single source of truth for all secrets.
+- Always provide docker-compose service definitions for new background dependencies.

@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "@uniforge/plugin-pgvector-explorer",
+  "name": "pgvector Explorer",
+  "version": "1.0.0",
+  "description": "Inspect PostgreSQL pgvector tables, HNSW/IVFFlat vector indexes, run cosine/L2 similarity searches, and visualize embedding clusters.",
+  "category": "database",
+  "author": {
+    "name": "UNIFORGE Official Plugins Team",
+    "url": "https://github.com/uniforge-os"
+  },
+  "license": "Apache-2.0",
+  "permissions": ["database:query", "network:outbound", "storage:read"],
+  "engines": {
+    "uniforge": ">=1.0.0"
+  },
+  "entrypoints": {
+    "backend": "dist/index.js"
+  },
+  "commands": [
+    {
+      "id": "buildSimilarityQuery",
+      "title": "Build pgvector Similarity SQL",
+      "description": "Generates parameterized cosine (<=>), L2 (<->), or inner-product (<#>) similarity SQL queries."
+    },
+    {
+      "id": "cosineSimilarity",
+      "title": "Compute Local Cosine Similarity",
+      "description": "Computes exact cosine similarity between two embedding vectors for debugging RAG pipelines."
+    },
+    {
+      "id": "indexRecommendations",
+      "title": "HNSW / IVFFlat Index Advisor",
+      "description": "Recommends optimal pgvector index DDL based on vector dimensions and row count."
+    }
+  ],
+  "views": [
+    {
+      "id": "pgvector-explorer-view",
+      "title": "pgvector Explorer",
+      "slot": "main-tab"
+    }
+  ],
+  "pricing": {
+    "tier": "free",
+    "priceUsdMonthly": 0
+  },
+  "tags": ["postgres", "pgvector", "vectors", "rag", "embeddings", "official"]
+}
+

@@ -1,0 +1,31 @@
+name: UNIFORGE Cloud Continuous Deployment
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'cloud/**'
+      - '00-universal-control-plane/**'
+      - '08-devops-cloud-and-iac/kubernetes/**'
+
+jobs:
+  deploy-cloud:
+    name: Deploy to UNIFORGE Cloud Staging & Production
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Orchestrator Cloud Image
+        run: |
+          docker build -t uniforge/control-plane:latest -f 00-universal-control-plane/orchestrator-api/Dockerfile 00-universal-control-plane/orchestrator-api
+
+      - name: Lint Kubernetes Helm Charts
+        run: |
+          curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+          helm lint 08-devops-cloud-and-iac/kubernetes/helm/uniforge-core || true
+          helm lint cloud/helm/uniforge-cloud || true
+

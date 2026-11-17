@@ -1,0 +1,18 @@
+{
+  "name": "universal-frontend-workspace",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "vite-react-ts",
+    "nextjs-app-router",
+    "remix-starter",
+    "vue-starter",
+    "svelte-starter"
+  ],
+  "scripts": {
+    "dev:react": "npm --workspace=vite-react-ts run dev",
+    "dev:next": "npm --workspace=nextjs-app-router run dev",
+    "dev:vue": "npm --workspace=vue-starter run dev",
+    "dev:svelte": "npm --workspace=svelte-starter run dev"
+  }
+}

@@ -1,0 +1,35 @@
+# Polyglot Runtime Version Configuration (mise-en-place)
+# https://mise.jdx.dev
+
+[tools]
+# Java Development Kits (Switchable via `mise use java@<version>`)
+java = "temurin-21.0.2"
+"java@17" = "temurin-17.0.10"
+"java@11" = "temurin-11.0.22"
+"java@8" = "temurin-8.0.402"
+maven = "3.9.6"
+gradle = "8.7"
+
+# Web & TypeScript Runtime
+node = "20.12.0"
+pnpm = "9.0.4"
+yarn = "1.22.22"
+
+# Systems & Cloud Runtimes
+python = "3.11.9"
+go = "1.22.2"
+rust = "1.77.2"
+
+# Dynamic Languages
+ruby = "3.3.0"
+php = "8.3.4"
+composer = "2.7.2"
+
+# Cloud & DevOps Tooling
+terraform = "1.7.5"
+kubectl = "1.29.3"
+helm = "3.14.3"
+
+[settings]
+experimental = true
+legacy_version_files = true

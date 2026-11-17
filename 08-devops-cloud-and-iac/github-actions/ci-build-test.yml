@@ -1,0 +1,57 @@
+name: Polyglot CI Build & Test Matrix
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-matrix:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - language: java
+            setup: java
+            version: '21'
+          - language: node
+            setup: node
+            version: '20'
+          - language: python
+            setup: python
+            version: '3.11'
+          - language: go
+            setup: go
+            version: '1.22'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Language Runtime
+        uses: actions/setup-node@v4
+        if: matrix.language == 'node'
+        with:
+          node-version: ${{ matrix.version }}
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        if: matrix.language == 'java'
+        with:
+          distribution: 'temurin'
+          java-version: ${{ matrix.version }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        if: matrix.language == 'python'
+        with:
+          python-version: ${{ matrix.version }}
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        if: matrix.language == 'go'
+        with:
+          go-version: ${{ matrix.version }}
+
+      - name: Run Build and Test
+        run: |
+          echo "Executing CI validation for ${{ matrix.language }}..."

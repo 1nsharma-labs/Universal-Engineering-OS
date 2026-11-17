@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "@uniforge/plugin-p5js-studio",
+  "name": "p5.js Studio",
+  "version": "1.0.0",
+  "description": "Live generative art, WebGL shader sandbox, reactive audio/visual sketch templates, and canvas exporter for p5.js.",
+  "category": "creative",
+  "author": {
+    "name": "UNIFORGE Official Plugins Team",
+    "url": "https://github.com/uniforge-os"
+  },
+  "license": "Apache-2.0",
+  "permissions": ["storage:read", "storage:write"],
+  "engines": {
+    "uniforge": ">=1.0.0"
+  },
+  "entrypoints": {
+    "backend": "dist/index.js",
+    "ui": "views/p5-canvas.html"
+  },
+  "commands": [
+    {
+      "id": "listTemplates",
+      "title": "List Generative Sketch Templates",
+      "description": "Returns curated p5.js creative coding templates (flow-field, audio-spectrum, shader-plasma)."
+    },
+    {
+      "id": "generateSketchHtml",
+      "title": "Compile Live p5.js HTML Preview",
+      "description": "Wraps user p5.js sketch code into a sandboxed live iframe HTML bundle."
+    }
+  ],
+  "views": [
+    {
+      "id": "p5js-studio-canvas",
+      "title": "p5.js Creative Studio",
+      "slot": "main-tab"
+    }
+  ],
+  "pricing": {
+    "tier": "free",
+    "priceUsdMonthly": 0
+  },
+  "tags": ["p5js", "creative-coding", "canvas", "generative-art", "webgl", "official"]
+}
+

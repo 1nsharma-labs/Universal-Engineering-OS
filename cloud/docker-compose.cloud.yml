@@ -1,0 +1,97 @@
+# ==============================================================================
+# UNIFORGE Cloud — Multi-Tenant Hosted Platform Stack
+# ==============================================================================
+name: uniforge-cloud
+
+services:
+  edge-proxy:
+    image: traefik:v3.1
+    container_name: uniforge-cloud-edge
+    command:
+      - "--api.dashboard=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.file.directory=/etc/traefik/dynamic"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--metrics.prometheus=true"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik:/etc/traefik/dynamic:ro
+    networks:
+      - cloud-edge
+      - cloud-internal
+    restart: unless-stopped
+
+  control-plane:
+    build:
+      context: ../00-universal-control-plane/orchestrator-api
+      dockerfile: Dockerfile
+    container_name: uniforge-cloud-control-plane
+    environment:
+      UNIFORGE_ENV: cloud-production
+      UNIFORGE_MULTI_TENANT: "true"
+      CONTROL_PLANE_PORT: "7000"
+      DATABASE_URL: postgresql://uniforge:${CLOUD_DB_PASSWORD:-change_me_in_prod}@cloud-postgres:5432/uniforge_cloud
+      REDIS_URL: redis://cloud-redis:6379/0
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET:-whsec_dev_placeholder}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.control-plane.rule=Host(`cloud.uniforge.io`) || Host(`localhost`)"
+      - "traefik.http.services.control-plane.loadbalancer.server.port=7000"
+    depends_on:
+      cloud-postgres:
+        condition: service_healthy
+      cloud-redis:
+        condition: service_healthy
+    networks:
+      - cloud-edge
+      - cloud-internal
+    restart: unless-stopped
+
+  cloud-postgres:
+    image: pgvector/pgvector:pg16
+    container_name: uniforge-cloud-postgres
+    environment:
+      POSTGRES_USER: uniforge
+      POSTGRES_PASSWORD: ${CLOUD_DB_PASSWORD:-change_me_in_prod}
+      POSTGRES_DB: uniforge_cloud
+    volumes:
+      - cloud_pgdata:/var/lib/postgresql/data
+      - ./db/multi_tenant_schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U uniforge -d uniforge_cloud"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - cloud-internal
+    restart: unless-stopped
+
+  cloud-redis:
+    image: redis:7-alpine
+    container_name: uniforge-cloud-redis
+    command: ["redis-server", "--appendonly", "yes", "--maxmemory", "256mb", "--maxmemory-policy", "allkeys-lru"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    networks:
+      - cloud-internal
+    restart: unless-stopped
+
+volumes:
+  cloud_pgdata:
+
+networks:
+  cloud-edge:
+    driver: bridge
+  cloud-internal:
+    driver: bridge
+    internal: true
+

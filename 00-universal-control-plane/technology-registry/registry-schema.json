@@ -1,0 +1,106 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Universal Technology Registry Schema",
+  "type": "object",
+  "required": [
+    "version",
+    "domains",
+    "hidden_stack",
+    "technologies"
+  ],
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "domains": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "hidden_stack": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "technologies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "type",
+          "domain_id",
+          "language",
+          "license",
+          "runtime",
+          "security_status"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "domain_id": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          },
+          "dependencies": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "documentation_url": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "license": {
+            "type": "string"
+          },
+          "runtime": {
+            "type": "string"
+          },
+          "security_status": {
+            "type": "string"
+          },
+          "alternatives": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "integrations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "package_source": {
+            "type": "string"
+          },
+          "hub_module": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

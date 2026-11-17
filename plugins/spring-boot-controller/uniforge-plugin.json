@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "@uniforge/plugin-spring-boot-controller",
+  "name": "Spring Boot Controller",
+  "version": "1.0.0",
+  "description": "Control Spring Boot 3 microservices, inspect Actuator health/metrics/beans, manage Maven profiles, and trigger hot builds.",
+  "category": "backend",
+  "author": {
+    "name": "UNIFORGE Official Plugins Team",
+    "url": "https://github.com/uniforge-os"
+  },
+  "license": "Apache-2.0",
+  "permissions": ["network:outbound", "process:exec", "storage:read"],
+  "engines": {
+    "uniforge": ">=1.0.0"
+  },
+  "entrypoints": {
+    "backend": "dist/index.js"
+  },
+  "commands": [
+    {
+      "id": "actuatorHealth",
+      "title": "Query Spring Actuator Health",
+      "description": "Fetches /actuator/health and /actuator/info from a target Spring Boot service."
+    },
+    {
+      "id": "mavenBuild",
+      "title": "Build Spring Boot Ecosystem",
+      "description": "Executes Maven compile/test lifecycle in 02-frameworks-and-templates/java-ecosystem."
+    }
+  ],
+  "views": [
+    {
+      "id": "spring-boot-view",
+      "title": "Spring Boot Controller",
+      "slot": "main-tab"
+    }
+  ],
+  "pricing": {
+    "tier": "free",
+    "priceUsdMonthly": 0
+  },
+  "tags": ["java", "spring-boot", "actuator", "maven", "jvm", "official"]
+}
+

@@ -1,0 +1,5 @@
+# Universal-Dev-Hub Windsurf Cascade Rules
+
+- Context Awareness: Recognize the 12 modular domains of `Universal-Dev-Hub`.
+- Modularity: Keep framework boilerplates isolated under `02-frameworks-and-templates`.
+- Verification: After editing code, run relevant lint or test commands defined in `Makefile`.

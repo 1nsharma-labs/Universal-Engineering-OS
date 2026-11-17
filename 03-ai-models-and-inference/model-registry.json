@@ -1,0 +1,100 @@
+{
+  "catalog_version": "2026.1",
+  "description": "Curated catalog of Open-Source Models for Local & Cloud Inference",
+  "models": {
+    "large_language_models": [
+      {
+        "id": "deepseek-r1-distill-qwen-14b",
+        "name": "DeepSeek R1 Distill Qwen 14B",
+        "huggingface_repo": "deepseek-ai/DeepSeek-R1-Distill-Qwen-14B",
+        "ollama_tag": "deepseek-r1:14b",
+        "context_length": 65536,
+        "vram_recommended_gb": 12,
+        "primary_use": "Reasoning, Mathematics, Code Synthesis",
+        "quantizations": ["Q4_K_M", "Q8_0", "FP16"]
+      },
+      {
+        "id": "qwen-2.5-coder-32b",
+        "name": "Qwen 2.5 Coder 32B Instruct",
+        "huggingface_repo": "Qwen/Qwen2.5-Coder-32B-Instruct",
+        "ollama_tag": "qwen2.5-coder:32b",
+        "context_length": 131072,
+        "vram_recommended_gb": 24,
+        "primary_use": "State-of-the-Art Polyglot Code Generation & Architecture",
+        "quantizations": ["Q4_K_M", "Q5_K_M"]
+      },
+      {
+        "id": "llama-3.3-70b-instruct",
+        "name": "Meta Llama 3.3 70B Instruct",
+        "huggingface_repo": "meta-llama/Llama-3.3-70B-Instruct",
+        "ollama_tag": "llama3.3:70b",
+        "context_length": 131072,
+        "vram_recommended_gb": 40,
+        "primary_use": "General Knowledge, Enterprise Workflow Automation",
+        "quantizations": ["Q4_K_M"]
+      },
+      {
+        "id": "phi-4-14b",
+        "name": "Microsoft Phi-4 14B",
+        "huggingface_repo": "microsoft/phi-4",
+        "ollama_tag": "phi4:latest",
+        "context_length": 16384,
+        "vram_recommended_gb": 10,
+        "primary_use": "Compact High-Fidelity Reasoning & Logic",
+        "quantizations": ["Q4_K_M", "Q8_0"]
+      }
+    ],
+    "multimodal_vision": [
+      {
+        "id": "qwen2-vl-7b-instruct",
+        "name": "Qwen2 VL 7B Instruct",
+        "huggingface_repo": "Qwen/Qwen2-VL-7B-Instruct",
+        "ollama_tag": "qwen2-vl:7b",
+        "primary_use": "Document OCR, UI Screenshot Grounding, Visual QA"
+      },
+      {
+        "id": "llama-3.2-11b-vision",
+        "name": "Llama 3.2 11B Vision",
+        "huggingface_repo": "meta-llama/Llama-3.2-11B-Vision-Instruct",
+        "ollama_tag": "llama3.2-vision:11b",
+        "primary_use": "Multimodal reasoning and visual inspection"
+      }
+    ],
+    "text_embeddings": [
+      {
+        "id": "bge-m3",
+        "name": "BAAI BGE-M3 Dense/Sparse Multilingual Embedding",
+        "huggingface_repo": "BAAI/bge-m3",
+        "ollama_tag": "bge-m3",
+        "dimension": 1024,
+        "context_length": 8192
+      },
+      {
+        "id": "nomic-embed-text",
+        "name": "Nomic Embed Text v1.5",
+        "huggingface_repo": "nomic-ai/nomic-embed-text-v1.5",
+        "ollama_tag": "nomic-embed-text",
+        "dimension": 768,
+        "context_length": 8192
+      }
+    ],
+    "audio_and_speech": [
+      {
+        "id": "whisper-large-v3-turbo",
+        "name": "OpenAI Whisper Large v3 Turbo",
+        "huggingface_repo": "openai/whisper-large-v3-turbo",
+        "service": "whisper-stt",
+        "primary_use": "Real-time speech-to-text transcription"
+      }
+    ],
+    "image_generation": [
+      {
+        "id": "flux-1-schnell",
+        "name": "Black Forest Labs Flux.1 Schnell",
+        "huggingface_repo": "black-forest-labs/FLUX.1-schnell",
+        "service": "comfyui",
+        "primary_use": "4-step ultra-fast photorealistic visual generation"
+      }
+    ]
+  }
+}

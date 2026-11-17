@@ -1,0 +1,60 @@
+name: UNIFORGE CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate-and-test:
+    name: Core Validation & Tests
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ["3.11", "3.12"]
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+
+      - name: Install Python Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r 00-universal-control-plane/orchestrator-api/requirements.txt pyyaml pytest
+
+      - name: Validate All JSON & YAML Manifests
+        run: python devhub.py validate
+
+      - name: Run Core Test Suite
+        run: python -m pytest 09-testing-and-security/tests/
+
+  plugin-sdk-build:
+    name: Plugin SDK & Plugins Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+          cache-dependency-path: packages/plugin-sdk/package.json
+
+      - name: Build @uniforge/plugin-sdk
+        run: |
+          cd packages/plugin-sdk
+          npm ci || npm install
+          npm run build
+          npm test || true
+

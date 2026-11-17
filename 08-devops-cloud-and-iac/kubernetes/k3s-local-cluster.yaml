@@ -1,0 +1,19 @@
+# K3s / K3d Local Cluster Configuration
+apiVersion: k3d.io/v1alpha5
+kind: Simple
+metadata:
+  name: devhub-cluster
+servers: 1
+agents: 2
+ports:
+  - port: 80:80
+    nodeFilters:
+      - loadbalancer
+  - port: 443:443
+    nodeFilters:
+      - loadbalancer
+registries:
+  create:
+    name: devhub-registry
+    host: "0.0.0.0"
+    hostPort: "5001"

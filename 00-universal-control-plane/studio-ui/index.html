@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UNIFORGE | Universal Engineering OS — Operational Studio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.47.0/min/vs/loader.min.js"></script>
+  <style>
+    body { background: #020617; color: #f8fafc; font-family: Inter, system-ui, -apple-system, sans-serif; }
+    .glass { background: rgba(15, 23, 42, 0.82); backdrop-filter: blur(14px); border: 1px solid rgba(51, 65, 85, 0.65); }
+    .terminal-log { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 9999px; }
+  </style>
+</head>
+<body class="min-h-screen">
+  <div class="max-w-7xl mx-auto px-5 py-7">
+    <!-- Header -->
+    <header class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 border-b border-slate-800 pb-6 mb-6">
+      <div>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/30 mb-2">
+          UNIFORGE-OS &bull; UNIVERSAL ENGINEERING OPERATING SYSTEM v1.0
+        </div>
+        <h1 class="text-3xl font-extrabold tracking-tight text-white">UNIFORGE Operational Studio</h1>
+        <p class="text-slate-400 text-sm mt-1">Monaco LSP &bull; Live PTY Terminal &bull; API Studio &bull; 60+ Wiki Profiles &bull; Plugin Marketplace &bull; UNIFORGE Cloud</p>
+      </div>
+      <div id="status-badges" class="flex flex-wrap gap-2 text-xs"></div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="flex flex-wrap gap-2 mb-6">
+      <button onclick="switchTab('brain')" id="tab-brain" class="tab-btn px-3.5 py-2 rounded-lg text-sm font-semibold bg-blue-600 text-white">AI Brain</button>
+      <button onclick="switchTab('editor')" id="tab-editor" class="tab-btn px-3.5 py-2 rounded-lg text-sm font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">Monaco LSP Studio</button>
+      <button onclick="switchTab('terminal')" id="tab-terminal" class="tab-btn px-3.5 py-2 rounded-lg text-sm font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">PTY Terminal</button>
+      <button onclick="switchTab('apistudio')" id="tab-apistudio" class="tab-btn px-3.5 py-2 rounded-lg text-sm font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">API Execution Studio</button>
+      <button onclick="switchTab('wiki')" id="tab-wiki" class="tab-btn px-3.5 py-2 rounded-lg text-sm font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">Universal Wiki (60+)</button>
+      <button onclick="switchTab('plugins')" id="tab-plugins" class="tab-btn px-3.5 py-2 rounded-lg text-sm font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">Plugins & Marketplace</button>
+      <button onclick="switchTab('cloud')" id="tab-cloud" class="tab-btn px-3.5 py-2 rounded-lg text-sm font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">UNIFORGE Cloud</button>
+      <button onclick="switchTab('unifier')" id="tab-unifier" class="tab-btn px-3.5 py-2 rounded-lg text-sm font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">Unifier & Sandbox</button>
+    </nav>
+
+    <!-- PANEL 1: AI Engineering Brain -->
+    <section id="panel-brain" class="space-y-6">
+      <div class="glass rounded-2xl p-6">
+        <h2 class="text-xl font-bold text-white mb-2">Universal AI Architecture Orchestrator</h2>
+        <p class="text-slate-400 text-sm mb-4">Describe your system vision to select a minimal, non-bloated stack across 15 domains and 60+ verified technologies.</p>
+        <textarea id="idea-input" rows="3" class="w-full rounded-xl bg-slate-950 border border-slate-700 p-4 text-sm text-slate-100 focus:outline-none focus:border-blue-500">Build an AI SaaS where users login, upload videos, AI transcribes and analyzes them, generates interactive 3D visuals, and lets users download results.</textarea>
+        <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex flex-wrap gap-2 text-xs">
+            <button onclick="setExample('Build an AI SaaS with login, video upload, AI analysis, 3D visuals, and downloads')" class="px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300">AI Video + 3D SaaS</button>
+            <button onclick="setExample('Create an offline-first desktop app with Rust shell, local LLM RAG search, and workflow automation')" class="px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300">Offline Desktop AI</button>
+            <button onclick="setExample('Build an enterprise Java Spring Boot microservice with Flutter mobile app and real-time analytics')" class="px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300">Enterprise Java + Flutter</button>
+          </div>
+          <button onclick="runArchitect()" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm shadow-lg">Generate Blueprint</button>
+        </div>
+      </div>
+      <div id="blueprint-output" class="hidden space-y-4"></div>
+    </section>
+
+    <!-- PANEL 2: Monaco LSP Code Studio -->
+    <section id="panel-editor" class="hidden space-y-4">
+      <div class="glass rounded-2xl p-5 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h2 class="text-lg font-bold text-white">Monaco Editor + Real-Time Backend LSP Bridge</h2>
+            <p class="text-xs text-slate-400">Connected to <code>/api/v1/lsp/diagnostics</code>, <code>/api/v1/lsp/format</code>, and <code>/api/v1/sandbox/execute</code></p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <select id="editor-lang" onchange="switchEditorLanguage()" class="rounded-lg bg-slate-950 border border-slate-700 px-3 py-1.5 text-xs text-white">
+              <option value="python">Python (AST LSP)</option>
+              <option value="typescript">TypeScript (@uniforge/plugin-sdk)</option>
+              <option value="json">JSON Schema</option>
+              <option value="sql">PostgreSQL + pgvector SQL</option>
+            </select>
+            <button onclick="runLspDiagnostics()" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold text-white">Run LSP Diagnostics</button>
+            <button onclick="runLspFormat()" class="px-3 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 text-xs font-semibold text-white">Format Code</button>
+            <button onclick="runEditorInSandbox()" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-xs font-semibold text-white">Preview Zero-Trust Sandbox</button>
+          </div>
+        </div>
+        <div id="monaco-container" class="w-full h-80 rounded-xl overflow-hidden border border-slate-700 bg-slate-950"></div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div class="rounded-xl bg-slate-950 border border-slate-800 p-4">
+            <div class="text-xs font-semibold text-slate-400 uppercase mb-2">LSP Diagnostics Output</div>
+            <pre id="lsp-diag-output" class="text-xs text-sky-300 overflow-x-auto whitespace-pre-wrap">Click "Run LSP Diagnostics" to inspect syntax and security rules.</pre>
+          </div>
+          <div class="rounded-xl bg-slate-950 border border-slate-800 p-4">
+            <div class="text-xs font-semibold text-slate-400 uppercase mb-2">Sandbox Policy / Output</div>
+            <pre id="editor-sb-output" class="text-xs text-emerald-300 overflow-x-auto whitespace-pre-wrap">Ready to generate isolated Docker sandbox specification.</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PANEL 3: Live PTY Terminal -->
+    <section id="panel-terminal" class="hidden space-y-4">
+      <div class="glass rounded-2xl p-5 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <h2 class="text-lg font-bold text-white">Live PTY Universal Terminal</h2>
+            <p class="text-xs text-slate-400">Real backend command execution via WebSocket <code>/ws/terminal</code> with stateful working directory & REST fallback.</p>
+          </div>
+          <div class="flex items-center gap-2 text-xs">
+            <span id="term-ws-status" class="px-2.5 py-1 rounded bg-slate-800 text-amber-300 border border-slate-700">Connecting...</span>
+            <button onclick="runQuickTerm('python devhub.py validate')" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200">devhub validate</button>
+            <button onclick="runQuickTerm('python devhub.py plugin list')" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200">plugin list</button>
+            <button onclick="clearTerminal()" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-400">Clear</button>
+          </div>
+        </div>
+        <div id="term-output" class="terminal-log h-80 overflow-y-auto rounded-xl bg-black border border-slate-800 p-4 text-xs text-emerald-400 whitespace-pre-wrap"></div>
+        <form onsubmit="submitTerminal(event)" class="flex gap-2">
+          <span id="term-cwd" class="px-3 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-sky-400 font-mono truncate max-w-xs">$</span>
+          <input id="term-input" autocomplete="off" placeholder="Enter command (e.g. python devhub.py version, dir, ls, git status)..." class="flex-1 rounded-xl bg-slate-950 border border-slate-700 px-4 py-2 text-sm text-white font-mono focus:outline-none focus:border-blue-500" />
+          <button type="submit" class="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold">Execute</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- PANEL 4: Embedded API Execution Studio -->
+    <section id="panel-apistudio" class="hidden space-y-4">
+      <div class="glass rounded-2xl p-6 space-y-4">
+        <h2 class="text-xl font-bold text-white">Embedded API Execution Studio</h2>
+        <p class="text-xs text-slate-400">Execute live HTTP/REST/GraphQL requests through <code>/api/v1/api-studio/execute</code> with latency timing and header inspection.</p>
+        <div class="flex flex-col md:flex-row gap-2">
+          <select id="api-method" class="rounded-xl bg-slate-950 border border-slate-700 px-3 py-2.5 text-sm font-semibold text-amber-400">
+            <option>GET</option><option>POST</option><option>PUT</option><option>PATCH</option><option>DELETE</option>
+          </select>
+          <input id="api-url" value="http://127.0.0.1:7000/api/v1/status" class="flex-1 rounded-xl bg-slate-950 border border-slate-700 px-4 py-2.5 text-sm text-white font-mono" />
+          <button onclick="executeApiCall()" class="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold">Send Request</button>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs text-slate-400 mb-1">Request Headers (JSON)</label>
+            <textarea id="api-headers" rows="3" class="w-full rounded-xl bg-slate-950 border border-slate-700 p-3 text-xs text-slate-200 font-mono">{"Accept": "application/json"}</textarea>
+          </div>
+          <div>
+            <label class="block text-xs text-slate-400 mb-1">Request Body (JSON / Raw)</label>
+            <textarea id="api-body" rows="3" placeholder='{"key": "value"}' class="w-full rounded-xl bg-slate-950 border border-slate-700 p-3 text-xs text-slate-200 font-mono"></textarea>
+          </div>
+        </div>
+        <div id="api-meta" class="hidden flex flex-wrap gap-3 text-xs"></div>
+        <pre id="api-response" class="hidden max-h-80 overflow-auto rounded-xl bg-slate-950 border border-slate-800 p-4 text-xs text-sky-300"></pre>
+      </div>
+    </section>
+
+    <!-- PANEL 5: Universal Wiki & 60+ Registry -->
+    <section id="panel-wiki" class="hidden space-y-4">
+      <div class="glass rounded-2xl p-5 flex flex-col md:flex-row gap-3">
+        <input id="wiki-search" oninput="loadWikiProfiles()" placeholder="Search 60+ Universal Wiki 10-point profiles (e.g. rust, pgvector, ollama, nextjs, helm)..." class="flex-1 rounded-xl bg-slate-950 border border-slate-700 px-4 py-2.5 text-sm text-white" />
+        <span id="wiki-count" class="px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-xs text-sky-400 font-semibold"></span>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div id="wiki-list" class="glass rounded-2xl p-4 max-h-[540px] overflow-y-auto space-y-2"></div>
+        <div class="lg:col-span-2 glass rounded-2xl p-6 max-h-[540px] overflow-y-auto">
+          <pre id="wiki-viewer" class="text-xs text-slate-200 whitespace-pre-wrap font-mono">Select any technology profile from the left to view its full 10-Point UNIFORGE Wiki documentation.</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- PANEL 6: Official Plugins & Paid Marketplace -->
+    <section id="panel-plugins" class="hidden space-y-6">
+      <div class="glass rounded-2xl p-6 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <h2 class="text-xl font-bold text-white">Official Plugins (`@uniforge/plugin-sdk` v1.0.0)</h2>
+            <p class="text-xs text-slate-400">Zero-trust capability-isolated extensions with live studio command execution.</p>
+          </div>
+          <span class="px-3 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-semibold">5 Official Plugins Active</span>
+        </div>
+        <div id="official-plugins-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+        <pre id="plugin-exec-output" class="hidden rounded-xl bg-slate-950 border border-slate-800 p-4 text-xs text-emerald-300 overflow-x-auto"></pre>
+      </div>
+
+      <div class="glass rounded-2xl p-6 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <h2 class="text-xl font-bold text-white">UNIFORGE Plugin Marketplace (70/30 Developer Rev-Share)</h2>
+            <p class="text-xs text-slate-400">Verified free, paid monthly, and enterprise extensions with HMAC-SHA256 cryptographic license keys.</p>
+          </div>
+          <a href="https://github.com/sponsors/uniforge-os" target="_blank" class="px-3 py-1.5 rounded-lg bg-pink-600/20 text-pink-300 border border-pink-500/30 text-xs font-semibold">GitHub Sponsors</a>
+        </div>
+        <div id="marketplace-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+        <pre id="marketplace-checkout-output" class="hidden rounded-xl bg-slate-950 border border-slate-800 p-4 text-xs text-amber-300 overflow-x-auto"></pre>
+      </div>
+    </section>
+
+    <!-- PANEL 7: UNIFORGE Cloud Multi-Tenant Control Plane -->
+    <section id="panel-cloud" class="hidden space-y-6">
+      <div class="glass rounded-2xl p-6 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h2 class="text-xl font-bold text-white">UNIFORGE Cloud — Multi-Tenant Hosted Platform</h2>
+            <p class="text-xs text-slate-400">PostgreSQL RLS + Kubernetes NetworkPolicy + SAML 2.0 SSO + SOC 2 Compliance Controls.</p>
+          </div>
+          <div class="flex gap-2">
+            <input id="new-tenant-name" placeholder="New Organization Name..." class="rounded-xl bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white" />
+            <select id="new-tenant-tier" class="rounded-xl bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white">
+              <option value="pro">Cloud Pro (\$29/mo)</option>
+              <option value="team">Team</option>
+              <option value="enterprise">Enterprise (SSO + VPC)</option>
+            </select>
+            <button onclick="provisionTenant()" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-xs font-semibold text-white">Provision Tenant</button>
+          </div>
+        </div>
+        <div id="cloud-tenants-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+      </div>
+    </section>
+
+    <!-- PANEL 8: Project Unifier & Zero-Trust Sandbox -->
+    <section id="panel-unifier" class="hidden space-y-6">
+      <div class="glass rounded-2xl p-6">
+        <h2 class="text-xl font-bold text-white mb-2">GitHub / Local Project Unifier</h2>
+        <div class="flex gap-3">
+          <input id="unify-input" value="https://github.com/vercel/next.js" class="flex-1 rounded-xl bg-slate-950 border border-slate-700 px-4 py-2.5 text-sm text-white" />
+          <button onclick="runUnifier()" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm">Analyze & Unify</button>
+        </div>
+        <pre id="unify-output" class="mt-4 hidden bg-slate-950 border border-slate-800 rounded-xl p-4 text-xs text-emerald-300 overflow-x-auto"></pre>
+      </div>
+      <div class="glass rounded-2xl p-6">
+        <h2 class="text-xl font-bold text-white mb-2">Zero-Trust Container Sandbox</h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+          <select id="sb-lang" class="rounded-xl bg-slate-950 border border-slate-700 px-3 py-2 text-sm text-white">
+            <option value="python">Python 3.11 (Alpine)</option>
+            <option value="node">Node.js 20 (Alpine)</option>
+            <option value="bash">POSIX Shell (Alpine)</option>
+          </select>
+          <input id="sb-code" value="print('Verified inside isolated UNIFORGE sandbox!')" class="md:col-span-2 rounded-xl bg-slate-950 border border-slate-700 px-3 py-2 text-sm text-white font-mono" />
+          <button onclick="runSandbox()" class="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-sm">Preview Hardened Spec</button>
+        </div>
+        <pre id="sb-output" class="mt-4 hidden bg-slate-950 border border-slate-800 rounded-xl p-4 text-xs text-purple-300 overflow-x-auto"></pre>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const TABS = ['brain', 'editor', 'terminal', 'apistudio', 'wiki', 'plugins', 'cloud', 'unifier'];
+    let monacoEditor = null;
+    let termSocket = null;
+    let termSessionId = '';
+
+    const EDITOR_SAMPLES = {
+      python: `from fastapi import FastAPI\n\napp = FastAPI(title="UNIFORGE Service")\n\n@app.get("/health")\nasync def health():\n    return {"status": "operational", "os": "UNIFORGE"}\n`,
+      typescript: `import { definePlugin } from '@uniforge/plugin-sdk';\n\nexport const demo = definePlugin({\n  manifest: { schemaVersion: '1.0.0', id: '@uniforge/demo', name: 'Demo', version: '1.0.0', description: 'Demo', category: 'devops', author: { name: 'UNIFORGE' }, license: 'Apache-2.0', permissions: ['storage:read'], engines: { uniforge: '>=1.0.0' } },\n  activate(ctx) {\n    ctx.log('Plugin activated!');\n  }\n});\n`,
+      json: `{\n  "schemaVersion": "1.0.0",\n  "id": "@uniforge/plugin-docker-manager",\n  "permissions": ["docker:control", "storage:read"]\n}\n`,
+      sql: `select id, content, 1 - (embedding <=> $1::vector) as score\nfrom documents\norder by embedding <=> $1::vector\nlimit 10;\n`
+    };
+
+    function switchTab(tab) {
+      TABS.forEach(t => {
+        document.getElementById('panel-' + t).classList.toggle('hidden', t !== tab);
+        document.getElementById('tab-' + t).className = t === tab
+          ? 'tab-btn px-3.5 py-2 rounded-lg text-sm font-semibold bg-blue-600 text-white'
+          : 'tab-btn px-3.5 py-2 rounded-lg text-sm font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700';
+      });
+      if (tab === 'editor' && !monacoEditor) initMonaco();
+      if (tab === 'terminal' && !termSocket) connectTerminalWs();
+    }
+
+    function setExample(text) {
+      document.getElementById('idea-input').value = text;
+      runArchitect();
+    }
+
+    async function init() {
+      const status = await fetch('/api/v1/status').then(r => r.json());
+      document.getElementById('status-badges').innerHTML = `
+        <span class="px-3 py-1.5 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold">${status.status}</span>
+        <span class="px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 border border-slate-700">${status.registered_technologies} Techs</span>
+        <span class="px-3 py-1.5 rounded-lg bg-slate-800 text-sky-300 border border-slate-700">${status.wiki_profiles_count} Wiki Profiles</span>
+        <span class="px-3 py-1.5 rounded-lg bg-slate-800 text-purple-300 border border-slate-700">${status.official_plugins_count} Official Plugins</span>
+        <span class="px-3 py-1.5 rounded-lg bg-slate-800 text-amber-300 border border-slate-700">${status.cloud_tenants_count} Cloud Tenants</span>
+      `;
+      runArchitect();
+      loadWikiProfiles();
+      loadPluginsAndMarketplace();
+      loadCloudOverview();
+    }
+
+    async function runArchitect() {
+      const prompt = document.getElementById('idea-input').value;
+      const data = await fetch('/api/v1/orchestrate/architect', {
+        method: 'POST', headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ prompt })
+      }).then(r => r.json());
+      const out = document.getElementById('blueprint-output');
+      out.classList.remove('hidden');
+      out.innerHTML = `
+        <div class="glass rounded-2xl p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-bold text-white">Justified Minimalist Architecture (${data.selected_stack_count} Technologies)</h3>
+            <span class="text-xs text-emerald-400">${data.deployment_mode}</span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+            ${data.selected_technologies.map(t => `
+              <div class="p-4 rounded-xl bg-slate-900 border border-slate-800">
+                <div class="flex justify-between items-center mb-1">
+                  <span class="font-bold text-white text-sm">${t.name}</span>
+                  <span class="text-[11px] px-2 py-0.5 rounded bg-blue-500/10 text-blue-300">${t.role}</span>
+                </div>
+                <p class="text-xs text-slate-400 mb-2">${t.reason}</p>
+                <div class="text-[11px] text-slate-500 font-mono">${t.hub_module}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    // --- Monaco LSP ---
+    function initMonaco() {
+      if (typeof require === 'undefined') {
+        document.getElementById('monaco-container').innerHTML = `<textarea id="fallback-editor" class="w-full h-full bg-slate-950 text-slate-100 p-4 font-mono text-xs">${EDITOR_SAMPLES.python}</textarea>`;
+        return;
+      }
+      require.config({ paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.47.0/min/vs' } });
+      require(['vs/editor/editor.main'], function () {
+        monacoEditor = monaco.editor.create(document.getElementById('monaco-container'), {
+          value: EDITOR_SAMPLES.python,
+          language: 'python',
+          theme: 'vs-dark',
+          automaticLayout: true,
+          minimap: { enabled: false },
+          fontSize: 13
+        });
+      });
+    }
+
+    function getEditorValue() {
+      if (monacoEditor) return monacoEditor.getValue();
+      const fb = document.getElementById('fallback-editor');
+      return fb ? fb.value : EDITOR_SAMPLES.python;
+    }
+
+    function setEditorValue(val, lang) {
+      if (monacoEditor) {
+        monaco.editor.setModelLanguage(monacoEditor.getModel(), lang);
+        monacoEditor.setValue(val);
+      } else {
+        const fb = document.getElementById('fallback-editor');
+        if (fb) fb.value = val;
+      }
+    }
+
+    function switchEditorLanguage() {
+      const lang = document.getElementById('editor-lang').value;
+      setEditorValue(EDITOR_SAMPLES[lang] || '', lang);
+    }
+
+    async function runLspDiagnostics() {
+      const language = document.getElementById('editor-lang').value;
+      const code = getEditorValue();
+      const res = await fetch('/api/v1/lsp/diagnostics', {
+        method: 'POST', headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ language, code })
+      }).then(r => r.json());
+      document.getElementById('lsp-diag-output').textContent = JSON.stringify(res, null, 2);
+      if (monacoEditor && typeof monaco !== 'undefined') {
+        const markers = (res.diagnostics || []).map(d => ({
+          startLineNumber: d.startLineNumber,
+          startColumn: d.startColumn,
+          endLineNumber: d.endLineNumber,
+          endColumn: d.endColumn,
+          message: d.message,
+          severity: d.severity === 'error' ? monaco.MarkerSeverity.Error : monaco.MarkerSeverity.Warning
+        }));
+        monaco.editor.setModelMarkers(monacoEditor.getModel(), 'uniforge-lsp', markers);
+      }
+    }
+
+    async function runLspFormat() {
+      const language = document.getElementById('editor-lang').value;
+      const res = await fetch('/api/v1/lsp/format', {
+        method: 'POST', headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ language, code: getEditorValue() })
+      }).then(r => r.json());
+      if (res.ok) setEditorValue(res.formatted, language);
+      document.getElementById('lsp-diag-output').textContent = JSON.stringify(res, null, 2);
+    }
+
+    async function runEditorInSandbox() {
+      const language = document.getElementById('editor-lang').value === 'typescript' ? 'node' : 'python';
+      const res = await fetch('/api/v1/sandbox/execute', {
+        method: 'POST', headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ language, code: getEditorValue(), dry_run: true })
+      }).then(r => r.json());
+      document.getElementById('editor-sb-output').textContent = JSON.stringify(res, null, 2);
+    }
+
+    // --- Live PTY Terminal ---
+    function appendTerm(text) {
+      const box = document.getElementById('term-output');
+      box.textContent += text;
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function clearTerminal() {
+      document.getElementById('term-output').textContent = '';
+    }
+
+    function connectTerminalWs() {
+      const proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
+      try {
+        termSocket = new WebSocket(`${proto}//${location.host}/ws/terminal`);
+        termSocket.onopen = () => {
+          document.getElementById('term-ws-status').textContent = 'WebSocket PTY Live';
+          document.getElementById('term-ws-status').className = 'px-2.5 py-1 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30';
+        };
+        termSocket.onmessage = (ev) => {
+          const msg = JSON.parse(ev.data);
+          if (msg.session_id) termSessionId = msg.session_id;
+          if (msg.cwd) document.getElementById('term-cwd').textContent = msg.cwd;
+          if (msg.type === 'ready') {
+            appendTerm(`[UNIFORGE PTY ${msg.session_id}] ${msg.banner}\n`);
+          } else {
+            if (msg.stdout) appendTerm(msg.stdout);
+            if (msg.stderr) appendTerm(msg.stderr);
+            appendTerm(`[exit=${msg.exit_code} | ${msg.duration_ms}ms]\n\n`);
+          }
+        };
+        termSocket.onerror = () => {
+          document.getElementById('term-ws-status').textContent = 'REST Terminal Mode';
+          termSocket = null;
+        };
+      } catch {
+        document.getElementById('term-ws-status').textContent = 'REST Terminal Mode';
+      }
+    }
+
+    async function runQuickTerm(cmd) {
+      document.getElementById('term-input').value = cmd;
+      await submitTerminal();
+    }
+
+    async function submitTerminal(ev) {
+      if (ev) ev.preventDefault();
+      const input = document.getElementById('term-input');
+      const cmd = input.value.trim();
+      if (!cmd) return;
+      input.value = '';
+      appendTerm(`$ ${cmd}\n`);
+      if (termSocket && termSocket.readyState === WebSocket.OPEN) {
+        termSocket.send(JSON.stringify({ command: cmd }));
+      } else {
+        const res = await fetch('/api/v1/terminal/exec', {
+          method: 'POST', headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ command: cmd, session_id: termSessionId })
+        }).then(r => r.json());
+        termSessionId = res.session_id;
+        document.getElementById('term-cwd').textContent = res.cwd;
+        if (res.stdout) appendTerm(res.stdout);
+        if (res.stderr) appendTerm(res.stderr);
+        appendTerm(`[exit=${res.exit_code} | ${res.duration_ms}ms]\n\n`);
+      }
+    }
+
+    // --- API Execution Studio ---
+    async function executeApiCall() {
+      const method = document.getElementById('api-method').value;
+      const url = document.getElementById('api-url').value;
+      let headers = {};
+      try { headers = JSON.parse(document.getElementById('api-headers').value || '{}'); } catch {}
+      const body = document.getElementById('api-body').value || null;
+      const res = await fetch('/api/v1/api-studio/execute', {
+        method: 'POST', headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ url, method, headers, body })
+      }).then(r => r.json());
+      const meta = document.getElementById('api-meta');
+      meta.classList.remove('hidden');
+      meta.innerHTML = `
+        <span class="px-3 py-1 rounded-lg ${res.ok ? 'bg-emerald-500/15 text-emerald-400' : 'bg-rose-500/15 text-rose-400'} font-semibold">HTTP ${res.status_code} ${res.reason || ''}</span>
+        <span class="px-3 py-1 rounded-lg bg-slate-800 text-sky-300">${res.duration_ms} ms</span>
+        <span class="px-3 py-1 rounded-lg bg-slate-800 text-slate-300">${res.size_bytes || 0} bytes</span>
+      `;
+      const out = document.getElementById('api-response');
+      out.classList.remove('hidden');
+      out.textContent = res.json ? JSON.stringify(res.json, null, 2) : (res.body || res.error || '');
+    }
+
+    // --- Universal Wiki ---
+    async function loadWikiProfiles() {
+      const q = document.getElementById('wiki-search').value;
+      const data = await fetch(`/api/v1/wiki/profiles?q=${encodeURIComponent(q)}`).then(r => r.json());
+      document.getElementById('wiki-count').textContent = `${data.total} Profiles`;
+      document.getElementById('wiki-list').innerHTML = data.profiles.map(p => `
+        <button onclick="openWikiProfile('${p.slug}')" class="w-full text-left p-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 transition">
+          <div class="text-xs font-bold text-white">${p.title.replace(' — UNIFORGE Technology Profile', '')}</div>
+          <div class="text-[11px] text-slate-400 font-mono mt-0.5">${p.slug}</div>
+        </button>
+      `).join('');
+    }
+
+    async function openWikiProfile(slug) {
+      const data = await fetch(`/api/v1/wiki/profiles/${encodeURIComponent(slug)}`).then(r => r.json());
+      document.getElementById('wiki-viewer').textContent = data.markdown || data.error;
+    }
+
+    // --- Plugins & Marketplace ---
+    async function loadPluginsAndMarketplace() {
+      const pData = await fetch('/api/v1/plugins').then(r => r.json());
+      document.getElementById('official-plugins-grid').innerHTML = pData.plugins.map(p => {
+        const m = p.manifest;
+        const firstCmd = (m.commands && m.commands[0]) ? m.commands[0].id : 'status';
+        return `
+          <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 flex flex-col justify-between gap-3">
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-bold text-white text-sm">${m.name}</span>
+                <span class="text-[11px] px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400">${m.category}</span>
+              </div>
+              <div class="text-[11px] text-sky-400 font-mono mb-2">${m.id}@${m.version}</div>
+              <p class="text-xs text-slate-400">${m.description}</p>
+            </div>
+            <button onclick="execOfficialPlugin('${m.id}', '${firstCmd}')" class="w-full py-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-xs font-semibold text-white transition">Run: ${firstCmd}()</button>
+          </div>
+        `;
+      }).join('');
+
+      const mData = await fetch('/api/v1/marketplace/catalog').then(r => r.json());
+      document.getElementById('marketplace-grid').innerHTML = mData.plugins.map(p => `
+        <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 flex flex-col justify-between gap-3">
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <span class="font-bold text-white text-sm">${p.name}</span>
+              <span class="text-[11px] px-2 py-0.5 rounded ${p.priceUsdMonthly > 0 ? 'bg-amber-500/15 text-amber-300' : 'bg-emerald-500/15 text-emerald-400'}">${p.priceUsdMonthly > 0 ? '$' + p.priceUsdMonthly + '/mo' : 'FREE'}</span>
+            </div>
+            <p class="text-xs text-slate-400 mb-2">${p.description}</p>
+            <div class="text-[11px] text-slate-500">By ${p.author} &bull; ★ ${p.rating} &bull; ${p.downloads.toLocaleString()} installs</div>
+          </div>
+          <button onclick="checkoutPlugin('${p.id}')" class="w-full py-2 rounded-lg ${p.priceUsdMonthly > 0 ? 'bg-amber-600 hover:bg-amber-500' : 'bg-emerald-700 hover:bg-emerald-600'} text-xs font-semibold text-white">${p.priceUsdMonthly > 0 ? 'Checkout & Issue License (70/30)' : 'Install Official Plugin'}</button>
+        </div>
+      `).join('');
+    }
+
+    async function execOfficialPlugin(plugin_id, command_id) {
+      const res = await fetch('/api/v1/plugins/execute', {
+        method: 'POST', headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ plugin_id, command_id, payload: {} })
+      }).then(r => r.json());
+      const out = document.getElementById('plugin-exec-output');
+      out.classList.remove('hidden');
+      out.textContent = JSON.stringify(res, null, 2);
+    }
+
+    async function checkoutPlugin(plugin_id) {
+      const res = await fetch('/api/v1/marketplace/checkout', {
+        method: 'POST', headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ tenant_id: 'tnt-uniforge-core', plugin_id })
+      }).then(r => r.json());
+      const out = document.getElementById('marketplace-checkout-output');
+      out.classList.remove('hidden');
+      out.textContent = JSON.stringify(res, null, 2);
+    }
+
+    // --- UNIFORGE Cloud ---
+    async function loadCloudOverview() {
+      const data = await fetch('/api/v1/cloud/overview').then(r => r.json());
+      document.getElementById('cloud-tenants-grid').innerHTML = data.tenants.map(t => `
+        <div class="p-5 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-white">${t.organization_name}</span>
+            <span class="text-xs px-2.5 py-0.5 rounded bg-blue-500/15 text-blue-300 uppercase">${t.plan_tier}</span>
+          </div>
+          <div class="text-xs text-slate-400">SSO: ${t.sso_provider} &bull; Region: ${t.region} &bull; RLS: ${t.rls_enforced ? 'ENFORCED' : 'OFF'}</div>
+          <div class="text-xs text-slate-500">Quota: ${t.quotas.max_workspaces} workspaces | ${t.quotas.cpu_millicores}m CPU | ${t.quotas.memory_mb}MB RAM</div>
+          <div class="pt-2 space-y-1">
+            ${t.workspaces.map(w => `<div class="text-xs font-mono text-emerald-400 bg-slate-950 px-3 py-1.5 rounded border border-slate-800">${w.subdomain} [${w.status}]</div>`).join('')}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function provisionTenant() {
+      const organization_name = document.getElementById('new-tenant-name').value.trim();
+      if (!organization_name) return;
+      const plan_tier = document.getElementById('new-tenant-tier').value;
+      await fetch('/api/v1/cloud/tenants', {
+        method: 'POST', headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ organization_name, plan_tier })
+      });
+      document.getElementById('new-tenant-name').value = '';
+      loadCloudOverview();
+    }
+
+    // --- Unifier & Sandbox ---
+    async function runUnifier() {
+      const target = document.getElementById('unify-input').value;
+      const res = await fetch('/api/v1/projects/unify', {
+        method: 'POST', headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ target })
+      }).then(r => r.json());
+      const out = document.getElementById('unify-output');
+      out.classList.remove('hidden');
+      out.textContent = JSON.stringify(res, null, 2);
+    }
+
+    async function runSandbox() {
+      const language = document.getElementById('sb-lang').value;
+      const code = document.getElementById('sb-code').value;
+      const res = await fetch('/api/v1/sandbox/execute', {
+        method: 'POST', headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ language, code, dry_run: true })
+      }).then(r => r.json());
+      const out = document.getElementById('sb-output');
+      out.classList.remove('hidden');
+      out.textContent = JSON.stringify(res, null, 2);
+    }
+
+    init();
+  </script>
+</body>
+</html>

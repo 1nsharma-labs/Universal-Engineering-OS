@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: uniforge-tenant-quota
+spec:
+  hard:
+    requests.cpu: {{ .Values.multiTenancy.defaultTenantQuota.cpu | quote }}
+    requests.memory: {{ .Values.multiTenancy.defaultTenantQuota.memory | quote }}
+    pods: {{ .Values.multiTenancy.defaultTenantQuota.pods | quote }}
+

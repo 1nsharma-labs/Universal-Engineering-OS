@@ -1,0 +1,5 @@
+micronaut:
+  application:
+    name: universal-micronaut-app
+  server:
+    port: 8082

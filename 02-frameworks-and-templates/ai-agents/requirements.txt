@@ -1,0 +1,10 @@
+langchain==0.1.13
+langchain-community==0.0.29
+langchain-core==0.1.33
+langchain-openai==0.1.0
+langgraph==0.0.30
+llama-index==0.10.23
+crewai==0.22.5
+pyautogen==0.2.19
+pydantic==2.6.4
+python-dotenv==1.0.1

@@ -1,0 +1,1856 @@
+{
+  "version": "2026.3",
+  "name": "Universal-Dev-Hub Technology Registry",
+  "architecture_mode": "Local + Self-Hosted Cloud (Hybrid Sync)",
+  "sources": [
+    "npm Registry",
+    "PyPI",
+    "Maven Central",
+    "crates.io",
+    "Packagist",
+    "NuGet",
+    "RubyGems",
+    "Go Modules",
+    "GitHub",
+    "Official Documentation"
+  ],
+  "domains": [
+    {
+      "id": "01-frontend",
+      "number": "01",
+      "name": "Frontend Engineering",
+      "summary": "Web UI frameworks, SSR, meta-frameworks, design systems"
+    },
+    {
+      "id": "02-backend",
+      "number": "02",
+      "name": "Backend Engineering",
+      "summary": "APIs, microservices, business logic, multi-language servers"
+    },
+    {
+      "id": "03-databases",
+      "number": "03",
+      "name": "Databases & Storage",
+      "summary": "SQL, NoSQL, Vector DBs, Object Storage, Caching, Search"
+    },
+    {
+      "id": "04-ai-ml",
+      "number": "04",
+      "name": "AI & Machine Learning",
+      "summary": "Local/Cloud LLMs, Agents, RAG, Vision, Training & Inference"
+    },
+    {
+      "id": "05-creative",
+      "number": "05",
+      "name": "Creative Coding & Graphics",
+      "summary": "WebGL, GLSL, 3D Scenes, Generative Art, WebGPU"
+    },
+    {
+      "id": "06-mobile",
+      "number": "06",
+      "name": "Mobile Development",
+      "summary": "Cross-platform and native iOS/Android engineering"
+    },
+    {
+      "id": "07-cloud-devops",
+      "number": "07",
+      "name": "Cloud & DevOps",
+      "summary": "Containers, Orchestration, IaC, CI/CD, Hybrid Cloud"
+    },
+    {
+      "id": "08-security",
+      "number": "08",
+      "name": "Security Engineering",
+      "summary": "Auth, OIDC, Sandboxing, SAST/DAST, Secret Scanning"
+    },
+    {
+      "id": "09-networking",
+      "number": "09",
+      "name": "Networking & Protocols",
+      "summary": "REST, GraphQL, gRPC, WebSockets, WebRTC, MQTT, Tailscale"
+    },
+    {
+      "id": "10-games",
+      "number": "10",
+      "name": "Game & Simulation",
+      "summary": "2D/3D Game engines, Physics engines, Interactive simulations"
+    },
+    {
+      "id": "11-data-eng",
+      "number": "11",
+      "name": "Data Engineering",
+      "summary": "Streaming, Batch ETL, Dataframes, Analytics & Visualization"
+    },
+    {
+      "id": "12-embedded",
+      "number": "12",
+      "name": "Embedded & Hardware",
+      "summary": "Microcontrollers, Firmware, RTOS, IoT, HDL"
+    },
+    {
+      "id": "13-automation",
+      "number": "13",
+      "name": "Automation & Workflow",
+      "summary": "Low-code pipelines, Browser automation, DAG schedulers"
+    },
+    {
+      "id": "14-systems",
+      "number": "14",
+      "name": "Systems & Language Engineering",
+      "summary": "Compilers, WASM, Low-level systems, LSP, Parsers"
+    },
+    {
+      "id": "15-testing",
+      "number": "15",
+      "name": "Testing & Quality Engineering",
+      "summary": "Unit, Integration, E2E, Load Testing, Static Quality"
+    }
+  ],
+  "hidden_stack": [
+    {
+      "layer": "Operating Systems",
+      "tools": [
+        "Linux",
+        "Windows (WSL2)",
+        "macOS"
+      ],
+      "role": "Host kernel, namespaces, cgroups, filesystem isolation"
+    },
+    {
+      "layer": "Runtime Engines",
+      "tools": [
+        "Node.js",
+        "JVM (Temurin 8/11/17/21)",
+        "CPython 3.11+",
+        ".NET",
+        "Go",
+        "Rust"
+      ],
+      "role": "Managed and native code execution"
+    },
+    {
+      "layer": "Compilers",
+      "tools": [
+        "GCC",
+        "Clang",
+        "LLVM",
+        "rustc",
+        "javac",
+        "tsc"
+      ],
+      "role": "Ahead-of-time & JIT compilation"
+    },
+    {
+      "layer": "Package Managers",
+      "tools": [
+        "npm",
+        "pnpm",
+        "pip",
+        "uv",
+        "Maven",
+        "Gradle",
+        "Cargo",
+        "Composer"
+      ],
+      "role": "Dependency graph resolution & lockfiles"
+    },
+    {
+      "layer": "Build Systems",
+      "tools": [
+        "Vite",
+        "Webpack",
+        "Gradle",
+        "CMake",
+        "Turborepo"
+      ],
+      "role": "Asset bundling, incremental builds, tree-shaking"
+    },
+    {
+      "layer": "Containerization",
+      "tools": [
+        "Docker",
+        "OCI",
+        "Buildx",
+        "Containerd"
+      ],
+      "role": "Immutable reproducible runtime packaging"
+    },
+    {
+      "layer": "Infrastructure",
+      "tools": [
+        "Terraform",
+        "Kubernetes (K3s)",
+        "Nginx",
+        "Tailscale Mesh"
+      ],
+      "role": "Declarative local and self-hosted cloud topology"
+    },
+    {
+      "layer": "Authentication",
+      "tools": [
+        "OAuth 2.1",
+        "OpenID Connect",
+        "JWT",
+        "RBAC",
+        "Passkeys"
+      ],
+      "role": "Identity, federation, and fine-grained authorization"
+    },
+    {
+      "layer": "Observability",
+      "tools": [
+        "OpenTelemetry",
+        "Prometheus",
+        "Grafana",
+        "Langfuse"
+      ],
+      "role": "Unified metrics, distributed traces, logs, and LLM costs"
+    },
+    {
+      "layer": "Security & Sandboxing",
+      "tools": [
+        "Rootless Containers",
+        "Seccomp",
+        "Trivy",
+        "Gitleaks",
+        "Semgrep"
+      ],
+      "role": "Isolated user-code execution & continuous auditing"
+    }
+  ],
+  "technologies": [
+    {
+      "id": "nextjs",
+      "name": "Next.js",
+      "type": "Full-Stack React Framework",
+      "domain_id": "01-frontend",
+      "language": "TypeScript / JavaScript",
+      "dependencies": [
+        "react",
+        "react-dom"
+      ],
+      "documentation_url": "https://nextjs.org/docs",
+      "version": "14.x / 15.x",
+      "license": "MIT",
+      "runtime": "Node.js / Edge / Browser",
+      "security_status": "verified",
+      "alternatives": [
+        "Remix",
+        "Astro",
+        "SvelteKit"
+      ],
+      "integrations": [
+        "Tailwind CSS",
+        "PostgreSQL",
+        "FastAPI",
+        "Three.js"
+      ],
+      "package_source": "npm Registry",
+      "hub_module": "02-frameworks-and-templates/react-and-frontend/nextjs-app-router"
+    },
+    {
+      "id": "react-vite",
+      "name": "React + Vite",
+      "type": "UI Library & Bundler",
+      "domain_id": "01-frontend",
+      "language": "TypeScript / JavaScript",
+      "dependencies": [
+        "vite",
+        "zustand",
+        "@tanstack/react-query"
+      ],
+      "documentation_url": "https://react.dev",
+      "version": "18.x / 19.x",
+      "license": "MIT",
+      "runtime": "Browser",
+      "security_status": "verified",
+      "alternatives": [
+        "Vue 3",
+        "Svelte",
+        "SolidJS"
+      ],
+      "integrations": [
+        "Tailwind CSS",
+        "Shadcn/UI",
+        "REST",
+        "WebSocket"
+      ],
+      "package_source": "npm Registry",
+      "hub_module": "02-frameworks-and-templates/react-and-frontend/vite-react-ts"
+    },
+    {
+      "id": "vue3",
+      "name": "Vue 3",
+      "type": "Progressive UI Framework",
+      "domain_id": "01-frontend",
+      "language": "TypeScript / JavaScript",
+      "dependencies": [
+        "pinia",
+        "vite"
+      ],
+      "documentation_url": "https://vuejs.org",
+      "version": "3.4+",
+      "license": "MIT",
+      "runtime": "Browser",
+      "security_status": "verified",
+      "alternatives": [
+        "React",
+        "Svelte",
+        "Angular"
+      ],
+      "integrations": [
+        "Vite",
+        "Tailwind CSS"
+      ],
+      "package_source": "npm Registry",
+      "hub_module": "02-frameworks-and-templates/react-and-frontend/vue-starter"
+    },
+    {
+      "id": "svelte",
+      "name": "Svelte",
+      "type": "Compiled UI Framework",
+      "domain_id": "01-frontend",
+      "language": "TypeScript / JavaScript",
+      "dependencies": [
+        "vite"
+      ],
+      "documentation_url": "https://svelte.dev",
+      "version": "4.x / 5.x",
+      "license": "MIT",
+      "runtime": "Browser",
+      "security_status": "verified",
+      "alternatives": [
+        "React",
+        "SolidJS",
+        "Qwik"
+      ],
+      "integrations": [
+        "Vite",
+        "Tailwind CSS"
+      ],
+      "package_source": "npm Registry",
+      "hub_module": "02-frameworks-and-templates/react-and-frontend/svelte-starter"
+    },
+    {
+      "id": "remix",
+      "name": "Remix",
+      "type": "Web-Standards Full-Stack Framework",
+      "domain_id": "01-frontend",
+      "language": "TypeScript",
+      "dependencies": [
+        "react",
+        "vite"
+      ],
+      "documentation_url": "https://remix.run/docs",
+      "version": "2.8+",
+      "license": "MIT",
+      "runtime": "Node.js / Edge",
+      "security_status": "verified",
+      "alternatives": [
+        "Next.js",
+        "SvelteKit"
+      ],
+      "integrations": [
+        "PostgreSQL",
+        "Tailwind CSS"
+      ],
+      "package_source": "npm Registry",
+      "hub_module": "02-frameworks-and-templates/react-and-frontend/remix-starter"
+    },
+    {
+      "id": "fastapi",
+      "name": "FastAPI",
+      "type": "Async Python API Framework",
+      "domain_id": "02-backend",
+      "language": "Python",
+      "dependencies": [
+        "uvicorn",
+        "pydantic",
+        "starlette"
+      ],
+      "documentation_url": "https://fastapi.tiangolo.com",
+      "version": "0.110+",
+      "license": "MIT",
+      "runtime": "CPython 3.11+",
+      "security_status": "verified",
+      "alternatives": [
+        "Django",
+        "Flask",
+        "Express"
+      ],
+      "integrations": [
+        "PyTorch",
+        "LangChain",
+        "PostgreSQL",
+        "Redis",
+        "OpenTelemetry"
+      ],
+      "package_source": "PyPI",
+      "hub_module": "02-frameworks-and-templates/backend-apis/fastapi-starter"
+    },
+    {
+      "id": "spring-boot",
+      "name": "Spring Boot 3",
+      "type": "Enterprise Java Framework",
+      "domain_id": "02-backend",
+      "language": "Java 21",
+      "dependencies": [
+        "spring-web",
+        "spring-actuator"
+      ],
+      "documentation_url": "https://spring.io/projects/spring-boot",
+      "version": "3.2+",
+      "license": "Apache-2.0",
+      "runtime": "JVM 21 / GraalVM",
+      "security_status": "verified",
+      "alternatives": [
+        "Quarkus",
+        "Micronaut"
+      ],
+      "integrations": [
+        "PostgreSQL",
+        "Kafka",
+        "Prometheus",
+        "Keycloak"
+      ],
+      "package_source": "Maven Central",
+      "hub_module": "02-frameworks-and-templates/java-ecosystem/spring-boot-starter"
+    },
+    {
+      "id": "quarkus",
+      "name": "Quarkus",
+      "type": "Cloud-Native Java Framework",
+      "domain_id": "02-backend",
+      "language": "Java 21",
+      "dependencies": [
+        "quarkus-resteasy-reactive"
+      ],
+      "documentation_url": "https://quarkus.io",
+      "version": "3.8+",
+      "license": "Apache-2.0",
+      "runtime": "JVM / GraalVM Native",
+      "security_status": "verified",
+      "alternatives": [
+        "Spring Boot",
+        "Micronaut"
+      ],
+      "integrations": [
+        "Kubernetes",
+        "Kafka",
+        "PostgreSQL"
+      ],
+      "package_source": "Maven Central",
+      "hub_module": "02-frameworks-and-templates/java-ecosystem/quarkus-starter"
+    },
+    {
+      "id": "go-fiber",
+      "name": "Go Fiber",
+      "type": "High-Throughput Go Web Framework",
+      "domain_id": "02-backend",
+      "language": "Go",
+      "dependencies": [
+        "fasthttp"
+      ],
+      "documentation_url": "https://docs.gofiber.io",
+      "version": "2.52+",
+      "license": "MIT",
+      "runtime": "Go Native Binary",
+      "security_status": "verified",
+      "alternatives": [
+        "Gin",
+        "Echo",
+        "Actix-Web"
+      ],
+      "integrations": [
+        "gRPC",
+        "PostgreSQL",
+        "Redis",
+        "Docker"
+      ],
+      "package_source": "Go Modules",
+      "hub_module": "02-frameworks-and-templates/backend-apis/go-fiber-starter"
+    },
+    {
+      "id": "nestjs",
+      "name": "NestJS",
+      "type": "Modular TypeScript Backend",
+      "domain_id": "02-backend",
+      "language": "TypeScript",
+      "dependencies": [
+        "express",
+        "rxjs"
+      ],
+      "documentation_url": "https://docs.nestjs.com",
+      "version": "10.3+",
+      "license": "MIT",
+      "runtime": "Node.js 20+",
+      "security_status": "verified",
+      "alternatives": [
+        "Express",
+        "Fastify"
+      ],
+      "integrations": [
+        "GraphQL",
+        "PostgreSQL",
+        "Redis",
+        "WebSockets"
+      ],
+      "package_source": "npm Registry",
+      "hub_module": "02-frameworks-and-templates/backend-apis/nestjs-starter"
+    },
+    {
+      "id": "django",
+      "name": "Django + DRF",
+      "type": "Batteries-Included Python Framework",
+      "domain_id": "02-backend",
+      "language": "Python",
+      "dependencies": [
+        "djangorestframework"
+      ],
+      "documentation_url": "https://docs.djangoproject.com",
+      "version": "5.0+",
+      "license": "BSD-3-Clause",
+      "runtime": "CPython 3.11+",
+      "security_status": "verified",
+      "alternatives": [
+        "FastAPI",
+        "Laravel",
+        "Rails"
+      ],
+      "integrations": [
+        "PostgreSQL",
+        "Celery",
+        "Redis"
+      ],
+      "package_source": "PyPI",
+      "hub_module": "02-frameworks-and-templates/backend-apis/django-starter"
+    },
+    {
+      "id": "laravel",
+      "name": "Laravel",
+      "type": "PHP Web Application Framework",
+      "domain_id": "02-backend",
+      "language": "PHP 8.3",
+      "dependencies": [
+        "composer"
+      ],
+      "documentation_url": "https://laravel.com/docs",
+      "version": "11.x",
+      "license": "MIT",
+      "runtime": "PHP-FPM / Swoole",
+      "security_status": "verified",
+      "alternatives": [
+        "Symfony",
+        "Django"
+      ],
+      "integrations": [
+        "MySQL",
+        "PostgreSQL",
+        "Redis"
+      ],
+      "package_source": "Packagist",
+      "hub_module": "02-frameworks-and-templates/backend-apis/laravel-starter"
+    },
+    {
+      "id": "postgresql-pgvector",
+      "name": "PostgreSQL + pgvector",
+      "type": "Relational & Vector Database",
+      "domain_id": "03-databases",
+      "language": "SQL",
+      "dependencies": [
+        "pgvector"
+      ],
+      "documentation_url": "https://www.postgresql.org/docs/",
+      "version": "16.x",
+      "license": "PostgreSQL License",
+      "runtime": "Docker / Linux",
+      "security_status": "verified",
+      "alternatives": [
+        "MySQL",
+        "Supabase",
+        "CockroachDB"
+      ],
+      "integrations": [
+        "FastAPI",
+        "Spring Boot",
+        "Next.js",
+        "Langfuse",
+        "n8n"
+      ],
+      "package_source": "Docker Hub",
+      "hub_module": "04-connectors-and-apis/docker-compose.infra.yml"
+    },
+    {
+      "id": "redis",
+      "name": "Redis",
+      "type": "In-Memory Cache & Queue",
+      "domain_id": "03-databases",
+      "language": "C",
+      "dependencies": [],
+      "documentation_url": "https://redis.io/docs/",
+      "version": "7.2",
+      "license": "RSALv2 / Valkey BSD",
+      "runtime": "Docker / Linux",
+      "security_status": "verified",
+      "alternatives": [
+        "Valkey",
+        "Memcached"
+      ],
+      "integrations": [
+        "FastAPI",
+        "Celery",
+        "BullMQ",
+        "Activepieces"
+      ],
+      "package_source": "Docker Hub",
+      "hub_module": "04-connectors-and-apis/docker-compose.infra.yml"
+    },
+    {
+      "id": "qdrant",
+      "name": "Qdrant",
+      "type": "High-Speed Vector Search Engine",
+      "domain_id": "03-databases",
+      "language": "Rust",
+      "dependencies": [],
+      "documentation_url": "https://qdrant.tech/documentation/",
+      "version": "1.8+",
+      "license": "Apache-2.0",
+      "runtime": "Docker / Native",
+      "security_status": "verified",
+      "alternatives": [
+        "Milvus",
+        "pgvector",
+        "Weaviate"
+      ],
+      "integrations": [
+        "LlamaIndex",
+        "LangChain",
+        "FastAPI"
+      ],
+      "package_source": "Docker Hub",
+      "hub_module": "04-connectors-and-apis/docker-compose.infra.yml"
+    },
+    {
+      "id": "milvus",
+      "name": "Milvus",
+      "type": "Distributed Vector Database",
+      "domain_id": "03-databases",
+      "language": "Go / C++",
+      "dependencies": [
+        "etcd",
+        "minio"
+      ],
+      "documentation_url": "https://milvus.io/docs",
+      "version": "2.4",
+      "license": "Apache-2.0",
+      "runtime": "Docker / Kubernetes",
+      "security_status": "verified",
+      "alternatives": [
+        "Qdrant",
+        "pgvector"
+      ],
+      "integrations": [
+        "PyTorch",
+        "HuggingFace",
+        "LangChain"
+      ],
+      "package_source": "Docker Hub",
+      "hub_module": "04-connectors-and-apis/docker-compose.infra.yml"
+    },
+    {
+      "id": "minio",
+      "name": "MinIO S3 Storage",
+      "type": "S3-Compatible Object Storage",
+      "domain_id": "03-databases",
+      "language": "Go",
+      "dependencies": [],
+      "documentation_url": "https://min.io/docs/",
+      "version": "2024+",
+      "license": "AGPL-3.0",
+      "runtime": "Docker / Linux",
+      "security_status": "verified",
+      "alternatives": [
+        "AWS S3",
+        "Cloudflare R2",
+        "GCS"
+      ],
+      "integrations": [
+        "boto3",
+        "Milvus",
+        "Video Uploads",
+        "Hybrid Sync"
+      ],
+      "package_source": "Docker Hub",
+      "hub_module": "04-connectors-and-apis/docker-compose.infra.yml"
+    },
+    {
+      "id": "mongodb",
+      "name": "MongoDB",
+      "type": "Document NoSQL Database",
+      "domain_id": "03-databases",
+      "language": "C++",
+      "dependencies": [],
+      "documentation_url": "https://www.mongodb.com/docs/",
+      "version": "7.0",
+      "license": "SSPL",
+      "runtime": "Docker / Linux",
+      "security_status": "verified",
+      "alternatives": [
+        "PostgreSQL JSONB",
+        "CouchDB"
+      ],
+      "integrations": [
+        "Node.js",
+        "Python",
+        "Go"
+      ],
+      "package_source": "Docker Hub",
+      "hub_module": "04-connectors-and-apis/docker-compose.infra.yml"
+    },
+    {
+      "id": "ollama",
+      "name": "Ollama",
+      "type": "Local LLM Inference Runtime",
+      "domain_id": "04-ai-ml",
+      "language": "Go / C++",
+      "dependencies": [
+        "llama.cpp"
+      ],
+      "documentation_url": "https://ollama.com",
+      "version": "Latest",
+      "license": "MIT",
+      "runtime": "Local GPU/CPU / Docker",
+      "security_status": "verified",
+      "alternatives": [
+        "vLLM",
+        "LocalAI",
+        "llama.cpp"
+      ],
+      "integrations": [
+        "LangChain",
+        "LangGraph",
+        "n8n",
+        "MCP"
+      ],
+      "package_source": "Docker Hub",
+      "hub_module": "03-ai-models-and-inference/docker-compose.models.yml"
+    },
+    {
+      "id": "vllm",
+      "name": "vLLM",
+      "type": "High-Throughput LLM Serving Engine",
+      "domain_id": "04-ai-ml",
+      "language": "Python / CUDA",
+      "dependencies": [
+        "pytorch"
+      ],
+      "documentation_url": "https://docs.vllm.ai",
+      "version": "Latest",
+      "license": "Apache-2.0",
+      "runtime": "CUDA GPU / Docker",
+      "security_status": "verified",
+      "alternatives": [
+        "Ollama",
+        "TGI",
+        "SGLang"
+      ],
+      "integrations": [
+        "OpenAI SDK",
+        "FastAPI",
+        "Langfuse"
+      ],
+      "package_source": "PyPI",
+      "hub_module": "03-ai-models-and-inference/docker-compose.models.yml"
+    },
+    {
+      "id": "langgraph",
+      "name": "LangGraph + LangChain",
+      "type": "Stateful Multi-Agent Orchestrator",
+      "domain_id": "04-ai-ml",
+      "language": "Python / TypeScript",
+      "dependencies": [
+        "langchain-core",
+        "pydantic"
+      ],
+      "documentation_url": "https://langchain-ai.github.io/langgraph/",
+      "version": "0.1+",
+      "license": "MIT",
+      "runtime": "Python / Node",
+      "security_status": "verified",
+      "alternatives": [
+        "CrewAI",
+        "AutoGen",
+        "LlamaIndex"
+      ],
+      "integrations": [
+        "Ollama",
+        "OpenAI",
+        "Anthropic",
+        "Gemini",
+        "MCP"
+      ],
+      "package_source": "PyPI",
+      "hub_module": "02-frameworks-and-templates/ai-agents/langgraph_workflow.py"
+    },
+    {
+      "id": "whisper",
+      "name": "Faster-Whisper",
+      "type": "Speech-to-Text Audio/Video AI",
+      "domain_id": "04-ai-ml",
+      "language": "Python / CTranslate2",
+      "dependencies": [
+        "ffmpeg"
+      ],
+      "documentation_url": "https://github.com/SYSTRAN/faster-whisper",
+      "version": "Large-v3",
+      "license": "MIT",
+      "runtime": "GPU/CPU Docker",
+      "security_status": "verified",
+      "alternatives": [
+        "Whisper.cpp",
+        "Deepgram"
+      ],
+      "integrations": [
+        "FastAPI",
+        "MinIO",
+        "Video Pipelines"
+      ],
+      "package_source": "PyPI",
+      "hub_module": "03-ai-models-and-inference/docker-compose.models.yml"
+    },
+    {
+      "id": "comfyui",
+      "name": "ComfyUI (Flux / SD)",
+      "type": "Node-Based Generative Vision Pipeline",
+      "domain_id": "04-ai-ml",
+      "language": "Python / PyTorch",
+      "dependencies": [
+        "pytorch"
+      ],
+      "documentation_url": "https://github.com/comfyanonymous/ComfyUI",
+      "version": "Latest",
+      "license": "GPL-3.0",
+      "runtime": "GPU Docker",
+      "security_status": "verified",
+      "alternatives": [
+        "Automatic1111",
+        "Diffusers"
+      ],
+      "integrations": [
+        "FastAPI",
+        "MinIO",
+        "Three.js"
+      ],
+      "package_source": "GitHub",
+      "hub_module": "03-ai-models-and-inference/docker-compose.models.yml"
+    },
+    {
+      "id": "mcp",
+      "name": "Model Context Protocol (MCP)",
+      "type": "Universal AI Tool Connectivity Standard",
+      "domain_id": "04-ai-ml",
+      "language": "TypeScript / Python",
+      "dependencies": [
+        "node",
+        "uv"
+      ],
+      "documentation_url": "https://modelcontextprotocol.io",
+      "version": "1.0",
+      "license": "MIT",
+      "runtime": "Stdio / SSE",
+      "security_status": "verified",
+      "alternatives": [
+        "OpenAPI Function Calling"
+      ],
+      "integrations": [
+        "GitHub",
+        "PostgreSQL",
+        "Docker",
+        "Kubernetes",
+        "Playwright"
+      ],
+      "package_source": "npm Registry",
+      "hub_module": "05-mcp-servers-hub/mcp-config.json"
+    },
+    {
+      "id": "threejs",
+      "name": "Three.js + React Three Fiber",
+      "type": "3D WebGL / WebGPU Engine",
+      "domain_id": "05-creative",
+      "language": "JavaScript / TypeScript",
+      "dependencies": [
+        "three",
+        "@react-three/fiber",
+        "@react-three/drei"
+      ],
+      "documentation_url": "https://threejs.org/docs/",
+      "version": "0.162+",
+      "license": "MIT",
+      "runtime": "Browser WebGL/WebGPU",
+      "security_status": "verified",
+      "alternatives": [
+        "Babylon.js",
+        "PlayCanvas"
+      ],
+      "integrations": [
+        "React",
+        "Next.js",
+        "GLSL Shaders"
+      ],
+      "package_source": "npm Registry",
+      "hub_module": "02-frameworks-and-templates/creative-coding-and-games/threejs-starter"
+    },
+    {
+      "id": "p5js",
+      "name": "p5.js",
+      "type": "Creative Coding & Generative Art Library",
+      "domain_id": "05-creative",
+      "language": "JavaScript",
+      "dependencies": [],
+      "documentation_url": "https://p5js.org/reference/",
+      "version": "1.9+",
+      "license": "LGPL-2.1",
+      "runtime": "Browser Canvas/WebGL",
+      "security_status": "verified",
+      "alternatives": [
+        "Processing",
+        "Paper.js",
+        "Hydra"
+      ],
+      "integrations": [
+        "HTML5 Canvas",
+        "WebAudio"
+      ],
+      "package_source": "npm Registry",
+      "hub_module": "02-frameworks-and-templates/creative-coding-and-games/p5-starter"
+    },
+    {
+      "id": "webgl-glsl",
+      "name": "WebGL2 / GLSL Shaders",
+      "type": "GPU Shader Pipeline",
+      "domain_id": "05-creative",
+      "language": "GLSL / JavaScript",
+      "dependencies": [],
+      "documentation_url": "https://www.khronos.org/webgl/",
+      "version": "WebGL 2.0",
+      "license": "Open Standard",
+      "runtime": "Browser GPU",
+      "security_status": "verified",
+      "alternatives": [
+        "WebGPU / WGSL"
+      ],
+      "integrations": [
+        "Three.js",
+        "PixiJS"
+      ],
+      "package_source": "Official Documentation",
+      "hub_module": "02-frameworks-and-templates/creative-coding-and-games/webgl-shaders"
+    },
+    {
+      "id": "flutter",
+      "name": "Flutter",
+      "type": "Cross-Platform Native UI Toolkit",
+      "domain_id": "06-mobile",
+      "language": "Dart",
+      "dependencies": [
+        "flutter_sdk"
+      ],
+      "documentation_url": "https://docs.flutter.dev",
+      "version": "3.19+",
+      "license": "BSD-3-Clause",
+      "runtime": "iOS / Android / Web / Desktop",
+      "security_status": "verified",
+      "alternatives": [
+        "React Native",
+        "Kotlin Multiplatform"
+      ],
+      "integrations": [
+        "REST",
+        "Firebase",
+        "FastAPI"
+      ],
+      "package_source": "GitHub",
+      "hub_module": "02-frameworks-and-templates/mobile-desktop/flutter-starter"
+    },
+    {
+      "id": "react-native",
+      "name": "React Native (Expo)",
+      "type": "Cross-Platform JS Mobile Framework",
+      "domain_id": "06-mobile",
+      "language": "TypeScript",
+      "dependencies": [
+        "expo",
+        "react"
+      ],
+      "documentation_url": "https://reactnative.dev/docs",
+      "version": "0.73+",
+      "license": "MIT",
+      "runtime": "iOS / Android",
+      "security_status": "verified",
+      "alternatives": [
+        "Flutter",
+        "Ionic"
+      ],
+      "integrations": [
+        "Next.js Monorepo",
+        "TanStack Query"
+      ],
+      "package_source": "npm Registry",
+      "hub_module": "02-frameworks-and-templates/mobile-desktop/react-native-starter"
+    },
+    {
+      "id": "docker-compose",
+      "name": "Docker & Compose",
+      "type": "Container Runtime & Local Orchestration",
+      "domain_id": "07-cloud-devops",
+      "language": "YAML / Go",
+      "dependencies": [],
+      "documentation_url": "https://docs.docker.com",
+      "version": "26.x",
+      "license": "Apache-2.0",
+      "runtime": "Linux / WSL2 / macOS",
+      "security_status": "verified",
+      "alternatives": [
+        "Podman",
+        "Nerdctl"
+      ],
+      "integrations": [
+        "All 12 Hub Modules",
+        "Sandboxed Workers"
+      ],
+      "package_source": "Official Documentation",
+      "hub_module": "04-connectors-and-apis/docker-compose.infra.yml"
+    },
+    {
+      "id": "kubernetes-k3s",
+      "name": "Kubernetes (K3s + Helm)",
+      "type": "Container Cluster Orchestrator",
+      "domain_id": "07-cloud-devops",
+      "language": "YAML / Go",
+      "dependencies": [
+        "helm",
+        "kubectl"
+      ],
+      "documentation_url": "https://kubernetes.io/docs/",
+      "version": "1.29+",
+      "license": "Apache-2.0",
+      "runtime": "Linux Cluster",
+      "security_status": "verified",
+      "alternatives": [
+        "Nomad",
+        "Docker Swarm"
+      ],
+      "integrations": [
+        "Terraform",
+        "Prometheus",
+        "GitHub Actions"
+      ],
+      "package_source": "GitHub",
+      "hub_module": "08-devops-cloud-and-iac/kubernetes"
+    },
+    {
+      "id": "terraform",
+      "name": "Terraform",
+      "type": "Multi-Cloud Infrastructure as Code",
+      "domain_id": "07-cloud-devops",
+      "language": "HCL",
+      "dependencies": [],
+      "documentation_url": "https://developer.hashicorp.com/terraform",
+      "version": "1.7+",
+      "license": "BSL-1.1 / OpenTofu MPL",
+      "runtime": "CLI Binary",
+      "security_status": "verified",
+      "alternatives": [
+        "OpenTofu",
+        "Pulumi"
+      ],
+      "integrations": [
+        "AWS",
+        "GCP",
+        "Azure",
+        "Cloudflare"
+      ],
+      "package_source": "Official Documentation",
+      "hub_module": "08-devops-cloud-and-iac/terraform"
+    },
+    {
+      "id": "devsecops-suite",
+      "name": "Trivy + Gitleaks + Semgrep",
+      "type": "Automated SAST, Secret & Container Audit",
+      "domain_id": "08-security",
+      "language": "Go / Python / Bash",
+      "dependencies": [],
+      "documentation_url": "https://trivy.dev",
+      "version": "Latest",
+      "license": "Apache-2.0 / MIT",
+      "runtime": "CLI / Docker",
+      "security_status": "verified",
+      "alternatives": [
+        "Snyk",
+        "SonarQube"
+      ],
+      "integrations": [
+        "GitHub Actions",
+        "Pre-commit",
+        "Sandbox"
+      ],
+      "package_source": "GitHub",
+      "hub_module": "09-testing-and-security/security-audit.sh"
+    },
+    {
+      "id": "kafka-rabbitmq",
+      "name": "Kafka (KRaft) & RabbitMQ",
+      "type": "Event Streaming & AMQP Messaging",
+      "domain_id": "09-networking",
+      "language": "Java / Erlang",
+      "dependencies": [],
+      "documentation_url": "https://kafka.apache.org/documentation/",
+      "version": "3.7 / 3.13",
+      "license": "Apache-2.0 / MPL-2.0",
+      "runtime": "Docker",
+      "security_status": "verified",
+      "alternatives": [
+        "NATS",
+        "Redpanda"
+      ],
+      "integrations": [
+        "Spring Boot",
+        "FastAPI",
+        "Airflow"
+      ],
+      "package_source": "Docker Hub",
+      "hub_module": "04-connectors-and-apis/docker-compose.infra.yml"
+    },
+    {
+      "id": "phaser-pixi",
+      "name": "Phaser 3 & PixiJS",
+      "type": "2D Web Game & WebGL Sprite Engines",
+      "domain_id": "10-games",
+      "language": "JavaScript / TypeScript",
+      "dependencies": [],
+      "documentation_url": "https://phaser.io/docs",
+      "version": "3.80 / 8.0",
+      "license": "MIT",
+      "runtime": "Browser",
+      "security_status": "verified",
+      "alternatives": [
+        "Godot Web",
+        "Bevy WASM"
+      ],
+      "integrations": [
+        "WebSocket Multiplayer",
+        "Canvas"
+      ],
+      "package_source": "npm Registry",
+      "hub_module": "02-frameworks-and-templates/creative-coding-and-games/phaser-starter"
+    },
+    {
+      "id": "d3-airflow-datasets",
+      "name": "Airflow + HuggingFace Datasets + D3.js",
+      "type": "Data Pipeline, Streaming & Visualization",
+      "domain_id": "11-data-eng",
+      "language": "Python / JavaScript",
+      "dependencies": [
+        "apache-airflow",
+        "datasets",
+        "d3"
+      ],
+      "documentation_url": "https://airflow.apache.org/docs/",
+      "version": "2.8+",
+      "license": "Apache-2.0",
+      "runtime": "Docker / Browser",
+      "security_status": "verified",
+      "alternatives": [
+        "Dagster",
+        "Prefect",
+        "Polars"
+      ],
+      "integrations": [
+        "PostgreSQL",
+        "Qdrant",
+        "MinIO"
+      ],
+      "package_source": "PyPI",
+      "hub_module": "06-open-source-datasets/fetch-datasets.py"
+    },
+    {
+      "id": "embedded-rust-cpp",
+      "name": "Rust / C++ / PlatformIO Ready Toolchain",
+      "type": "Embedded & Hardware Development Stack",
+      "domain_id": "12-embedded",
+      "language": "C / C++ / Rust",
+      "dependencies": [
+        "gcc",
+        "clang",
+        "rustc"
+      ],
+      "documentation_url": "https://docs.platformio.org",
+      "version": "Latest",
+      "license": "MIT / Apache-2.0",
+      "runtime": "Bare Metal / ESP32 / Linux",
+      "security_status": "verified",
+      "alternatives": [
+        "Zephyr RTOS",
+        "MicroPython"
+      ],
+      "integrations": [
+        "MQTT",
+        "Serial",
+        "DevContainer"
+      ],
+      "package_source": "crates.io",
+      "hub_module": "01-languages-and-runtimes/mise.toml"
+    },
+    {
+      "id": "n8n-activepieces",
+      "name": "n8n & Activepieces",
+      "type": "Self-Hosted Workflow & AI Automation",
+      "domain_id": "13-automation",
+      "language": "TypeScript",
+      "dependencies": [
+        "postgres",
+        "redis"
+      ],
+      "documentation_url": "https://docs.n8n.io",
+      "version": "Latest",
+      "license": "Sustainable Use / MIT",
+      "runtime": "Docker",
+      "security_status": "verified",
+      "alternatives": [
+        "Temporal",
+        "Windmill"
+      ],
+      "integrations": [
+        "Ollama",
+        "Webhooks",
+        "Slack",
+        "GitHub"
+      ],
+      "package_source": "Docker Hub",
+      "hub_module": "10-automation-and-workflows/docker-compose.auto.yml"
+    },
+    {
+      "id": "tauri-rust",
+      "name": "Tauri (Rust + WebView)",
+      "type": "Ultra-Lightweight Native Desktop Engine",
+      "domain_id": "14-systems",
+      "language": "Rust / TypeScript",
+      "dependencies": [
+        "cargo",
+        "tauri"
+      ],
+      "documentation_url": "https://tauri.app",
+      "version": "1.6 / 2.0",
+      "license": "MIT / Apache-2.0",
+      "runtime": "Windows / macOS / Linux",
+      "security_status": "verified",
+      "alternatives": [
+        "Electron",
+        "JavaFX"
+      ],
+      "integrations": [
+        "React",
+        "Vite",
+        "Local APIs"
+      ],
+      "package_source": "crates.io",
+      "hub_module": "02-frameworks-and-templates/mobile-desktop/tauri-starter"
+    },
+    {
+      "id": "playwright-k6-pytest",
+      "name": "Playwright + Pytest + Jest + JUnit 5 + k6",
+      "type": "Polyglot Automated QA & Load Testing Suite",
+      "domain_id": "15-testing",
+      "language": "TypeScript / Python / Java / Go",
+      "dependencies": [],
+      "documentation_url": "https://playwright.dev",
+      "version": "Latest",
+      "license": "Apache-2.0 / MIT",
+      "runtime": "Node / Python / JVM / CLI",
+      "security_status": "verified",
+      "alternatives": [
+        "Cypress",
+        "Locust",
+        "Vitest"
+      ],
+      "integrations": [
+        "GitHub Actions",
+        "Docker Sandbox"
+      ],
+      "package_source": "npm Registry",
+      "hub_module": "09-testing-and-security/testing-configs"
+    },
+    {
+      "id": "astro",
+      "name": "Astro",
+      "type": "Content-First Islands Web Framework",
+      "domain_id": "01-frontend",
+      "language": "TypeScript / JavaScript",
+      "dependencies": [
+        "vite",
+        "node"
+      ],
+      "documentation_url": "https://docs.astro.build",
+      "version": "4.x / 5.x",
+      "license": "MIT",
+      "runtime": "Node.js / Edge / Static",
+      "security_status": "verified",
+      "alternatives": [
+        "Next.js",
+        "Eleventy",
+        "Hugo"
+      ],
+      "integrations": [
+        "React",
+        "Vue",
+        "Svelte",
+        "Tailwind CSS"
+      ],
+      "package_source": "npm Registry",
+      "hub_module": "02-frameworks-and-templates/react-and-frontend"
+    },
+    {
+      "id": "solidjs",
+      "name": "SolidJS",
+      "type": "Fine-Grained Reactive UI Framework",
+      "domain_id": "01-frontend",
+      "language": "TypeScript / JavaScript",
+      "dependencies": [
+        "vite"
+      ],
+      "documentation_url": "https://docs.solidjs.com",
+      "version": "1.8+",
+      "license": "MIT",
+      "runtime": "Browser / Node.js",
+      "security_status": "verified",
+      "alternatives": [
+        "React",
+        "Svelte",
+        "Qwik"
+      ],
+      "integrations": [
+        "Vite",
+        "Tailwind CSS",
+        "SolidStart"
+      ],
+      "package_source": "npm Registry",
+      "hub_module": "02-frameworks-and-templates/react-and-frontend"
+    },
+    {
+      "id": "axum",
+      "name": "Axum",
+      "type": "Ergonomic Modular Rust Web Framework",
+      "domain_id": "02-backend",
+      "language": "Rust",
+      "dependencies": [
+        "tokio",
+        "tower",
+        "hyper"
+      ],
+      "documentation_url": "https://docs.rs/axum",
+      "version": "0.7+",
+      "license": "MIT",
+      "runtime": "Native Binary (Tokio Async)",
+      "security_status": "verified",
+      "alternatives": [
+        "Actix Web",
+        "Rocket",
+        "Go Fiber"
+      ],
+      "integrations": [
+        "SQLx",
+        "PostgreSQL",
+        "OpenTelemetry",
+        "Tower"
+      ],
+      "package_source": "crates.io",
+      "hub_module": "02-frameworks-and-templates/backend-apis"
+    },
+    {
+      "id": "go-gin",
+      "name": "Gin Web Framework",
+      "type": "High-Performance Go HTTP Framework",
+      "domain_id": "02-backend",
+      "language": "Go",
+      "dependencies": [
+        "go-1.22+"
+      ],
+      "documentation_url": "https://gin-gonic.com/docs/",
+      "version": "1.10+",
+      "license": "MIT",
+      "runtime": "Native Go Binary",
+      "security_status": "verified",
+      "alternatives": [
+        "Go Fiber",
+        "Echo",
+        "Chi"
+      ],
+      "integrations": [
+        "GORM",
+        "PostgreSQL",
+        "Redis",
+        "Prometheus"
+      ],
+      "package_source": "Go Modules",
+      "hub_module": "02-frameworks-and-templates/backend-apis"
+    },
+    {
+      "id": "express",
+      "name": "Express.js",
+      "type": "Minimalist Node.js Web Framework",
+      "domain_id": "02-backend",
+      "language": "JavaScript / TypeScript",
+      "dependencies": [
+        "node"
+      ],
+      "documentation_url": "https://expressjs.com/",
+      "version": "4.x / 5.x",
+      "license": "MIT",
+      "runtime": "Node.js",
+      "security_status": "verified",
+      "alternatives": [
+        "Fastify",
+        "NestJS",
+        "Hono"
+      ],
+      "integrations": [
+        "Prisma",
+        "Mongoose",
+        "Passport.js",
+        "Socket.io"
+      ],
+      "package_source": "npm Registry",
+      "hub_module": "02-frameworks-and-templates/backend-apis"
+    },
+    {
+      "id": "sqlite",
+      "name": "SQLite",
+      "type": "Embedded Serverless ACID Relational Database",
+      "domain_id": "03-databases",
+      "language": "C / SQL",
+      "dependencies": [
+        "libc"
+      ],
+      "documentation_url": "https://www.sqlite.org/docs.html",
+      "version": "3.46+",
+      "license": "Public Domain",
+      "runtime": "Embedded In-Process",
+      "security_status": "verified",
+      "alternatives": [
+        "DuckDB",
+        "PostgreSQL",
+        "LibSQL"
+      ],
+      "integrations": [
+        "Python sqlite3",
+        "SQLAlchemy",
+        "Prisma",
+        "Drizzle"
+      ],
+      "package_source": "OS / Language Standard Library",
+      "hub_module": "04-connectors-and-apis"
+    },
+    {
+      "id": "chroma",
+      "name": "ChromaDB",
+      "type": "AI-Native Open-Source Embedding Database",
+      "domain_id": "03-databases",
+      "language": "Python / Rust",
+      "dependencies": [
+        "sqlite",
+        "hnswlib"
+      ],
+      "documentation_url": "https://docs.trychroma.com/",
+      "version": "0.5+",
+      "license": "Apache-2.0",
+      "runtime": "Python / Docker Container",
+      "security_status": "verified",
+      "alternatives": [
+        "Qdrant",
+        "Milvus",
+        "pgvector"
+      ],
+      "integrations": [
+        "LangChain",
+        "LlamaIndex",
+        "Ollama",
+        "FastAPI"
+      ],
+      "package_source": "PyPI / Docker Hub",
+      "hub_module": "04-connectors-and-apis"
+    },
+    {
+      "id": "weaviate",
+      "name": "Weaviate",
+      "type": "Hybrid Vector & Keyword Search Database",
+      "domain_id": "03-databases",
+      "language": "Go",
+      "dependencies": [
+        "docker"
+      ],
+      "documentation_url": "https://weaviate.io/developers/weaviate",
+      "version": "1.26+",
+      "license": "BSD-3-Clause",
+      "runtime": "Docker / Kubernetes",
+      "security_status": "verified",
+      "alternatives": [
+        "Qdrant",
+        "Milvus",
+        "Elasticsearch"
+      ],
+      "integrations": [
+        "GraphQL",
+        "gRPC",
+        "Ollama",
+        "OpenAI"
+      ],
+      "package_source": "Docker Hub",
+      "hub_module": "04-connectors-and-apis"
+    },
+    {
+      "id": "langchain",
+      "name": "LangChain",
+      "type": "Composable LLM Application Framework",
+      "domain_id": "04-ai-ml",
+      "language": "Python / TypeScript",
+      "dependencies": [
+        "pydantic",
+        "langchain-core"
+      ],
+      "documentation_url": "https://python.langchain.com/docs/",
+      "version": "0.3+",
+      "license": "MIT",
+      "runtime": "Python / Node.js",
+      "security_status": "verified",
+      "alternatives": [
+        "LlamaIndex",
+        "Haystack",
+        "Semantic Kernel"
+      ],
+      "integrations": [
+        "Ollama",
+        "OpenAI",
+        "pgvector",
+        "Qdrant",
+        "LangGraph"
+      ],
+      "package_source": "PyPI / npm",
+      "hub_module": "02-frameworks-and-templates/ai-agents"
+    },
+    {
+      "id": "llamaindex",
+      "name": "LlamaIndex",
+      "type": "Data Framework for Context-Augmented RAG & Agents",
+      "domain_id": "04-ai-ml",
+      "language": "Python / TypeScript",
+      "dependencies": [
+        "pydantic"
+      ],
+      "documentation_url": "https://docs.llamaindex.ai/",
+      "version": "0.11+",
+      "license": "MIT",
+      "runtime": "Python / Node.js",
+      "security_status": "verified",
+      "alternatives": [
+        "LangChain",
+        "Haystack"
+      ],
+      "integrations": [
+        "PostgreSQL pgvector",
+        "Qdrant",
+        "Ollama",
+        "FastAPI"
+      ],
+      "package_source": "PyPI / npm",
+      "hub_module": "02-frameworks-and-templates/ai-agents"
+    },
+    {
+      "id": "crewai",
+      "name": "CrewAI",
+      "type": "Role-Based Multi-Agent Orchestration Framework",
+      "domain_id": "04-ai-ml",
+      "language": "Python",
+      "dependencies": [
+        "pydantic",
+        "litellm"
+      ],
+      "documentation_url": "https://docs.crewai.com/",
+      "version": "0.70+",
+      "license": "MIT",
+      "runtime": "Python 3.10+",
+      "security_status": "verified",
+      "alternatives": [
+        "AutoGen",
+        "LangGraph"
+      ],
+      "integrations": [
+        "Ollama",
+        "OpenAI",
+        "MCP",
+        "LangChain Tools"
+      ],
+      "package_source": "PyPI",
+      "hub_module": "02-frameworks-and-templates/ai-agents"
+    },
+    {
+      "id": "autogen",
+      "name": "Microsoft AutoGen",
+      "type": "Event-Driven Multi-Agent Conversation Framework",
+      "domain_id": "04-ai-ml",
+      "language": "Python / .NET",
+      "dependencies": [
+        "pydantic",
+        "docker"
+      ],
+      "documentation_url": "https://microsoft.github.io/autogen/",
+      "version": "0.4+",
+      "license": "MIT / CC-BY-4.0",
+      "runtime": "Python 3.10+",
+      "security_status": "verified",
+      "alternatives": [
+        "CrewAI",
+        "LangGraph"
+      ],
+      "integrations": [
+        "Docker Sandbox",
+        "Ollama",
+        "OpenAI",
+        "FastAPI"
+      ],
+      "package_source": "PyPI",
+      "hub_module": "02-frameworks-and-templates/ai-agents"
+    },
+    {
+      "id": "huggingface-transformers",
+      "name": "Hugging Face Transformers",
+      "type": "Pretrained Deep Learning Model Hub & Inference Library",
+      "domain_id": "04-ai-ml",
+      "language": "Python",
+      "dependencies": [
+        "torch",
+        "tokenizers",
+        "safetensors"
+      ],
+      "documentation_url": "https://huggingface.co/docs/transformers",
+      "version": "4.45+",
+      "license": "Apache-2.0",
+      "runtime": "Python (CPU / CUDA / MPS)",
+      "security_status": "verified",
+      "alternatives": [
+        "vLLM",
+        "ONNX Runtime",
+        "llama.cpp"
+      ],
+      "integrations": [
+        "PyTorch",
+        "Accelerate",
+        "PEFT",
+        "Datasets"
+      ],
+      "package_source": "PyPI",
+      "hub_module": "03-ai-models-and-inference"
+    },
+    {
+      "id": "babylonjs",
+      "name": "Babylon.js",
+      "type": "Enterprise 3D WebGL & WebGPU Engine",
+      "domain_id": "05-creative",
+      "language": "TypeScript / JavaScript",
+      "dependencies": [
+        "webgl2",
+        "webgpu"
+      ],
+      "documentation_url": "https://doc.babylonjs.com/",
+      "version": "7.x",
+      "license": "Apache-2.0",
+      "runtime": "Browser (WebGL2 / WebGPU)",
+      "security_status": "verified",
+      "alternatives": [
+        "Three.js",
+        "PlayCanvas",
+        "Godot Web"
+      ],
+      "integrations": [
+        "React",
+        "Havok Physics",
+        "glTF 2.0",
+        "WebXR"
+      ],
+      "package_source": "npm Registry",
+      "hub_module": "02-frameworks-and-templates/creative-coding-and-games"
+    },
+    {
+      "id": "prometheus-grafana",
+      "name": "Prometheus + Grafana",
+      "type": "Time-Series Metrics & Observability Visualization Stack",
+      "domain_id": "07-cloud-devops",
+      "language": "Go / TypeScript",
+      "dependencies": [
+        "docker"
+      ],
+      "documentation_url": "https://prometheus.io/docs/",
+      "version": "Prometheus 2.54+ / Grafana 11+",
+      "license": "Apache-2.0 / AGPL-3.0",
+      "runtime": "Docker / Kubernetes",
+      "security_status": "verified",
+      "alternatives": [
+        "Datadog",
+        "VictoriaMetrics",
+        "SigNoz"
+      ],
+      "integrations": [
+        "OpenTelemetry",
+        "Spring Actuator",
+        "FastAPI",
+        "Kubernetes"
+      ],
+      "package_source": "Docker Hub / Helm",
+      "hub_module": "12-observability-and-logs"
+    },
+    {
+      "id": "opentelemetry",
+      "name": "OpenTelemetry",
+      "type": "Vendor-Neutral Distributed Tracing, Metrics & Logs Standard",
+      "domain_id": "07-cloud-devops",
+      "language": "Polyglot (Go / Python / Java / JS / Rust)",
+      "dependencies": [
+        "otlp"
+      ],
+      "documentation_url": "https://opentelemetry.io/docs/",
+      "version": "1.27+",
+      "license": "Apache-2.0",
+      "runtime": "SDK + Collector Daemon",
+      "security_status": "verified",
+      "alternatives": [
+        "Jaeger Native",
+        "Zipkin"
+      ],
+      "integrations": [
+        "Prometheus",
+        "Grafana Tempo",
+        "FastAPI",
+        "Spring Boot"
+      ],
+      "package_source": "CNCF / PyPI / npm / Maven",
+      "hub_module": "12-observability-and-logs"
+    },
+    {
+      "id": "helm",
+      "name": "Helm",
+      "type": "Kubernetes Package Manager & Chart Templating Engine",
+      "domain_id": "07-cloud-devops",
+      "language": "Go Templates / YAML",
+      "dependencies": [
+        "kubernetes"
+      ],
+      "documentation_url": "https://helm.sh/docs/",
+      "version": "3.15+",
+      "license": "Apache-2.0",
+      "runtime": "CLI Binary",
+      "security_status": "verified",
+      "alternatives": [
+        "Kustomize",
+        "Jsonnet",
+        "CDK8s"
+      ],
+      "integrations": [
+        "Kubernetes",
+        "ArgoCD",
+        "GitHub Actions",
+        "UNIFORGE Cloud"
+      ],
+      "package_source": "CNCF / Homebrew / Winget",
+      "hub_module": "08-devops-cloud-and-iac/kubernetes/helm"
+    },
+    {
+      "id": "grpc-protobuf",
+      "name": "gRPC & Protocol Buffers",
+      "type": "High-Performance Typed Binary RPC Framework",
+      "domain_id": "09-networking",
+      "language": "Polyglot (Proto3)",
+      "dependencies": [
+        "http2",
+        "protoc"
+      ],
+      "documentation_url": "https://grpc.io/docs/",
+      "version": "1.65+",
+      "license": "Apache-2.0",
+      "runtime": "HTTP/2 Polyglot Runtimes",
+      "security_status": "verified",
+      "alternatives": [
+        "GraphQL",
+        "REST/OpenAPI",
+        "tRPC",
+        "ConnectRPC"
+      ],
+      "integrations": [
+        "Go",
+        "Rust Tonic",
+        "Java",
+        "Python",
+        "Envoy"
+      ],
+      "package_source": "CNCF / Multi-Registry",
+      "hub_module": "04-connectors-and-apis"
+    },
+    {
+      "id": "duckdb",
+      "name": "DuckDB",
+      "type": "In-Process Analytical OLAP SQL Database",
+      "domain_id": "11-data-eng",
+      "language": "C++ / SQL",
+      "dependencies": [
+        "parquet",
+        "arrow"
+      ],
+      "documentation_url": "https://duckdb.org/docs/",
+      "version": "1.1+",
+      "license": "MIT",
+      "runtime": "Embedded In-Process / WASM",
+      "security_status": "verified",
+      "alternatives": [
+        "ClickHouse",
+        "Apache Spark",
+        "Polars"
+      ],
+      "integrations": [
+        "Python Pandas",
+        "Polars",
+        "Apache Arrow",
+        "S3/MinIO"
+      ],
+      "package_source": "PyPI / npm / CLI",
+      "hub_module": "06-open-source-datasets"
+    },
+    {
+      "id": "apache-spark",
+      "name": "Apache Spark",
+      "type": "Distributed Big Data & Lakehouse Processing Engine",
+      "domain_id": "11-data-eng",
+      "language": "Scala / Python (PySpark) / SQL / Java",
+      "dependencies": [
+        "jvm-17+"
+      ],
+      "documentation_url": "https://spark.apache.org/docs/latest/",
+      "version": "3.5+",
+      "license": "Apache-2.0",
+      "runtime": "JVM Cluster / Kubernetes / Serverless",
+      "security_status": "verified",
+      "alternatives": [
+        "Apache Flink",
+        "Dask",
+        "Ray",
+        "DuckDB"
+      ],
+      "integrations": [
+        "Iceberg",
+        "Delta Lake",
+        "Kafka",
+        "Airflow",
+        "MinIO"
+      ],
+      "package_source": "Apache / PyPI",
+      "hub_module": "10-automation-and-workflows"
+    }
+  ]
+}

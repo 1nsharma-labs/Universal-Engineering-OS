@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "@uniforge/plugin-ollama-ai-studio",
+  "name": "Ollama AI Studio",
+  "version": "1.0.0",
+  "description": "Local-first LLM inference playground for Ollama: list models, pull weights, execute chat completions, and generate embeddings with zero API fees.",
+  "category": "ai",
+  "author": {
+    "name": "UNIFORGE Official Plugins Team",
+    "url": "https://github.com/uniforge-os"
+  },
+  "license": "Apache-2.0",
+  "permissions": ["ai:inference", "network:outbound", "storage:read"],
+  "engines": {
+    "uniforge": ">=1.0.0"
+  },
+  "entrypoints": {
+    "backend": "dist/index.js"
+  },
+  "commands": [
+    {
+      "id": "listModels",
+      "title": "List Local Ollama Models",
+      "description": "Queries /api/tags on the local Ollama server to inspect available quantized models."
+    },
+    {
+      "id": "generate",
+      "title": "Run Local LLM Completion",
+      "description": "Sends a prompt to Ollama /api/generate with deterministic temperature control."
+    },
+    {
+      "id": "embed",
+      "title": "Generate Vector Embeddings",
+      "description": "Computes embeddings via Ollama /api/embeddings for pgvector/Qdrant RAG pipelines."
+    }
+  ],
+  "views": [
+    {
+      "id": "ollama-ai-studio-view",
+      "title": "Ollama AI Studio",
+      "slot": "main-tab"
+    }
+  ],
+  "pricing": {
+    "tier": "free",
+    "priceUsdMonthly": 0
+  },
+  "tags": ["ollama", "llm", "local-ai", "embeddings", "rag", "official"]
+}
+

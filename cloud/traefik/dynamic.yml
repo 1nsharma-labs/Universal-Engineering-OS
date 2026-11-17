@@ -1,0 +1,19 @@
+http:
+  middlewares:
+    uniforge-security-headers:
+      headers:
+        stsSeconds: 31536000
+        stsIncludeSubdomains: true
+        stsPreload: true
+        contentTypeNosniff: true
+        browserXssFilter: true
+        frameDeny: true
+        customResponseHeaders:
+          X-Powered-By: "UNIFORGE-Cloud-Edge"
+
+    tenant-rate-limit:
+      rateLimit:
+        average: 120
+        burst: 240
+        period: 1m
+

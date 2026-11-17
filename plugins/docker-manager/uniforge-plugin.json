@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "@uniforge/plugin-docker-manager",
+  "name": "Docker Manager",
+  "version": "1.0.0",
+  "description": "Manage containers, Compose stacks, images, volumes, and zero-trust sandbox lifecycles directly from UNIFORGE Studio.",
+  "category": "infrastructure",
+  "author": {
+    "name": "UNIFORGE Official Plugins Team",
+    "url": "https://github.com/uniforge-os"
+  },
+  "license": "Apache-2.0",
+  "permissions": ["docker:control", "process:exec", "storage:read"],
+  "engines": {
+    "uniforge": ">=1.0.0"
+  },
+  "entrypoints": {
+    "backend": "dist/index.js",
+    "ui": "views/docker-panel.html"
+  },
+  "commands": [
+    {
+      "id": "listContainers",
+      "title": "List Docker Containers",
+      "description": "Returns running and stopped containers with port bindings."
+    },
+    {
+      "id": "composeAction",
+      "title": "Run Compose Stack Action",
+      "description": "Executes up/down/ps on any Universal-Dev-Hub docker-compose stack."
+    },
+    {
+      "id": "systemInfo",
+      "title": "Inspect Docker Engine",
+      "description": "Returns Docker daemon version, server stats, and image count."
+    }
+  ],
+  "views": [
+    {
+      "id": "docker-manager-view",
+      "title": "Docker Manager",
+      "slot": "main-tab"
+    }
+  ],
+  "pricing": {
+    "tier": "free",
+    "priceUsdMonthly": 0
+  },
+  "tags": ["docker", "containers", "compose", "devops", "official"]
+}
+

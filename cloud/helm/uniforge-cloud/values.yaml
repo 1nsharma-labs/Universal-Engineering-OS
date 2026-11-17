@@ -1,0 +1,33 @@
+replicaCount: 3
+
+image:
+  repository: ghcr.io/uniforge-os/control-plane
+  tag: "1.0.0"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 7000
+
+ingress:
+  enabled: true
+  className: nginx
+  host: cloud.uniforge.io
+  wildcardHost: "*.workspaces.uniforge.io"
+  tls:
+    enabled: true
+    secretName: uniforge-cloud-tls
+
+multiTenancy:
+  enforceRowLevelSecurity: true
+  networkIsolation: true
+  defaultTenantQuota:
+    cpu: "4"
+    memory: "8Gi"
+    pods: "12"
+
+enterprise:
+  samlSsoEnabled: true
+  auditLogStreaming: true
+  soc2ComplianceMode: true
+

@@ -1,0 +1,29 @@
+# Environments & Secrets (Never commit .env files)
+.env
+*.env.local
+04-connectors-and-apis/.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+
+# Node.js / TypeScript
+node_modules/
+npm-debug.log*
+yarn-error.log*
+.pnpm-store/
+
+# Java / Rust / Go build artifacts
+target/
+build/
+.gradle/
+
+# OS & IDE
+.DS_Store
+Thumbs.db
+.idea/
+*.swp

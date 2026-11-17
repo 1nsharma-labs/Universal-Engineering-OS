@@ -1,0 +1,30 @@
+{
+  "name": "Universal Dev Hub - AI Webhook Triage",
+  "nodes": [
+    {
+      "parameters": { "httpMethod": "POST", "path": "devhub-triage", "responseMode": "lastNode" },
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "url": "http://devhub-ollama:11434/api/generate",
+        "method": "POST",
+        "jsonParameters": true,
+        "bodyParametersJson": "={ \"model\": \"qwen2.5-coder:7b\", \"prompt\": $json.body.issue, \"stream\": false }"
+      },
+      "name": "Local Ollama Classifier",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [520, 300]
+    }
+  ],
+  "connections": {
+    "Webhook Trigger": {
+      "main": [[{ "node": "Local Ollama Classifier", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false
+}

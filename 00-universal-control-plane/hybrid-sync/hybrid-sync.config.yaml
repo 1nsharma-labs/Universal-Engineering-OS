@@ -1,0 +1,29 @@
+version: "1.0"
+architecture: "hybrid-local-cloud"
+description: "Synchronizes Universal-Dev-Hub between your Local Workstation (offline-first) and your Self-Hosted Cloud Server."
+
+local_node:
+  role: primary_authoring
+  offline_capable: true
+  control_plane_url: "http://localhost:7000"
+  local_llm_runtime: "http://localhost:11434"
+
+self_hosted_cloud_node:
+  role: remote_replica_and_always_on_runner
+  host: "${CLOUD_HUB_HOST:-hub.yourdomain.internal}"
+  ssh_user: "${CLOUD_HUB_USER:-devhub}"
+  remote_path: "/opt/Universal-Dev-Hub"
+  mesh_vpn: "tailscale"
+
+sync_channels:
+  source_and_configs:
+    method: git
+    branch: main
+    auto_exclude: [".env", "node_modules", "target", ".venv", "__pycache__"]
+  object_storage_artifacts:
+    method: minio_mc_mirror
+    local_alias: "local-minio/devhub-artifacts"
+    cloud_alias: "cloud-minio/devhub-artifacts"
+  registry_metadata:
+    method: pg_dump_sync
+    tables: ["tech_domains", "technology_registry", "knowledge_chunks"]

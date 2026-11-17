@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  # Universal Engineering OS Control Plane & AI Orchestrator
+  control-plane:
+    build:
+      context: ..
+      dockerfile: orchestrator-api/Dockerfile
+    container_name: devhub-control-plane
+    restart: unless-stopped
+    ports:
+      - "${CONTROL_PLANE_PORT:-7000}:7000"
+    environment:
+      - CONTROL_PLANE_PORT=7000
+      - POSTGRES_URL=${POSTGRES_URL:-postgresql://devhub:devhub_secure_pass@postgres:5432/devhub_db}
+      - REDIS_URL=${REDIS_URL:-redis://:devhub_redis_pass@redis:6379/0}
+      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL:-http://ollama:11434}
+    volumes:
+      - ../../:/workspace:ro
+
+  # Optional Encrypted Mesh Tunnel for Local <-> Self-Hosted Cloud Access
+  tailscale-mesh:
+    image: tailscale/tailscale:latest
+    container_name: devhub-tailscale-mesh
+    profiles: ["cloud-sync"]
+    hostname: universal-dev-hub-node
+    environment:
+      - TS_AUTHKEY=${TAILSCALE_AUTHKEY:-replace_with_tailscale_key}
+      - TS_STATE_DIR=/var/lib/tailscale
+    volumes:
+      - tailscale_state:/var/lib/tailscale
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+
+volumes:
+  tailscale_state:
+
+networks:
+  default:
+    name: universal-dev-network

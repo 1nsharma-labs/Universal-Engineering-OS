@@ -1,0 +1,59 @@
+{
+  "name": "@uniforge/plugin-sdk",
+  "version": "1.0.0",
+  "description": "Official TypeScript & Node.js SDK for authoring UNIFORGE plugins, operational studios, and MCP integrations",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "uniforge-plugin": "dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "node -e \"require('fs').rmSync('dist', {recursive: true, force: true})\"",
+    "test": "node --test test/sdk.test.mjs",
+    "prepublishOnly": "npm run build && npm test"
+  },
+  "keywords": [
+    "uniforge",
+    "universal-engineering-os",
+    "plugin-sdk",
+    "developer-tools",
+    "polyglot",
+    "mcp",
+    "ide-plugins"
+  ],
+  "author": "UNIFORGE Contributors (uniforge-os)",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/uniforge-os/Universal-Engineering-OS.git",
+    "directory": "packages/plugin-sdk"
+  },
+  "homepage": "https://github.com/uniforge-os/Universal-Engineering-OS#readme",
+  "bugs": {
+    "url": "https://github.com/uniforge-os/Universal-Engineering-OS/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "typescript": "^5.4.0"
+  }
+}

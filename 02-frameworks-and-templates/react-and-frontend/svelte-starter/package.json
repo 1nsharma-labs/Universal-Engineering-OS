@@ -1,0 +1,14 @@
+{
+  "name": "svelte-starter",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vite -p 3004",
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^3.0.2",
+    "svelte": "^4.2.12",
+    "typescript": "^5.4.3",
+    "vite": "^5.2.0"
+  }
+}

@@ -1,0 +1,59 @@
+version: "1.0"
+title: "Universal Open-Source Datasets Catalog"
+description: "High-value open-access datasets for fine-tuning, RAG indexing, and ML benchmarks"
+
+datasets:
+  code_and_software:
+    - id: the-stack-v2
+      name: "The Stack v2 (Software Heritage)"
+      huggingface_id: "bigcode/the-stack-v2"
+      languages: ["Python", "Java", "TypeScript", "Go", "Rust", "C++", "SQL"]
+      size_raw: "3+ TB"
+      license: "OpenRAIL-M"
+      description: "Over 600 programming languages curated for training high-performance coding LLMs."
+    - id: starcoder-data
+      name: "StarCoder Training Corpus"
+      huggingface_id: "bigcode/starcoderdata"
+      size_raw: "250 GB"
+      license: "BigCode OpenRAIL-M"
+      description: "Cleaned and deduplicated source code with commit histories and documentation."
+
+  instruction_and_reasoning:
+    - id: openhermes-2.5
+      name: "OpenHermes 2.5"
+      huggingface_id: "teknium/OpenHermes-2.5"
+      rows: 1000000
+      license: "MIT"
+      description: "One million diverse conversational instruction pairs for chat alignment."
+    - id: gsm8k
+      name: "Grade School Math 8K"
+      huggingface_id: "openai/gsm8k"
+      size_mb: 15
+      license: "MIT"
+      description: "High quality mathematical reasoning questions with step-by-step solutions."
+
+  general_pretraining:
+    - id: fineweb-edu
+      name: "FineWeb-Edu"
+      huggingface_id: "HuggingFaceFW/fineweb-edu"
+      size_raw: "Multi-Terabyte"
+      license: "ODC-By 1.0"
+      description: "Highest quality educational and technical subset of web crawl data."
+    - id: wikimedia-text
+      name: "Wikipedia Clean Text Corpus"
+      huggingface_id: "wikimedia/wikipedia"
+      size_gb: 22
+      license: "CC BY-SA 4.0"
+      description: "Full text encyclopedia snapshots in 300+ languages."
+
+  tabular_and_benchmarks:
+    - id: uci-heart-disease
+      name: "UCI Heart Disease Classification"
+      url: "https://archive.ics.uci.edu/dataset/45/heart+disease"
+      license: "CC BY 4.0"
+      description: "Standard clinical ML benchmark dataset."
+    - id: kaggle-titanic
+      name: "Kaggle Titanic Machine Learning from Disaster"
+      kaggle_id: "competitions/titanic"
+      license: "Community Data"
+      description: "Canonical tabular binary classification baseline dataset."

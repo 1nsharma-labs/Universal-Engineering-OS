@@ -1,0 +1,11 @@
+{
+  "name": "@uniforge/plugin-spring-boot-controller",
+  "version": "1.0.0",
+  "description": "Official UNIFORGE Spring Boot 3 Controller Plugin",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "license": "Apache-2.0",
+  "scripts": { "build": "tsc" },
+  "dependencies": { "@uniforge/plugin-sdk": "file:../../packages/plugin-sdk" }
+}
+
