@@ -360,3 +360,31 @@ def test_core_operating_layer_five_subsystems():
     assert len(obs["subsystems"]) == 15
     assert obs["requests_total"] >= 1
 
+
+def test_uniforge_workbench_v2_reverse_engineered_engine():
+    from fastapi.testclient import TestClient
+    import main as control_plane
+
+    client = TestClient(control_plane.app)
+
+    # 1. Multi-provider catalog
+    provs = client.get("/api/v1/workbench/providers").json()
+    assert len(provs["providers"]) >= 8
+    assert any(p["id"] == "ollama" for p in provs["providers"])
+
+    # 2. Prompt Enhancer
+    enh = client.post("/api/v1/workbench/enhance-prompt", json={"prompt": "Build a SaaS dashboard"}).json()
+    assert enh["ok"] is True
+    assert "Engineering & UX Requirements" in enh["enhanced"]
+
+    # 3. Native <uniforgeArtifact> + <uniforgeAction> build generation (zero Bolt branding)
+    chat = client.post(
+        "/api/v1/workbench/chat",
+        json={"prompt": "Build an interactive SaaS analytics dashboard", "provider": "uniforge-local", "chat_mode": "build"},
+    ).json()
+    assert chat["ok"] is True
+    assert "<uniforgeArtifact" in chat["response"]
+    assert "<uniforgeAction" in chat["response"]
+    assert "<uniforge-quick-actions>" in chat["response"]
+    assert "bolt" not in chat["response"].lower()
+

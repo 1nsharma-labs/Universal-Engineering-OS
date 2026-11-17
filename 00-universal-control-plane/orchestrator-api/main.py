@@ -68,6 +68,12 @@ from terminal_service import (
     list_terminal_sessions,
 )
 from visual_canvas_service import compile_visual_graph, get_canvas_catalog
+from workbench_llm_service import (
+    enhance_workbench_prompt,
+    get_workbench_providers,
+    import_github_repository,
+    run_workbench_chat,
+)
 
 
 def get_system_overview() -> Dict[str, Any]:
@@ -106,6 +112,7 @@ def get_system_overview() -> Dict[str, Any]:
             "shared_data_layer": "READY",
             "secrets_vault": "READY",
             "observability_engine": "READY",
+            "uniforge_workbench_v2": "READY",
         },
         "status": "OPERATIONAL",
     }
@@ -250,6 +257,22 @@ try:
         value: str
         scope: str = "workspace"
         actor: str = "admin"
+
+    class WorkbenchChatRequest(BaseModel):
+        prompt: str
+        provider: str = "uniforge-local"
+        model: str = "uniforge-architect-v2"
+        chat_mode: str = "build"
+        api_key: str = ""
+        ollama_url: str = "http://localhost:11434"
+        files: Optional[Dict[str, str]] = None
+
+    class WorkbenchEnhanceRequest(BaseModel):
+        prompt: str
+
+    class WorkbenchGitImportRequest(BaseModel):
+        repo_url: str
+        max_files: int = 12
 
     @app.get("/", response_class=HTMLResponse)
     def serve_studio():
@@ -489,6 +512,31 @@ try:
     @app.get("/api/v1/observability/metrics")
     def api_observability_metrics():
         return get_observability_metrics()
+
+    # --- UNIFORGE AI Workbench v2 Multi-Provider & Artifact Engine ---
+    @app.get("/api/v1/workbench/providers")
+    def api_workbench_providers():
+        return get_workbench_providers()
+
+    @app.post("/api/v1/workbench/chat")
+    def api_workbench_chat(req: WorkbenchChatRequest):
+        return run_workbench_chat(
+            prompt=req.prompt,
+            provider=req.provider,
+            model=req.model,
+            chat_mode=req.chat_mode,
+            api_key=req.api_key,
+            ollama_url=req.ollama_url,
+            files=req.files,
+        )
+
+    @app.post("/api/v1/workbench/enhance-prompt")
+    def api_workbench_enhance(req: WorkbenchEnhanceRequest):
+        return enhance_workbench_prompt(req.prompt)
+
+    @app.post("/api/v1/workbench/import-github")
+    def api_workbench_import_github(req: WorkbenchGitImportRequest):
+        return import_github_repository(req.repo_url, max_files=req.max_files)
 
     FASTAPI_AVAILABLE = True
 except ImportError:
