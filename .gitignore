@@ -2,6 +2,8 @@
 .env
 *.env.local
 04-connectors-and-apis/.env
+*.db
+.uniforge-state.db
 
 # Python
 __pycache__/
@@ -16,6 +18,7 @@ node_modules/
 npm-debug.log*
 yarn-error.log*
 .pnpm-store/
+02-frameworks-and-templates/**/dist/
 
 # Java / Rust / Go build artifacts
 target/

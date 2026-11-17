@@ -316,3 +316,47 @@ def test_five_layer_software_factory_pipeline():
     assert dist["pipeline_status"] == "DISTRIBUTED_LIVE"
     assert dist["layer5_distribution"]["status"] == "DISTRIBUTED"
 
+
+def test_core_operating_layer_five_subsystems():
+    from fastapi.testclient import TestClient
+    import main as control_plane
+
+    client = TestClient(control_plane.app)
+
+    # 1. Universal Event Bus
+    r_ev = client.post(
+        "/api/v1/events/publish",
+        json={"topic": "console.test_event", "source": "pytest", "actor": "admin", "payload": {"ok": True}},
+    )
+    assert r_ev.status_code == 200
+    assert r_ev.json()["topic"] == "console.test_event"
+    assert client.get("/api/v1/events").json()["count"] >= 1
+
+    # 2. Identity & RBAC Policy Engine
+    allow_res = client.post("/api/v1/identity/check", json={"role": "admin", "action": "secrets:write"}).json()
+    deny_res = client.post("/api/v1/identity/check", json={"role": "coder-agent", "action": "secrets:write"}).json()
+    assert allow_res["allowed"] is True
+    assert deny_res["allowed"] is False
+
+    # 3. Shared Data Layer (SQLite Projects)
+    p_res = client.post(
+        "/api/v1/projects",
+        json={"name": "React Control Plane Test", "stack": "React + FastAPI", "owner_role": "admin"},
+    ).json()
+    assert p_res["ok"] is True
+    assert client.get("/api/v1/projects").json()["count"] >= 1
+
+    # 4. Secrets Vault (Masked & RBAC-enforced)
+    s_deny = client.post("/api/v1/secrets", json={"key": "TEST_KEY", "value": "supersecret123", "actor": "coder-agent"}).json()
+    assert s_deny["ok"] is False
+    s_ok = client.post("/api/v1/secrets", json={"key": "TEST_KEY", "value": "supersecret123", "actor": "admin"}).json()
+    assert s_ok["ok"] is True
+    assert "supersecret123" not in s_ok["masked_preview"]
+    client.delete("/api/v1/secrets/TEST_KEY?actor=admin")
+
+    # 5. Observability Engine
+    obs = client.get("/api/v1/observability/metrics").json()
+    assert obs["status"] == "HEALTHY"
+    assert len(obs["subsystems"]) == 15
+    assert obs["requests_total"] >= 1
+

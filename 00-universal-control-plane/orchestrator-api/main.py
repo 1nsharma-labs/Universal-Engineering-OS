@@ -30,6 +30,21 @@ if str(CURRENT_DIR) not in sys.path:
 from api_studio_service import execute_api_request
 from autonomous_team_service import list_agent_runs, run_autonomous_build, run_self_healing_sre
 from brain import architect_solution, load_registry, search_registry
+from core_os_layer import (
+    check_permission,
+    create_project,
+    delete_secret,
+    get_identity_policies,
+    get_observability_metrics,
+    get_settings,
+    list_events,
+    list_projects,
+    list_secrets,
+    publish_event,
+    record_request_metric,
+    set_secret,
+    update_setting,
+)
 from deploy_hub_service import list_community_plugins, plan_one_click_deploy, submit_community_plugin
 from lsp_service import analyze_diagnostics, format_code, get_completions
 from project_unifier import unify_project
@@ -86,21 +101,27 @@ def get_system_overview() -> Dict[str, Any]:
             "visual_node_canvas": "READY",
             "multi_cloud_deployer": "READY",
             "software_factory_5layer": "READY",
+            "universal_event_bus": "READY",
+            "identity_rbac_engine": "READY",
+            "shared_data_layer": "READY",
+            "secrets_vault": "READY",
+            "observability_engine": "READY",
         },
         "status": "OPERATIONAL",
     }
 
 
 try:
-    from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+    import time as _time
+    from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect
     from fastapi.middleware.cors import CORSMiddleware
     from fastapi.responses import HTMLResponse
     from pydantic import BaseModel
 
     app = FastAPI(
         title="UNIFORGE — Universal Engineering OS Control Plane",
-        version="1.0.0",
-        description="AI Orchestrator, PTY Terminal, Monaco LSP, API Studio, 60+ Wiki Profiles, Plugin Host & UNIFORGE Cloud API",
+        version="2.1.0",
+        description="AI Orchestrator, 5-Layer Software Factory, PTY Terminal, Monaco LSP, API Studio, Event Bus, Identity/RBAC, Shared Data Layer, Secrets Vault & Observability",
     )
     app.add_middleware(
         CORSMiddleware,
@@ -108,6 +129,13 @@ try:
         allow_methods=["*"],
         allow_headers=["*"],
     )
+
+    @app.middleware("http")
+    async def observability_middleware(request: Request, call_next):
+        t0 = _time.perf_counter()
+        response = await call_next(request)
+        record_request_metric(request.url.path, response.status_code, (_time.perf_counter() - t0) * 1000)
+        return response
 
     class ArchitectRequest(BaseModel):
         prompt: str
@@ -195,6 +223,33 @@ try:
         job_id: str
         approver: str = "lead-engineer"
         target_cloud: str = ""
+
+    class EventPublishRequest(BaseModel):
+        topic: str
+        source: str = "react-console"
+        actor: str = "admin"
+        payload: Dict[str, Any] = {}
+
+    class PermissionCheckRequest(BaseModel):
+        role: str
+        action: str
+
+    class ProjectCreateRequest(BaseModel):
+        name: str
+        stack: str = "React + FastAPI + PostgreSQL"
+        repo_url: str = ""
+        owner_role: str = "admin"
+
+    class SettingUpdateRequest(BaseModel):
+        key: str
+        value: str
+        actor: str = "admin"
+
+    class SecretSetRequest(BaseModel):
+        key: str
+        value: str
+        scope: str = "workspace"
+        actor: str = "admin"
 
     @app.get("/", response_class=HTMLResponse)
     def serve_studio():
@@ -375,11 +430,65 @@ try:
 
     @app.post("/api/v1/factory/assemble")
     def api_factory_assemble(req: FactoryAssembleRequest):
-        return run_software_factory(req.prompt, target_cloud=req.target_cloud, write_artifacts=req.write_artifacts)
+        res = run_software_factory(req.prompt, target_cloud=req.target_cloud, write_artifacts=req.write_artifacts)
+        publish_event("factory.assembled", "software-factory", {"job_id": res["job_id"], "slug": res["project_slug"]}, actor="architect")
+        return res
 
     @app.post("/api/v1/factory/approve")
     def api_factory_approve(req: FactoryApproveRequest):
-        return approve_and_distribute(req.job_id, approver=req.approver, target_cloud=req.target_cloud)
+        res = approve_and_distribute(req.job_id, approver=req.approver, target_cloud=req.target_cloud)
+        if res.get("ok"):
+            publish_event("factory.approved", "software-factory", {"job_id": req.job_id, "approver": req.approver}, actor=req.approver)
+        return res
+
+    # --- 5 Core Central Operating Layer Endpoints ---
+    @app.get("/api/v1/events")
+    def api_events(limit: int = 40, topic: str = ""):
+        return list_events(limit=limit, topic=topic)
+
+    @app.post("/api/v1/events/publish")
+    def api_events_publish(req: EventPublishRequest):
+        return publish_event(req.topic, req.source, req.payload, actor=req.actor)
+
+    @app.get("/api/v1/identity/policies")
+    def api_identity_policies():
+        return get_identity_policies()
+
+    @app.post("/api/v1/identity/check")
+    def api_identity_check(req: PermissionCheckRequest):
+        return check_permission(req.role, req.action)
+
+    @app.get("/api/v1/projects")
+    def api_projects_list():
+        return list_projects()
+
+    @app.post("/api/v1/projects")
+    def api_projects_create(req: ProjectCreateRequest):
+        return create_project(req.name, req.stack, req.repo_url, req.owner_role)
+
+    @app.get("/api/v1/settings")
+    def api_settings_get():
+        return get_settings()
+
+    @app.post("/api/v1/settings")
+    def api_settings_set(req: SettingUpdateRequest):
+        return update_setting(req.key, req.value, req.actor)
+
+    @app.get("/api/v1/secrets")
+    def api_secrets_list():
+        return list_secrets()
+
+    @app.post("/api/v1/secrets")
+    def api_secrets_set(req: SecretSetRequest):
+        return set_secret(req.key, req.value, req.scope, req.actor)
+
+    @app.delete("/api/v1/secrets/{key}")
+    def api_secrets_delete(key: str, actor: str = "admin"):
+        return delete_secret(key, actor=actor)
+
+    @app.get("/api/v1/observability/metrics")
+    def api_observability_metrics():
+        return get_observability_metrics()
 
     FASTAPI_AVAILABLE = True
 except ImportError:

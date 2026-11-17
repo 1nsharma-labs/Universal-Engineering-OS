@@ -1,0 +1,362 @@
+{
+  "schemaVersion": "1.0.0",
+  "synced_at_epoch": 1794943867,
+  "duration_sec": 7.22,
+  "counts": {
+    "pypi_ok": 10,
+    "npm_ok": 10,
+    "hf_datasets_ok": 5,
+    "hf_models_ok": 5,
+    "github_ok": 6
+  },
+  "pypi_packages": [
+    {
+      "name": "fastapi",
+      "version": "0.163.2",
+      "summary": "FastAPI framework, high performance, easy to learn, fast to code, ready for production",
+      "license": "MIT",
+      "url": "https://pypi.org/project/fastapi/",
+      "ok": true
+    },
+    {
+      "name": "uvicorn",
+      "version": "0.54.0",
+      "summary": "The lightning-fast ASGI server.",
+      "license": "BSD-3-Clause",
+      "url": "https://pypi.org/project/uvicorn/",
+      "ok": true
+    },
+    {
+      "name": "pydantic",
+      "version": "2.14.3",
+      "summary": "Data validation using Python type hints",
+      "license": "MIT",
+      "url": "https://pypi.org/project/pydantic/",
+      "ok": true
+    },
+    {
+      "name": "httpx",
+      "version": "0.28.1",
+      "summary": "The next generation HTTP client.",
+      "license": "BSD-3-Clause",
+      "url": "https://pypi.org/project/httpx/",
+      "ok": true
+    },
+    {
+      "name": "pytest",
+      "version": "9.2.0",
+      "summary": "pytest: simple powerful testing with Python",
+      "license": "MIT",
+      "url": "https://pypi.org/project/pytest/",
+      "ok": true
+    },
+    {
+      "name": "langchain",
+      "version": "1.5.0",
+      "summary": "Building applications with LLMs through composability",
+      "license": "MIT",
+      "url": "https://pypi.org/project/langchain/",
+      "ok": true
+    },
+    {
+      "name": "qdrant-client",
+      "version": "1.20.0",
+      "summary": "Client library for the Qdrant vector search engine",
+      "license": "Apache-2.0",
+      "url": "https://pypi.org/project/qdrant-client/",
+      "ok": true
+    },
+    {
+      "name": "duckdb",
+      "version": "2.0.0",
+      "summary": "DuckDB in-process database",
+      "license": "Open Source",
+      "url": "https://pypi.org/project/duckdb/",
+      "ok": true
+    },
+    {
+      "name": "transformers",
+      "version": "5.23.0",
+      "summary": "Transformers: the model-definition framework for state-of-the-art machine learning models in text, vision, audio, and multimodal models, for both inference and ",
+      "license": "Apache 2.0 License",
+      "url": "https://pypi.org/project/transformers/",
+      "ok": true
+    },
+    {
+      "name": "chromadb",
+      "version": "1.5.9",
+      "summary": "Chroma.",
+      "license": "Open Source",
+      "url": "https://pypi.org/project/chromadb/",
+      "ok": true
+    }
+  ],
+  "npm_packages": [
+    {
+      "name": "react",
+      "version": "19.3.1",
+      "description": "React is a JavaScript library for building user interfaces.",
+      "license": "MIT",
+      "url": "https://www.npmjs.com/package/react",
+      "ok": true
+    },
+    {
+      "name": "next",
+      "version": "16.4.6",
+      "description": "The React Framework",
+      "license": "MIT",
+      "url": "https://www.npmjs.com/package/next",
+      "ok": true
+    },
+    {
+      "name": "vite",
+      "version": "8.3.8",
+      "description": "Native-ESM powered web dev build tool",
+      "license": "MIT",
+      "url": "https://www.npmjs.com/package/vite",
+      "ok": true
+    },
+    {
+      "name": "typescript",
+      "version": "7.0.2",
+      "description": "TypeScript is a language for application scale JavaScript development",
+      "license": "Apache-2.0",
+      "url": "https://www.npmjs.com/package/typescript",
+      "ok": true
+    },
+    {
+      "name": "tailwindcss",
+      "version": "4.3.5",
+      "description": "A utility-first CSS framework for rapidly building custom user interfaces.",
+      "license": "MIT",
+      "url": "https://www.npmjs.com/package/tailwindcss",
+      "ok": true
+    },
+    {
+      "name": "zustand",
+      "version": "5.1.0",
+      "description": "\ud83d\udc3b Bear necessities for state management in React",
+      "license": "MIT",
+      "url": "https://www.npmjs.com/package/zustand",
+      "ok": true
+    },
+    {
+      "name": "@tanstack/react-query",
+      "version": "5.108.0",
+      "description": "Hooks for managing, caching and syncing asynchronous and remote data in React",
+      "license": "MIT",
+      "url": "https://www.npmjs.com/package/@tanstack/react-query",
+      "ok": true
+    },
+    {
+      "name": "three",
+      "version": "0.187.0",
+      "description": "JavaScript 3D library",
+      "license": "MIT",
+      "url": "https://www.npmjs.com/package/three",
+      "ok": true
+    },
+    {
+      "name": "p5",
+      "version": "2.4.0",
+      "description": "[![npm version](https://badge.fury.io/js/p5.svg)](https://www.npmjs.com/package/p5)",
+      "license": "LGPL-2.1",
+      "url": "https://www.npmjs.com/package/p5",
+      "ok": true
+    },
+    {
+      "name": "astro",
+      "version": "7.4.12",
+      "description": "Astro is a modern site builder with web best practices, performance, and DX front-of-mind.",
+      "license": "MIT",
+      "url": "https://www.npmjs.com/package/astro",
+      "ok": true
+    }
+  ],
+  "huggingface_datasets": [
+    {
+      "id": "openai/gsm8k",
+      "downloads": 1170342,
+      "likes": 2053,
+      "tags": [
+        "benchmark:official",
+        "benchmark:eval-yaml",
+        "task_categories:text-generation",
+        "annotations_creators:crowdsourced",
+        "language_creators:crowdsourced",
+        "multilinguality:monolingual"
+      ],
+      "url": "https://huggingface.co/datasets/openai/gsm8k",
+      "ok": true
+    },
+    {
+      "id": "HuggingFaceFW/fineweb",
+      "downloads": 353552,
+      "likes": 3754,
+      "tags": [
+        "task_categories:text-generation",
+        "language:en",
+        "license:odc-by",
+        "size_categories:10B<n<100B",
+        "modality:tabular",
+        "modality:text"
+      ],
+      "url": "https://huggingface.co/datasets/HuggingFaceFW/fineweb",
+      "ok": true
+    },
+    {
+      "id": "teknium/OpenHermes-2.5",
+      "downloads": 16697,
+      "likes": 933,
+      "tags": [
+        "language:eng",
+        "size_categories:1M<n<10M",
+        "format:json",
+        "modality:text",
+        "library:datasets",
+        "library:pandas"
+      ],
+      "url": "https://huggingface.co/datasets/teknium/OpenHermes-2.5",
+      "ok": true
+    },
+    {
+      "id": "bigcode/the-stack-v2",
+      "downloads": 14247,
+      "likes": 680,
+      "tags": [
+        "task_categories:text-generation",
+        "language_creators:crowdsourced",
+        "language_creators:expert-generated",
+        "multilinguality:multilingual",
+        "language:code",
+        "license:other"
+      ],
+      "url": "https://huggingface.co/datasets/bigcode/the-stack-v2",
+      "ok": true
+    },
+    {
+      "id": "tatsu-lab/alpaca",
+      "downloads": 86244,
+      "likes": 1395,
+      "tags": [
+        "task_categories:text-generation",
+        "language:en",
+        "license:cc-by-nc-4.0",
+        "size_categories:10K<n<100K",
+        "format:parquet",
+        "modality:text"
+      ],
+      "url": "https://huggingface.co/datasets/tatsu-lab/alpaca",
+      "ok": true
+    }
+  ],
+  "huggingface_models": [
+    {
+      "id": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "pipeline_tag": "text-generation",
+      "downloads": 1521646,
+      "likes": 874,
+      "library": "transformers",
+      "url": "https://huggingface.co/Qwen/Qwen2.5-Coder-7B-Instruct",
+      "ok": true
+    },
+    {
+      "id": "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B",
+      "pipeline_tag": "text-generation",
+      "downloads": 289718,
+      "likes": 966,
+      "library": "transformers",
+      "url": "https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B",
+      "ok": true
+    },
+    {
+      "id": "meta-llama/Llama-3.2-3B-Instruct",
+      "pipeline_tag": "text-generation",
+      "downloads": 831390,
+      "likes": 3029,
+      "library": "transformers",
+      "url": "https://huggingface.co/meta-llama/Llama-3.2-3B-Instruct",
+      "ok": true
+    },
+    {
+      "id": "openai/whisper-large-v3",
+      "pipeline_tag": "automatic-speech-recognition",
+      "downloads": 3315495,
+      "likes": 6825,
+      "library": "transformers",
+      "url": "https://huggingface.co/openai/whisper-large-v3",
+      "ok": true
+    },
+    {
+      "id": "nomic-ai/nomic-embed-text-v1.5",
+      "pipeline_tag": "sentence-similarity",
+      "downloads": 11551104,
+      "likes": 995,
+      "library": "sentence-transformers",
+      "url": "https://huggingface.co/nomic-ai/nomic-embed-text-v1.5",
+      "ok": true
+    }
+  ],
+  "github_repositories": [
+    {
+      "repo": "fastapi/fastapi",
+      "stars": 105035,
+      "forks": 10419,
+      "language": "Python",
+      "license": "MIT",
+      "description": "FastAPI framework, high performance, easy to learn, fast to code, ready for production",
+      "url": "https://github.com/fastapi/fastapi",
+      "ok": true
+    },
+    {
+      "repo": "vercel/next.js",
+      "stars": 143692,
+      "forks": 32815,
+      "language": "JavaScript",
+      "license": "MIT",
+      "description": "The React Framework",
+      "url": "https://github.com/vercel/next.js",
+      "ok": true
+    },
+    {
+      "repo": "ollama/ollama",
+      "stars": 187412,
+      "forks": 19123,
+      "language": "Go",
+      "license": "MIT",
+      "description": "Get up and running with Kimi, GLM, MiniMax, DeepSeek, gpt-oss, Qwen, Gemma and other models.",
+      "url": "https://github.com/ollama/ollama",
+      "ok": true
+    },
+    {
+      "repo": "qdrant/qdrant",
+      "stars": 35616,
+      "forks": 2822,
+      "language": "Rust",
+      "license": "Apache-2.0",
+      "description": "Qdrant - High-performance, massive-scale Vector Database and Vector Search Engine for the next generation of AI. Also available in the cloud https://cloud.qdran",
+      "url": "https://github.com/qdrant/qdrant",
+      "ok": true
+    },
+    {
+      "repo": "pgvector/pgvector",
+      "stars": 23712,
+      "forks": 1395,
+      "language": "C",
+      "license": "NOASSERTION",
+      "description": "Open-source vector similarity search for Postgres",
+      "url": "https://github.com/pgvector/pgvector",
+      "ok": true
+    },
+    {
+      "repo": "langchain-ai/langgraph",
+      "stars": 45078,
+      "forks": 7779,
+      "language": "Python",
+      "license": "MIT",
+      "description": "Build resilient agents.",
+      "url": "https://github.com/langchain-ai/langgraph",
+      "ok": true
+    }
+  ]
+}

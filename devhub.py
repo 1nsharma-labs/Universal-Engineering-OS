@@ -252,6 +252,10 @@ def cmd_datasets(_args):
     sys.exit(run_cmd([sys.executable, "06-open-source-datasets/fetch-datasets.py", "--list"]))
 
 
+def cmd_sync_opensource(_args):
+    sys.exit(run_cmd([sys.executable, "06-open-source-datasets/sync_open_source_collections.py"]))
+
+
 def cmd_test(_args):
     sys.exit(run_cmd([sys.executable, "-m", "pytest", "09-testing-and-security/tests/"]))
 
@@ -394,6 +398,7 @@ def main():
     sub.add_parser("creative", help="Serve Creative Coding & Game templates on port 8088").set_defaults(func=cmd_creative)
     sub.add_parser("agents", help="Execute all 5 AI agent orchestration demos").set_defaults(func=cmd_agents)
     sub.add_parser("datasets", help="List curated open-source datasets").set_defaults(func=cmd_datasets)
+    sub.add_parser("sync-opensource", help="Fetch live open-source metadata from PyPI, npm, Hugging Face & GitHub").set_defaults(func=cmd_sync_opensource)
     sub.add_parser("test", help="Run automated pytest verification suite").set_defaults(func=cmd_test)
     sub.add_parser("validate", help="Validate syntax of all JSON & YAML configs").set_defaults(func=cmd_validate)
 
