@@ -12,8 +12,8 @@ import subprocess
 import sys
 from pathlib import Path
 
-VERSION = "1.0.0"
-ORG = "uniforge-os / Universal-Engineering-OS"
+VERSION = "2.0.0"
+ORG = "1nsharma-labs / Universal-Engineering-OS"
 ROOT = Path(__file__).resolve().parent
 ORCH_DIR = ROOT / "00-universal-control-plane" / "orchestrator-api"
 if str(ORCH_DIR) not in sys.path:
@@ -140,6 +140,34 @@ def cmd_cloud(args):
     elif args.action == "create-tenant":
         res = create_cloud_tenant(args.org or "Demo Organization", args.tier, args.region)
         print(json.dumps(res, indent=2))
+
+
+def cmd_agent_build(args):
+    from autonomous_team_service import run_autonomous_build
+    res = run_autonomous_build(" ".join(args.prompt), stack=args.stack, write_to_disk=args.write)
+    print(json.dumps(res, indent=2))
+
+
+def cmd_self_heal(args):
+    from autonomous_team_service import run_self_healing_sre
+    res = run_self_healing_sre(" ".join(args.error), service_name=args.service)
+    print(json.dumps(res, indent=2))
+
+
+def cmd_rag(args):
+    from rag_brain_service import build_rag_index, query_rag_brain
+    if args.reindex:
+        print(json.dumps(build_rag_index(), indent=2))
+        if not args.query:
+            return
+    res = query_rag_brain(" ".join(args.query), top_k=args.top_k, use_ollama=args.ollama)
+    print(json.dumps(res, indent=2))
+
+
+def cmd_deploy(args):
+    from deploy_hub_service import plan_one_click_deploy
+    res = plan_one_click_deploy(args.provider, args.path, args.service, args.region)
+    print(json.dumps(res, indent=2))
 
 
 def cmd_unify(args):
@@ -301,6 +329,31 @@ def main():
     p_cloud.add_argument("--tier", default="pro")
     p_cloud.add_argument("--region", default="us-central1")
     p_cloud.set_defaults(func=cmd_cloud)
+
+    p_ab = sub.add_parser("agent-build", help="Milestone 5: Run Autonomous Architect->Coder->Tester build")
+    p_ab.add_argument("prompt", nargs="+", help="Application specification")
+    p_ab.add_argument("--stack", default="fastapi", choices=["fastapi", "spring-boot", "react", "p5js"])
+    p_ab.add_argument("--write", action="store_true", help="Write generated project into workspaces/autonomous-builds/")
+    p_ab.set_defaults(func=cmd_agent_build)
+
+    p_sh = sub.add_parser("self-heal", help="Milestone 5: Diagnose error trace and synthesize SRE patch")
+    p_sh.add_argument("error", nargs="+", help="Error log or stack trace")
+    p_sh.add_argument("--service", default="control-plane")
+    p_sh.set_defaults(func=cmd_self_heal)
+
+    p_rag = sub.add_parser("rag", help="Milestone 6: Query or re-index offline Local RAG Brain")
+    p_rag.add_argument("query", nargs="*", help="Natural-language engineering question")
+    p_rag.add_argument("--reindex", action="store_true")
+    p_rag.add_argument("--top-k", type=int, default=5)
+    p_rag.add_argument("--ollama", action="store_true")
+    p_rag.set_defaults(func=cmd_rag)
+
+    p_dep = sub.add_parser("deploy", help="Milestone 8: Zero-config multi-cloud deployment planner")
+    p_dep.add_argument("--provider", "-p", default="gcp", choices=["gcp", "aws", "cloudflare", "uniforge-cloud"])
+    p_dep.add_argument("--service", "-s", default="uniforge-app")
+    p_dep.add_argument("--region", "-r", default="us-central1")
+    p_dep.add_argument("--path", default=".")
+    p_dep.set_defaults(func=cmd_deploy)
 
     p_uni = sub.add_parser("unify", help="Analyze & unify a GitHub URL or local project path")
     p_uni.add_argument("target", help="GitHub repo URL or local directory")

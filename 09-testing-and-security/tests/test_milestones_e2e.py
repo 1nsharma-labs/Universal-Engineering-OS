@@ -119,9 +119,11 @@ def test_milestone2_fastapi_routes():
 
     r_ui = client.get("/")
     assert r_ui.status_code == 200
-    assert "Monaco LSP Studio" in r_ui.text
+    assert "Monaco LSP" in r_ui.text
     assert "PTY Terminal" in r_ui.text
     assert "API Execution Studio" in r_ui.text
+    assert "Autonomous AI Team" in r_ui.text
+    assert "Local RAG Brain" in r_ui.text
 
     r_lsp = client.post("/api/v1/lsp/diagnostics", json={"language": "json", "code": '{"valid": true}'})
     assert r_lsp.status_code == 200
@@ -207,4 +209,81 @@ def test_milestone4_cloud_enterprise_and_marketplace():
     assert res["ok"] is True
     assert res["tenant"]["rls_enforced"] is True
     assert get_cloud_overview()["tenant_count"] >= 3
+
+
+# ==============================================================================
+# Phase 2 (Milestones 5-8): Autonomous AI Team, Local RAG, Visual Canvas & Deploy
+# ==============================================================================
+def test_milestone5_autonomous_team_and_self_healing():
+    from autonomous_team_service import run_autonomous_build, run_self_healing_sre
+
+    build = run_autonomous_build("Build a real-time analytics API", stack="fastapi", write_to_disk=False)
+    assert build["status"] == "PASSED"
+    assert "main.py" in build["generated_files"]
+    assert len(build["agents_trace"]) == 3
+
+    heal = run_self_healing_sre("ModuleNotFoundError: No module named 'httpx'", service_name="ci-runner")
+    assert heal["ok"] is True
+    assert heal["incident_type"] == "MISSING_PYTHON_DEPENDENCY"
+    assert "httpx" in heal["remediation_command"]
+
+
+def test_milestone6_local_rag_brain():
+    from rag_brain_service import build_rag_index, query_rag_brain
+
+    stats = build_rag_index()
+    assert stats["ok"] is True
+    assert stats["documents_indexed"] >= 60
+    assert stats["chunks_indexed"] >= 100
+
+    res = query_rag_brain("PostgreSQL pgvector HNSW similarity search", top_k=5)
+    assert res["ok"] is True
+    assert len(res["matches"]) >= 1
+    assert any("pgvector" in m["source"] or "pgvector" in m["snippet"].lower() for m in res["matches"])
+
+
+def test_milestone7_visual_node_canvas():
+    from visual_canvas_service import compile_visual_graph
+
+    compiled = compile_visual_graph(
+        nodes=[
+            {"id": "web", "type": "react"},
+            {"id": "api", "type": "fastapi"},
+            {"id": "db", "type": "postgres"},
+            {"id": "llm", "type": "ollama"},
+        ],
+        edges=[
+            {"source": "web", "target": "api"},
+            {"source": "api", "target": "db"},
+            {"source": "api", "target": "llm"},
+        ],
+    )
+    assert compiled["ok"] is True
+    assert "pgvector/pgvector:pg16" in compiled["docker_compose_yaml"]
+    assert "DATABASE_URL" in compiled["docker_compose_yaml"]
+    assert "OLLAMA_HOST" in compiled["docker_compose_yaml"]
+    assert "flowchart LR" in compiled["mermaid"]
+
+
+def test_milestone8_deploy_community_hub_and_launch_kit():
+    from fastapi.testclient import TestClient
+    import main as control_plane
+
+    client = TestClient(control_plane.app)
+
+    r_dep = client.post("/api/v1/deploy/plan", json={"provider": "gcp", "service_name": "uniforge-prod"})
+    assert r_dep.status_code == 200
+    assert r_dep.json()["ok"] is True
+    assert "gcloud run deploy" in " ".join(r_dep.json()["commands"])
+
+    r_rag = client.post("/api/v1/rag/query", json={"query": "Docker rootless sandbox", "top_k": 3})
+    assert r_rag.status_code == 200
+    assert r_rag.json()["ok"] is True
+
+    for rel in (
+        "docs/launch/LANDING_PAGE.md",
+        "docs/launch/PRODUCT_HUNT_HN_KIT.md",
+        "docs/launch/PITCH_DECK_OUTLINE.md",
+    ):
+        assert (HUB_ROOT / rel).exists(), f"Missing launch kit doc: {rel}"
 

@@ -1,28 +1,43 @@
-# UNIFORGE Public Roadmap (`uniforge-os / Universal-Engineering-OS`)
+# UNIFORGE Public Roadmap (`1nsharma-labs / Universal-Engineering-OS`)
 
-## Milestone 1 (Weeks 1–4): Foundation & Governance — COMPLETED
-- [x] Establish GitHub Organization configuration (`uniforge-os / Universal-Engineering-OS`, `.github/profile/README.md`, `CODEOWNERS`, `dependabot.yml`, Issue/PR templates, CI/CD workflows)
-- [x] Canonical Open-Source Governance Suite (`LICENSE` full Apache-2.0, `CONTRIBUTING.md`, `SECURITY.md`, `CODE_OF_CONDUCT.md`, `GOVERNANCE.md`, `NOTICE`, RFC Template)
-- [x] Finalize Monolithic Root Controller (`devhub.py`, `devhub.ps1`, `Makefile`)
-- [x] Technology Registry Schema & TypeScript Index (`packages/registry-schema/`)
+## Phase 1 (v1.0.0): Open-Core Foundation, Studios, SDK & Cloud — COMPLETED
 
-## Milestone 2 (Weeks 5–8): Operational Studios & Registry — COMPLETED
-- [x] Connect Web Studio Dashboard (`00-universal-control-plane/studio-ui/index.html`) to live FastAPI backend services
-- [x] Live PTY Universal Terminal (`/ws/terminal` WebSocket + `/api/v1/terminal/exec` stateful runner)
-- [x] Live Monaco LSP Code Studio (`/api/v1/lsp/diagnostics`, `/api/v1/lsp/format`, `/api/v1/lsp/complete`)
-- [x] Embedded API Execution Studio (`/api/v1/api-studio/execute` HTTP/REST/GraphQL runner)
-- [x] 60+ Verified Technology Profiles across 15 domains in Universal Wiki (`docs/wiki/profiles/`, `docs/wiki/INDEX.md`)
+### Milestone 1 (Weeks 1–4): Foundation & Governance
+- [x] GitHub Organization configuration, `CODEOWNERS`, `dependabot.yml`, Issue/PR templates, CI/CD workflows
+- [x] Canonical Open-Source Governance (`LICENSE` Apache-2.0, `CONTRIBUTING.md`, `SECURITY.md`, `CODE_OF_CONDUCT.md`, `GOVERNANCE.md`, `NOTICE`, RFC Template)
+- [x] Monolithic Root Controller (`devhub.py`, `devhub.ps1`, `Makefile`) & `@uniforge/registry-schema`
 
-## Milestone 3 (Weeks 9–12): Plugin SDK & Extensibility — COMPLETED
-- [x] Production `@uniforge/plugin-sdk` v1.0.0 ready for npm (`packages/plugin-sdk/` with TypeScript build, CLI, Zero-Trust Capability Sandbox, and automated tests)
-- [x] Official Plugin 1: **Docker Manager** (`plugins/docker-manager/`)
-- [x] Official Plugin 2: **pgvector Explorer** (`plugins/pgvector-explorer/`)
-- [x] Official Plugin 3: **p5.js Studio** (`plugins/p5js-studio/`)
-- [x] Official Plugin 4: **Spring Boot Controller** (`plugins/spring-boot-controller/`)
-- [x] Official Plugin 5: **Ollama AI Studio** (`plugins/ollama-ai-studio/`)
+### Milestone 2 (Weeks 5–8): Operational Studios & Registry
+- [x] Live Web Studio Dashboard (`:7000`) connected to FastAPI backend services
+- [x] WebSocket PTY Universal Terminal (`/ws/terminal` & `/api/v1/terminal/exec`)
+- [x] Monaco LSP Bridge (`/api/v1/lsp/diagnostics`, `/format`, `/complete`) & Embedded API Studio (`/api/v1/api-studio/execute`)
+- [x] 60 Verified Technology Profiles across 15 domains (`docs/wiki/profiles/`, `docs/wiki/INDEX.md`)
 
-## Milestone 4 (Weeks 13–16): Cloud Platform & Monetization Launch — COMPLETED
-- [x] Multi-Tenant Hosted Platform (`UNIFORGE Cloud`: `cloud/docker-compose.cloud.yml`, PostgreSQL RLS schema, Traefik wildcard TLS proxy, Kubernetes Helm Chart with `NetworkPolicy` & `ResourceQuota`)
-- [x] GitHub Sponsors & Open Collective activation (`.github/FUNDING.yml`, `SPONSORS.md`)
-- [x] Enterprise Edition & Commercial Licensing (`ENTERPRISE.md`, `COMMERCIAL_LICENSE.md`)
-- [x] Paid Plugin Marketplace with 70/30 Developer Revenue Share & HMAC-SHA256 Cryptographic License Verification (`marketplace/catalog.json`, `marketplace/billing.py`)
+### Milestone 3 (Weeks 9–12): Plugin SDK & Extensibility
+- [x] `@uniforge/plugin-sdk` v1.0.0 (TypeScript SDK, Zero-Trust Capability Sandbox, CLI, Unit Tests)
+- [x] 5 Official Plugins: **Docker Manager**, **pgvector Explorer**, **p5.js Studio**, **Spring Boot Controller**, **Ollama AI Studio**
+
+### Milestone 4 (Weeks 13–16): Cloud Platform & Monetization Launch
+- [x] UNIFORGE Cloud Multi-Tenant Platform (`cloud/docker-compose.cloud.yml`, PostgreSQL RLS schema, Traefik wildcard TLS proxy, Kubernetes Helm Chart)
+- [x] GitHub Sponsors (`SPONSORS.md`, `.github/FUNDING.yml`), Enterprise Edition (`ENTERPRISE.md`, `COMMERCIAL_LICENSE.md`), and Paid Plugin Marketplace (70/30 Rev-Share & HMAC-SHA256 license engine)
+
+---
+
+## Phase 2 (v2.0.0): Self-Evolving Autonomous Engineering OS — COMPLETED
+
+### Milestone 5: Autonomous AI Engineering Team (Self-Coding & Self-Healing)
+- [x] Multi-Agent `Architect -> Coder -> Tester` pipeline (`/api/v1/agents/autonomous-build`, `devhub.py agent-build`) with live AST/LSP verification
+- [x] Self-Healing SRE Patch Synthesizer (`/api/v1/agents/self-heal`, `devhub.py self-heal`) diagnosing CI/runtime errors and generating unified diff patches
+
+### Milestone 6: Local RAG Brain & Personal Code Memory
+- [x] Offline Hybrid TF-IDF Cosine Vector Indexer across all 60 Wiki profiles, cheatsheets & plugins (`/api/v1/rag/index`, `/api/v1/rag/query`, `devhub.py rag`)
+- [x] Zero-API-key offline copilot with optional local Ollama LLM synthesis
+
+### Milestone 7: Visual Node-Based Canvas & Live Split-Screen Creative Sandbox
+- [x] Visual Node Architecture Compiler (`/api/v1/canvas/compile`) turning node graphs into runnable `docker-compose.yml`, `.env` wiring, and Mermaid topology
+- [x] Live Split-Screen Creative Studio in Web UI with interactive real-time physics/color parameter sliders
+
+### Milestone 8: Decentralized Community Hub, One-Click Cloud Deploy & GTM Launch Kit
+- [x] Decentralized Community Plugin Registry with schema & capability validation (`/api/v1/community/plugins/submit`)
+- [x] Zero-Config One-Click Multi-Cloud Deployer (`devhub.py deploy` / `/api/v1/deploy/plan`) targeting GCP Cloud Run, AWS App Runner, Cloudflare Pages, and UNIFORGE Cloud Helm
+- [x] Go-To-Market Launch Kit (`docs/launch/LANDING_PAGE.md`, `PRODUCT_HUNT_HN_KIT.md`, `PITCH_DECK_OUTLINE.md`)

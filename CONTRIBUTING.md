@@ -18,12 +18,14 @@ Thank you for your interest in contributing to **UNIFORGE** — the open-source 
 ## 2. Local Development Setup
 
 ### Prerequisites
+
 - **Python 3.11+** (with `fastapi`, `uvicorn`, `pydantic`, `pyyaml`, `pytest`)
 - **Node.js 20+** and **npm 10+** (for `@uniforge/plugin-sdk` and official plugins)
 - **Docker & Docker Compose** (optional for container stacks & Zero-Trust Sandbox execution)
 - **Git**
 
 ### Quick Bootstrap
+
 ```bash
 # 1. Fork & clone the repository
 git clone https://github.com/1nsharma-labs/Universal-Engineering-OS.git
@@ -48,6 +50,7 @@ python devhub.py studio --port 7000
 ## 3. Branching & Commit Conventions
 
 We follow **[Conventional Commits 1.0.0](https://www.conventionalcommits.org/)**:
+
 - `feat(studio): add live Monaco LSP diagnostics endpoint`
 - `fix(sandbox): enforce read-only root filesystem on Alpine runners`
 - `docs(wiki): add Rust Axum 10-point technology profile`
@@ -62,10 +65,12 @@ Branch naming: `feat/<topic>`, `fix/<issue-id>-<topic>`, `docs/<topic>`, `rfc/<n
 
 1. Ensure `python devhub.py validate` and `python devhub.py test` pass with zero errors.
 2. Build and test TypeScript packages if touching `packages/plugin-sdk/` or `plugins/`:
+
    ```bash
    make plugin-sdk
    make plugins
    ```
+
 3. Run the security hygiene check (`make audit`) to guarantee zero leaked secrets.
 4. Open a Pull Request using `.github/PULL_REQUEST_TEMPLATE.md` and link any related issue or RFC.
 5. At least one maintainer from `.github/CODEOWNERS` must approve before merge.

@@ -28,9 +28,12 @@ if str(CURRENT_DIR) not in sys.path:
     sys.path.insert(0, str(CURRENT_DIR))
 
 from api_studio_service import execute_api_request
+from autonomous_team_service import list_agent_runs, run_autonomous_build, run_self_healing_sre
 from brain import architect_solution, load_registry, search_registry
+from deploy_hub_service import list_community_plugins, plan_one_click_deploy, submit_community_plugin
 from lsp_service import analyze_diagnostics, format_code, get_completions
 from project_unifier import unify_project
+from rag_brain_service import build_rag_index, get_rag_stats, query_rag_brain
 from sandbox_runner import execute_in_sandbox
 from studio_services import (
     check_marketplace_license,
@@ -48,6 +51,7 @@ from terminal_service import (
     execute_terminal_command,
     list_terminal_sessions,
 )
+from visual_canvas_service import compile_visual_graph, get_canvas_catalog
 
 
 def get_system_overview() -> Dict[str, Any]:
@@ -57,10 +61,10 @@ def get_system_overview() -> Dict[str, Any]:
     plugins_info = list_installed_plugins()
     cloud_info = get_cloud_overview()
     return {
-        "platform": "UNIFORGE — Universal Engineering OS",
-        "organization": "uniforge-os / Universal-Engineering-OS",
-        "version": "1.0.0",
-        "mode": "Local + UNIFORGE Cloud (Hybrid Multi-Tenant)",
+        "platform": "UNIFORGE — Self-Evolving Autonomous Engineering OS",
+        "organization": "1nsharma-labs / Universal-Engineering-OS",
+        "version": "2.0.0",
+        "mode": "Local + UNIFORGE Cloud (Hybrid Multi-Tenant + Autonomous Phase 2)",
         "modules_count": len(modules),
         "modules": modules,
         "domains_count": len(reg["domains"]),
@@ -76,6 +80,10 @@ def get_system_overview() -> Dict[str, Any]:
             "plugin_host": "READY",
             "marketplace_billing": "READY",
             "cloud_control_plane": "READY",
+            "autonomous_ai_team": "READY",
+            "local_rag_brain": "READY",
+            "visual_node_canvas": "READY",
+            "multi_cloud_deployer": "READY",
         },
         "status": "OPERATIONAL",
     }
@@ -146,6 +154,35 @@ try:
         tenant_id: str
         plugin_id: str
         tier: str = "paid_monthly"
+
+    class AutonomousBuildRequest(BaseModel):
+        prompt: str
+        stack: str = "fastapi"
+        write_to_disk: bool = False
+
+    class SelfHealRequest(BaseModel):
+        error_log: str
+        service_name: str = "control-plane"
+
+    class RagQueryRequest(BaseModel):
+        query: str
+        top_k: int = 5
+        use_ollama: bool = False
+        model: str = "llama3.2"
+
+    class VisualCanvasRequest(BaseModel):
+        nodes: list
+        edges: list = []
+
+    class CommunityPluginSubmitRequest(BaseModel):
+        manifest: Dict[str, Any]
+        repo_url: str = ""
+
+    class DeployPlanRequest(BaseModel):
+        provider: str = "gcp"
+        project_path: str = "."
+        service_name: str = "uniforge-app"
+        region: str = "us-central1"
 
     @app.get("/", response_class=HTMLResponse)
     def serve_studio():
@@ -271,6 +308,54 @@ try:
     def api_marketplace_verify(req: LicenseVerifyRequest):
         return check_marketplace_license(req.license_key, req.tenant_id, req.plugin_id, req.tier)
 
+    # --- Milestone 5: Autonomous AI Engineering Team & Self-Healing SRE ---
+    @app.post("/api/v1/agents/autonomous-build")
+    def api_autonomous_build(req: AutonomousBuildRequest):
+        return run_autonomous_build(req.prompt, req.stack, write_to_disk=req.write_to_disk)
+
+    @app.post("/api/v1/agents/self-heal")
+    def api_self_heal(req: SelfHealRequest):
+        return run_self_healing_sre(req.error_log, req.service_name)
+
+    @app.get("/api/v1/agents/runs")
+    def api_agent_runs():
+        return list_agent_runs()
+
+    # --- Milestone 6: Local RAG Brain & Offline Code Memory ---
+    @app.get("/api/v1/rag/stats")
+    def api_rag_stats():
+        return get_rag_stats()
+
+    @app.post("/api/v1/rag/index")
+    def api_rag_index():
+        return build_rag_index()
+
+    @app.post("/api/v1/rag/query")
+    def api_rag_query(req: RagQueryRequest):
+        return query_rag_brain(req.query, top_k=req.top_k, use_ollama=req.use_ollama, model=req.model)
+
+    # --- Milestone 7: Visual Node-Based Architecture Canvas ---
+    @app.get("/api/v1/canvas/catalog")
+    def api_canvas_catalog():
+        return get_canvas_catalog()
+
+    @app.post("/api/v1/canvas/compile")
+    def api_canvas_compile(req: VisualCanvasRequest):
+        return compile_visual_graph(req.nodes, req.edges)
+
+    # --- Milestone 8: Community Plugin Hub & One-Click Cloud Deploy ---
+    @app.get("/api/v1/community/plugins")
+    def api_community_plugins():
+        return list_community_plugins()
+
+    @app.post("/api/v1/community/plugins/submit")
+    def api_community_plugin_submit(req: CommunityPluginSubmitRequest):
+        return submit_community_plugin(req.manifest, req.repo_url)
+
+    @app.post("/api/v1/deploy/plan")
+    def api_deploy_plan(req: DeployPlanRequest):
+        return plan_one_click_deploy(req.provider, req.project_path, req.service_name, req.region)
+
     FASTAPI_AVAILABLE = True
 except ImportError:
     app = None
@@ -330,6 +415,14 @@ class FallbackHandler(BaseHTTPRequestHandler):
             return self._send_json(get_cloud_overview())
         if parsed.path == "/api/v1/marketplace/catalog":
             return self._send_json(get_marketplace_catalog(query=qs.get("q", [""])[0], tier=qs.get("tier", [""])[0]))
+        if parsed.path == "/api/v1/agents/runs":
+            return self._send_json(list_agent_runs())
+        if parsed.path == "/api/v1/rag/stats":
+            return self._send_json(get_rag_stats())
+        if parsed.path == "/api/v1/canvas/catalog":
+            return self._send_json(get_canvas_catalog())
+        if parsed.path == "/api/v1/community/plugins":
+            return self._send_json(list_community_plugins())
         return self._send_json({"error": "Not found"}, 404)
 
     def do_POST(self):
@@ -358,6 +451,20 @@ class FallbackHandler(BaseHTTPRequestHandler):
             return self._send_json(run_marketplace_checkout(payload.get("tenant_id", "tnt-uniforge-core"), payload.get("plugin_id", "")))
         if self.path == "/api/v1/marketplace/verify-license":
             return self._send_json(check_marketplace_license(payload.get("license_key", ""), payload.get("tenant_id", ""), payload.get("plugin_id", ""), payload.get("tier", "paid_monthly")))
+        if self.path == "/api/v1/agents/autonomous-build":
+            return self._send_json(run_autonomous_build(payload.get("prompt", ""), payload.get("stack", "fastapi"), write_to_disk=bool(payload.get("write_to_disk", False))))
+        if self.path == "/api/v1/agents/self-heal":
+            return self._send_json(run_self_healing_sre(payload.get("error_log", ""), payload.get("service_name", "control-plane")))
+        if self.path == "/api/v1/rag/index":
+            return self._send_json(build_rag_index())
+        if self.path == "/api/v1/rag/query":
+            return self._send_json(query_rag_brain(payload.get("query", ""), int(payload.get("top_k", 5)), bool(payload.get("use_ollama", False)), payload.get("model", "llama3.2")))
+        if self.path == "/api/v1/canvas/compile":
+            return self._send_json(compile_visual_graph(payload.get("nodes", []), payload.get("edges", [])))
+        if self.path == "/api/v1/community/plugins/submit":
+            return self._send_json(submit_community_plugin(payload.get("manifest", {}), payload.get("repo_url", "")))
+        if self.path == "/api/v1/deploy/plan":
+            return self._send_json(plan_one_click_deploy(payload.get("provider", "gcp"), payload.get("project_path", "."), payload.get("service_name", "uniforge-app"), payload.get("region", "us-central1")))
         return self._send_json({"error": "Not found"}, 404)
 
 

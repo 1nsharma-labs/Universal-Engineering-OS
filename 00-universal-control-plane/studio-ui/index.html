@@ -20,24 +20,28 @@
     <header class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 border-b border-slate-800 pb-6 mb-6">
       <div>
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/30 mb-2">
-          UNIFORGE-OS &bull; UNIVERSAL ENGINEERING OPERATING SYSTEM v1.0
+          UNIFORGE v2.0 &bull; SELF-EVOLVING AUTONOMOUS ENGINEERING OS (MILESTONES 1–8)
         </div>
         <h1 class="text-3xl font-extrabold tracking-tight text-white">UNIFORGE Operational Studio</h1>
-        <p class="text-slate-400 text-sm mt-1">Monaco LSP &bull; Live PTY Terminal &bull; API Studio &bull; 60+ Wiki Profiles &bull; Plugin Marketplace &bull; UNIFORGE Cloud</p>
+        <p class="text-slate-400 text-sm mt-1">Monaco LSP &bull; PTY Terminal &bull; Autonomous AI Team &bull; Local RAG Brain &bull; Visual Node Canvas &bull; Live p5.js Sandbox &bull; Multi-Cloud Deploy</p>
       </div>
       <div id="status-badges" class="flex flex-wrap gap-2 text-xs"></div>
     </header>
 
     <!-- Navigation Tabs -->
     <nav class="flex flex-wrap gap-2 mb-6">
-      <button onclick="switchTab('brain')" id="tab-brain" class="tab-btn px-3.5 py-2 rounded-lg text-sm font-semibold bg-blue-600 text-white">AI Brain</button>
-      <button onclick="switchTab('editor')" id="tab-editor" class="tab-btn px-3.5 py-2 rounded-lg text-sm font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">Monaco LSP Studio</button>
-      <button onclick="switchTab('terminal')" id="tab-terminal" class="tab-btn px-3.5 py-2 rounded-lg text-sm font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">PTY Terminal</button>
-      <button onclick="switchTab('apistudio')" id="tab-apistudio" class="tab-btn px-3.5 py-2 rounded-lg text-sm font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">API Execution Studio</button>
-      <button onclick="switchTab('wiki')" id="tab-wiki" class="tab-btn px-3.5 py-2 rounded-lg text-sm font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">Universal Wiki (60+)</button>
-      <button onclick="switchTab('plugins')" id="tab-plugins" class="tab-btn px-3.5 py-2 rounded-lg text-sm font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">Plugins & Marketplace</button>
-      <button onclick="switchTab('cloud')" id="tab-cloud" class="tab-btn px-3.5 py-2 rounded-lg text-sm font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">UNIFORGE Cloud</button>
-      <button onclick="switchTab('unifier')" id="tab-unifier" class="tab-btn px-3.5 py-2 rounded-lg text-sm font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">Unifier & Sandbox</button>
+      <button onclick="switchTab('brain')" id="tab-brain" class="tab-btn px-3 py-2 rounded-lg text-xs font-semibold bg-blue-600 text-white">AI Brain</button>
+      <button onclick="switchTab('autoteam')" id="tab-autoteam" class="tab-btn px-3 py-2 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">Autonomous AI Team</button>
+      <button onclick="switchTab('rag')" id="tab-rag" class="tab-btn px-3 py-2 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">Local RAG Brain</button>
+      <button onclick="switchTab('canvas')" id="tab-canvas" class="tab-btn px-3 py-2 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">Visual Canvas & Creative</button>
+      <button onclick="switchTab('editor')" id="tab-editor" class="tab-btn px-3 py-2 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">Monaco LSP</button>
+      <button onclick="switchTab('terminal')" id="tab-terminal" class="tab-btn px-3 py-2 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">PTY Terminal</button>
+      <button onclick="switchTab('apistudio')" id="tab-apistudio" class="tab-btn px-3 py-2 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">API Studio</button>
+      <button onclick="switchTab('wiki')" id="tab-wiki" class="tab-btn px-3 py-2 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">Wiki (60+)</button>
+      <button onclick="switchTab('plugins')" id="tab-plugins" class="tab-btn px-3 py-2 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">Plugins & Market</button>
+      <button onclick="switchTab('cloud')" id="tab-cloud" class="tab-btn px-3 py-2 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">UNIFORGE Cloud</button>
+      <button onclick="switchTab('deploy')" id="tab-deploy" class="tab-btn px-3 py-2 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">1-Click Deploy & Hub</button>
+      <button onclick="switchTab('unifier')" id="tab-unifier" class="tab-btn px-3 py-2 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">Unifier & Sandbox</button>
     </nav>
 
     <!-- PANEL 1: AI Engineering Brain -->
@@ -230,13 +234,157 @@
         <pre id="sb-output" class="mt-4 hidden bg-slate-950 border border-slate-800 rounded-xl p-4 text-xs text-purple-300 overflow-x-auto"></pre>
       </div>
     </section>
+
+    <!-- PANEL 9 (Milestone 5): Autonomous AI Engineering Team -->
+    <section id="panel-autoteam" class="hidden space-y-6">
+      <div class="glass rounded-2xl p-6 space-y-4">
+        <h2 class="text-xl font-bold text-white">Autonomous Multi-Agent Engineering Team (Architect &rarr; Coder &rarr; Tester)</h2>
+        <p class="text-xs text-slate-400">Generates runnable code across stacks and automatically verifies syntax & security via LSP/AST.</p>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+          <input id="auto-prompt" value="Build a real-time AI telemetry microservice with health probes" class="md:col-span-2 rounded-xl bg-slate-950 border border-slate-700 px-4 py-2.5 text-sm text-white" />
+          <select id="auto-stack" class="rounded-xl bg-slate-950 border border-slate-700 px-3 py-2.5 text-sm text-white">
+            <option value="fastapi">Python FastAPI</option>
+            <option value="spring-boot">Java Spring Boot 3</option>
+            <option value="react">React + TypeScript</option>
+            <option value="p5js">p5.js Creative Sketch</option>
+          </select>
+          <button onclick="runAutonomousBuild()" class="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-sm font-semibold text-white">Run AI Team Build</button>
+        </div>
+        <pre id="auto-build-output" class="hidden max-h-96 overflow-auto rounded-xl bg-slate-950 border border-slate-800 p-4 text-xs text-emerald-300"></pre>
+      </div>
+      <div class="glass rounded-2xl p-6 space-y-4">
+        <h2 class="text-xl font-bold text-white">Self-Healing SRE Agent (CI / Prometheus / Langfuse Patch Synthesizer)</h2>
+        <textarea id="sre-log" rows="3" class="w-full rounded-xl bg-slate-950 border border-slate-700 p-3 text-xs text-rose-300 font-mono">ModuleNotFoundError: No module named 'httpx' during pytest execution</textarea>
+        <button onclick="runSelfHeal()" class="px-5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-xs font-semibold text-white">Diagnose & Synthesize Auto-Patch</button>
+        <pre id="sre-output" class="hidden rounded-xl bg-slate-950 border border-slate-800 p-4 text-xs text-amber-300 overflow-x-auto"></pre>
+      </div>
+    </section>
+
+    <!-- PANEL 10 (Milestone 6): Local RAG Brain & Personal Code Memory -->
+    <section id="panel-rag" class="hidden space-y-6">
+      <div class="glass rounded-2xl p-6 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h2 class="text-xl font-bold text-white">Local RAG Brain & Offline AI Copilot</h2>
+            <p class="text-xs text-slate-400">Indexes all 60 Universal Wiki profiles, cheatsheets, and plugin manifests into local vector memory (100% offline-capable + optional Ollama).</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <span id="rag-stats-badge" class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-xs text-sky-400">Indexing...</span>
+            <button onclick="reindexRag()" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold text-white">Re-Index Workspace</button>
+          </div>
+        </div>
+        <div class="flex gap-2">
+          <input id="rag-query" value="How do I configure PostgreSQL pgvector HNSW index and zero-trust Docker sandbox?" class="flex-1 rounded-xl bg-slate-950 border border-slate-700 px-4 py-2.5 text-sm text-white" />
+          <button onclick="queryRag()" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-sm font-semibold text-white">Ask Offline Copilot</button>
+        </div>
+        <div id="rag-answer" class="hidden rounded-xl bg-slate-900 border border-emerald-500/30 p-4 text-sm text-emerald-200"></div>
+        <div id="rag-matches" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+      </div>
+    </section>
+
+    <!-- PANEL 11 (Milestone 7): Visual Node Canvas & Live Split-Screen Creative Sandbox -->
+    <section id="panel-canvas" class="hidden space-y-6">
+      <div class="glass rounded-2xl p-6 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <h2 class="text-xl font-bold text-white">Visual Node-Based Architecture Compiler</h2>
+            <p class="text-xs text-slate-400">Assemble React &rarr; FastAPI/Spring Boot &rarr; PostgreSQL pgvector &rarr; Ollama pipelines and compile to runnable Docker Compose + .env.</p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <button onclick="loadPresetGraph('ai-saas')" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-200">Preset: AI SaaS</button>
+            <button onclick="loadPresetGraph('enterprise-java')" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-200">Preset: Java + Postgres</button>
+            <button onclick="compileVisualCanvas()" class="px-4 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-xs font-semibold text-white">Compile to Docker Compose</button>
+          </div>
+        </div>
+        <div id="canvas-nodes-bar" class="flex flex-wrap gap-2"></div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <pre id="canvas-mermaid" class="rounded-xl bg-slate-950 border border-slate-800 p-4 text-xs text-sky-300 overflow-x-auto">Click "Compile to Docker Compose" to generate topology & stack YAML.</pre>
+          <pre id="canvas-compose" class="max-h-72 overflow-auto rounded-xl bg-slate-950 border border-slate-800 p-4 text-xs text-emerald-300"></pre>
+        </div>
+      </div>
+
+      <div class="glass rounded-2xl p-6 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h2 class="text-xl font-bold text-white">Live Split-Screen Creative Studio (p5.js / WebGL Sliders)</h2>
+            <p class="text-xs text-slate-400">Adjust interactive physics & color parameters in real time on the live canvas.</p>
+          </div>
+          <div class="flex flex-wrap items-center gap-4 text-xs">
+            <label>Speed <input id="cr-speed" type="range" min="1" max="10" value="4" oninput="renderCreativeCanvas()" class="align-middle" /></label>
+            <label>Rings <input id="cr-rings" type="range" min="4" max="24" value="14" oninput="renderCreativeCanvas()" class="align-middle" /></label>
+            <label>Hue <input id="cr-hue" type="range" min="0" max="360" value="205" oninput="renderCreativeCanvas()" class="align-middle" /></label>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <textarea id="cr-code" rows="10" class="w-full rounded-xl bg-slate-950 border border-slate-700 p-3 text-xs text-sky-200 font-mono">function drawFrame(ctx, w, h, t, cfg) {
+  ctx.fillStyle = 'rgba(2, 6, 23, 0.18)';
+  ctx.fillRect(0, 0, w, h);
+  ctx.save();
+  ctx.translate(w / 2, h / 2);
+  for (let i = 1; i <= cfg.rings; i++) {
+    ctx.strokeStyle = `hsla(${(cfg.hue + i * 9) % 360}, 85%, 62%, 0.85)`;
+    ctx.lineWidth = 1.6;
+    ctx.rotate(t * 0.004 * cfg.speed * (i % 2 === 0 ? 1 : -1));
+    ctx.beginPath();
+    ctx.ellipse(0, 0, i * 11, i * 7 + Math.sin(t * 0.05 + i) * 14, 0, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+  ctx.restore();
+}</textarea>
+          <canvas id="creative-canvas" width="520" height="260" class="w-full h-64 rounded-xl bg-slate-950 border border-slate-700"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- PANEL 12 (Milestone 8): Community Plugin Hub & One-Click Cloud Deploy -->
+    <section id="panel-deploy" class="hidden space-y-6">
+      <div class="glass rounded-2xl p-6 space-y-4">
+        <h2 class="text-xl font-bold text-white">One-Click Zero-Config Multi-Cloud Deployer (`devhub deploy`)</h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+          <select id="dep-provider" class="rounded-xl bg-slate-950 border border-slate-700 px-3 py-2.5 text-sm text-white">
+            <option value="gcp">GCP Cloud Run</option>
+            <option value="aws">AWS App Runner / ECS</option>
+            <option value="cloudflare">Cloudflare Pages / Workers</option>
+            <option value="uniforge-cloud">UNIFORGE Cloud (Helm K8s)</option>
+          </select>
+          <input id="dep-service" value="uniforge-prod-studio" class="rounded-xl bg-slate-950 border border-slate-700 px-3 py-2.5 text-sm text-white" />
+          <input id="dep-region" value="us-central1" class="rounded-xl bg-slate-950 border border-slate-700 px-3 py-2.5 text-sm text-white" />
+          <button onclick="runDeployPlan()" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-sm font-semibold text-white">Generate Deploy Plan</button>
+        </div>
+        <pre id="dep-output" class="hidden rounded-xl bg-slate-950 border border-slate-800 p-4 text-xs text-emerald-300 overflow-x-auto"></pre>
+      </div>
+      <div class="glass rounded-2xl p-6 space-y-4">
+        <h2 class="text-xl font-bold text-white">Decentralized Community Plugin Registry</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <input id="comm-id" value="@community/kafka-visualizer" class="rounded-xl bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white font-mono" />
+          <input id="comm-name" value="Kafka Stream Visualizer" class="rounded-xl bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white" />
+          <button onclick="submitCommunityPlugin()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold text-white">Validate & Publish to Hub</button>
+        </div>
+        <pre id="comm-output" class="hidden rounded-xl bg-slate-950 border border-slate-800 p-4 text-xs text-sky-300 overflow-x-auto"></pre>
+      </div>
+    </section>
   </div>
 
   <script>
-    const TABS = ['brain', 'editor', 'terminal', 'apistudio', 'wiki', 'plugins', 'cloud', 'unifier'];
+    const TABS = ['brain', 'autoteam', 'rag', 'canvas', 'editor', 'terminal', 'apistudio', 'wiki', 'plugins', 'cloud', 'deploy', 'unifier'];
     let monacoEditor = null;
     let termSocket = null;
     let termSessionId = '';
+    let visualGraph = {
+      nodes: [
+        { id: 'react-ui', type: 'react', label: 'React Frontend' },
+        { id: 'fastapi-api', type: 'fastapi', label: 'FastAPI Backend' },
+        { id: 'postgres-db', type: 'postgres', label: 'PostgreSQL pgvector' },
+        { id: 'ollama-ai', type: 'ollama', label: 'Ollama Local LLM' }
+      ],
+      edges: [
+        { source: 'react-ui', target: 'fastapi-api' },
+        { source: 'fastapi-api', target: 'postgres-db' },
+        { source: 'fastapi-api', target: 'ollama-ai' }
+      ]
+    };
+    let creativeAnimId = null;
+    let creativeTick = 0;
 
     const EDITOR_SAMPLES = {
       python: `from fastapi import FastAPI\n\napp = FastAPI(title="UNIFORGE Service")\n\n@app.get("/health")\nasync def health():\n    return {"status": "operational", "os": "UNIFORGE"}\n`,
@@ -254,6 +402,8 @@
       });
       if (tab === 'editor' && !monacoEditor) initMonaco();
       if (tab === 'terminal' && !termSocket) connectTerminalWs();
+      if (tab === 'rag') loadRagStats();
+      if (tab === 'canvas') { renderCanvasNodes(); startCreativeLoop(); }
     }
 
     function setExample(text) {
@@ -601,6 +751,163 @@
         body: JSON.stringify({ language, code, dry_run: true })
       }).then(r => r.json());
       const out = document.getElementById('sb-output');
+      out.classList.remove('hidden');
+      out.textContent = JSON.stringify(res, null, 2);
+    }
+
+    // --- Milestone 5: Autonomous AI Team & Self-Healing SRE ---
+    async function runAutonomousBuild() {
+      const prompt = document.getElementById('auto-prompt').value;
+      const stack = document.getElementById('auto-stack').value;
+      const res = await fetch('/api/v1/agents/autonomous-build', {
+        method: 'POST', headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ prompt, stack, write_to_disk: false })
+      }).then(r => r.json());
+      const out = document.getElementById('auto-build-output');
+      out.classList.remove('hidden');
+      out.textContent = JSON.stringify(res, null, 2);
+    }
+
+    async function runSelfHeal() {
+      const error_log = document.getElementById('sre-log').value;
+      const res = await fetch('/api/v1/agents/self-heal', {
+        method: 'POST', headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ error_log, service_name: 'control-plane' })
+      }).then(r => r.json());
+      const out = document.getElementById('sre-output');
+      out.classList.remove('hidden');
+      out.textContent = JSON.stringify(res, null, 2);
+    }
+
+    // --- Milestone 6: Local RAG Brain ---
+    async function loadRagStats() {
+      const stats = await fetch('/api/v1/rag/stats').then(r => r.json());
+      document.getElementById('rag-stats-badge').textContent = `${stats.documents_indexed} Docs | ${stats.chunks_indexed} Chunks | Offline Ready`;
+    }
+
+    async function reindexRag() {
+      const stats = await fetch('/api/v1/rag/index', { method: 'POST' }).then(r => r.json());
+      document.getElementById('rag-stats-badge').textContent = `Re-indexed ${stats.documents_indexed} Docs (${stats.duration_ms}ms)`;
+    }
+
+    async function queryRag() {
+      const query = document.getElementById('rag-query').value;
+      const res = await fetch('/api/v1/rag/query', {
+        method: 'POST', headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ query, top_k: 4 })
+      }).then(r => r.json());
+      const ans = document.getElementById('rag-answer');
+      ans.classList.remove('hidden');
+      ans.textContent = `[${res.mode} | ${res.duration_ms}ms] ${res.answer}`;
+      document.getElementById('rag-matches').innerHTML = (res.matches || []).map(m => `
+        <div class="p-3 rounded-xl bg-slate-900 border border-slate-800">
+          <div class="flex justify-between text-xs font-bold text-white"><span>${m.title}</span><span class="text-sky-400">score ${m.score}</span></div>
+          <div class="text-[11px] font-mono text-slate-400 my-1">${m.source}</div>
+          <p class="text-xs text-slate-300">${m.snippet}</p>
+        </div>
+      `).join('');
+    }
+
+    // --- Milestone 7: Visual Node Canvas & Live Creative Sandbox ---
+    function loadPresetGraph(preset) {
+      if (preset === 'enterprise-java') {
+        visualGraph = {
+          nodes: [
+            { id: 'nextjs-web', type: 'nextjs', label: 'Next.js Portal' },
+            { id: 'spring-api', type: 'spring-boot', label: 'Spring Boot 3 API' },
+            { id: 'postgres-db', type: 'postgres', label: 'PostgreSQL pgvector' },
+            { id: 'redis-cache', type: 'redis', label: 'Redis 7 Cache' }
+          ],
+          edges: [
+            { source: 'nextjs-web', target: 'spring-api' },
+            { source: 'spring-api', target: 'postgres-db' },
+            { source: 'spring-api', target: 'redis-cache' }
+          ]
+        };
+      } else {
+        visualGraph = {
+          nodes: [
+            { id: 'react-ui', type: 'react', label: 'React Frontend' },
+            { id: 'fastapi-api', type: 'fastapi', label: 'FastAPI Backend' },
+            { id: 'postgres-db', type: 'postgres', label: 'PostgreSQL pgvector' },
+            { id: 'ollama-ai', type: 'ollama', label: 'Ollama Local LLM' }
+          ],
+          edges: [
+            { source: 'react-ui', target: 'fastapi-api' },
+            { source: 'fastapi-api', target: 'postgres-db' },
+            { source: 'fastapi-api', target: 'ollama-ai' }
+          ]
+        };
+      }
+      renderCanvasNodes();
+      compileVisualCanvas();
+    }
+
+    function renderCanvasNodes() {
+      document.getElementById('canvas-nodes-bar').innerHTML = visualGraph.nodes.map((n, idx) =>
+        `<span class="px-3 py-1.5 rounded-lg bg-slate-900 border border-blue-500/40 text-xs text-blue-300 font-semibold">${idx + 1}. ${n.label} (${n.type})</span>`
+      ).join('<span class="text-slate-500 self-center">&rarr;</span>');
+    }
+
+    async function compileVisualCanvas() {
+      const res = await fetch('/api/v1/canvas/compile', {
+        method: 'POST', headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(visualGraph)
+      }).then(r => r.json());
+      document.getElementById('canvas-mermaid').textContent = res.mermaid + '\n\n' + res.env_template;
+      document.getElementById('canvas-compose').textContent = res.docker_compose_yaml;
+    }
+
+    function renderCreativeCanvas() {
+      const canvas = document.getElementById('creative-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const cfg = {
+        speed: Number(document.getElementById('cr-speed').value),
+        rings: Number(document.getElementById('cr-rings').value),
+        hue: Number(document.getElementById('cr-hue').value)
+      };
+      try {
+        const fn = new Function('ctx', 'w', 'h', 't', 'cfg', document.getElementById('cr-code').value + '\ndrawFrame(ctx, w, h, t, cfg);');
+        fn(ctx, canvas.width, canvas.height, creativeTick, cfg);
+      } catch {}
+    }
+
+    function startCreativeLoop() {
+      if (creativeAnimId) return;
+      function tick() {
+        creativeTick += 1;
+        renderCreativeCanvas();
+        creativeAnimId = requestAnimationFrame(tick);
+      }
+      tick();
+    }
+
+    // --- Milestone 8: One-Click Deploy & Community Hub ---
+    async function runDeployPlan() {
+      const provider = document.getElementById('dep-provider').value;
+      const service_name = document.getElementById('dep-service').value;
+      const region = document.getElementById('dep-region').value;
+      const res = await fetch('/api/v1/deploy/plan', {
+        method: 'POST', headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ provider, service_name, region })
+      }).then(r => r.json());
+      const out = document.getElementById('dep-output');
+      out.classList.remove('hidden');
+      out.textContent = JSON.stringify(res, null, 2);
+    }
+
+    async function submitCommunityPlugin() {
+      const id = document.getElementById('comm-id').value;
+      const name = document.getElementById('comm-name').value;
+      const res = await fetch('/api/v1/community/plugins/submit', {
+        method: 'POST', headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          manifest: { schemaVersion: '1.0.0', id, name, version: '1.0.0', category: 'devops', license: 'Apache-2.0', permissions: ['network:outbound'] },
+          repo_url: 'https://github.com/1nsharma-labs/Universal-Engineering-OS'
+        })
+      }).then(r => r.json());
+      const out = document.getElementById('comm-output');
       out.classList.remove('hidden');
       out.textContent = JSON.stringify(res, null, 2);
     }
