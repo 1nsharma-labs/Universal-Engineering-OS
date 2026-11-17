@@ -19,6 +19,7 @@ npm-debug.log*
 yarn-error.log*
 .pnpm-store/
 02-frameworks-and-templates/**/dist/
+apps/**/dist/
 
 # Java / Rust / Go build artifacts
 target/

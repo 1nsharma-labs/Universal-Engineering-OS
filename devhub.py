@@ -257,19 +257,17 @@ def cmd_sync_opensource(_args):
 
 
 def cmd_workbench(args):
-    wb_dir = ROOT.parent / "bin" / "bolt.diy"
+    wb_dir = ROOT / "apps" / "uniforge-workbench"
     if not wb_dir.exists():
         print(f"[ERROR] UNIFORGE AI Workbench not found at {wb_dir}")
         sys.exit(1)
-    pnpm_bin = "pnpm.cmd" if platform.system() == "Windows" else "pnpm"
-    if not shutil.which(pnpm_bin):
-        pnpm_bin = "npm.cmd" if platform.system() == "Windows" else "npm"
+    npm_bin = "npm.cmd" if platform.system() == "Windows" else "npm"
     if args.prod:
-        rc = run_cmd([pnpm_bin, "run", "build"], cwd=wb_dir)
+        rc = run_cmd([npm_bin, "run", "build"], cwd=wb_dir)
         if rc != 0:
             sys.exit(rc)
-        sys.exit(run_cmd([pnpm_bin, "run", "start"], cwd=wb_dir))
-    sys.exit(run_cmd([pnpm_bin, "run", "dev"], cwd=wb_dir))
+        sys.exit(run_cmd([npm_bin, "run", "preview"], cwd=wb_dir))
+    sys.exit(run_cmd([npm_bin, "run", "dev"], cwd=wb_dir))
 
 
 def cmd_test(_args):
