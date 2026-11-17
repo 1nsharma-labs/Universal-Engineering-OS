@@ -44,5 +44,5 @@ Architectural changes, breaking Plugin SDK contracts, new security boundaries, o
 
 ## 5. Commercial & Open-Source Boundaries
 
-- Apache-2.0 open-source repositories live under `github.com/uniforge-os/Universal-Engineering-OS`.
+- Apache-2.0 open-source repositories live under `github.com/1nsharma-labs/Universal-Engineering-OS`.
 - Commercial licensing (`COMMERCIAL_LICENSE.md`), Enterprise Edition features (`ENTERPRISE.md`), and Marketplace revenue sharing (70% developer / 30% platform) fund full-time maintainers and public CI infrastructure without restricting community use of the open-source core.

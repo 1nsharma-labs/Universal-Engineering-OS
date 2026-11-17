@@ -7,7 +7,7 @@
   "category": "infrastructure",
   "author": {
     "name": "UNIFORGE Official Plugins Team",
-    "url": "https://github.com/uniforge-os"
+    "url": "https://github.com/1nsharma-labs/Universal-Engineering-OS"
   },
   "license": "Apache-2.0",
   "permissions": ["docker:control", "process:exec", "storage:read"],

@@ -1,25 +1,25 @@
 # Global code ownership for Universal-Engineering-OS
-* @uniforge-os/core-maintainers
+* @1nsharma-labs
 
 # Control Plane & Studio UI
-/00-universal-control-plane/ @uniforge-os/control-plane-team
-/devhub.py @uniforge-os/control-plane-team
-/devhub.ps1 @uniforge-os/control-plane-team
-/Makefile @uniforge-os/control-plane-team
+/00-universal-control-plane/ @1nsharma-labs
+/devhub.py @1nsharma-labs
+/devhub.ps1 @1nsharma-labs
+/Makefile @1nsharma-labs
 
 # Plugin SDK & Plugins
-/packages/plugin-sdk/ @uniforge-os/sdk-maintainers
-/plugins/ @uniforge-os/sdk-maintainers
+/packages/plugin-sdk/ @1nsharma-labs
+/plugins/ @1nsharma-labs
 
 # Universal Wiki & Technology Registry
-/docs/wiki/ @uniforge-os/wiki-maintainers
-/00-universal-control-plane/technology-registry/ @uniforge-os/wiki-maintainers
+/docs/wiki/ @1nsharma-labs
+/00-universal-control-plane/technology-registry/ @1nsharma-labs
 
 # Cloud, DevOps & IaC
-/cloud/ @uniforge-os/cloud-infra-team
-/08-devops-cloud-and-iac/ @uniforge-os/cloud-infra-team
+/cloud/ @1nsharma-labs
+/08-devops-cloud-and-iac/ @1nsharma-labs
 
 # Security & Compliance
-/09-testing-and-security/ @uniforge-os/security-team
-/SECURITY.md @uniforge-os/security-team
+/09-testing-and-security/ @1nsharma-labs
+/SECURITY.md @1nsharma-labs
 

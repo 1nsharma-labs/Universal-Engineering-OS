@@ -1,9 +1,9 @@
 blank_issues_enabled: false
 contact_links:
   - name: UNIFORGE Community Discussions
-    url: https://github.com/uniforge-os/Universal-Engineering-OS/discussions
+    url: https://github.com/1nsharma-labs/Universal-Engineering-OS/discussions
     about: Ask architectural questions, share plugins, or request guidance.
   - name: Security Vulnerability Reporting
-    url: https://github.com/uniforge-os/Universal-Engineering-OS/security/advisories/new
+    url: https://github.com/1nsharma-labs/Universal-Engineering-OS/security/advisories/new
     about: Report sensitive vulnerabilities privately under responsible disclosure.
 

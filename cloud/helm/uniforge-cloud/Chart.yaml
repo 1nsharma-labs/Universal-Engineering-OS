@@ -4,7 +4,7 @@ description: Multi-tenant Kubernetes Helm Chart for UNIFORGE Cloud Hosted Worksp
 type: application
 version: 1.0.0
 appVersion: "1.0.0"
-home: https://github.com/uniforge-os/Universal-Engineering-OS
+home: https://github.com/1nsharma-labs/Universal-Engineering-OS
 maintainers:
   - name: UNIFORGE Cloud Team
     email: cloud@uniforge.io

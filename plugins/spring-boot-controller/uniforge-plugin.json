@@ -7,7 +7,7 @@
   "category": "backend",
   "author": {
     "name": "UNIFORGE Official Plugins Team",
-    "url": "https://github.com/uniforge-os"
+    "url": "https://github.com/1nsharma-labs/Universal-Engineering-OS"
   },
   "license": "Apache-2.0",
   "permissions": ["network:outbound", "process:exec", "storage:read"],

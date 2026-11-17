@@ -22,7 +22,7 @@ Welcome to **UNIFORGE** — the next-generation Universal Engineering OS and Pol
 
 ## 🏛️ Ecosystem Repositories
 
-- **[Universal-Engineering-OS](https://github.com/uniforge-os/Universal-Engineering-OS)**: Monolithic polyglot control plane, technology registry, devhub CLI, and developer studios.
+- **[Universal-Engineering-OS](https://github.com/1nsharma-labs/Universal-Engineering-OS)**: Monolithic polyglot control plane, technology registry, devhub CLI, and developer studios.
 - **`@uniforge/plugin-sdk`**: TypeScript/Node.js SDK for authoring UNIFORGE plugins, custom studios, and Model Context Protocol (MCP) bridges.
 - **Official Plugins**: Docker Manager, pgvector Explorer, p5.js Studio, Spring Boot Controller, Ollama AI Studio.
 - **UNIFORGE Cloud**: Multi-tenant managed cloud runtime with instant sandboxes and team workspaces.
@@ -30,9 +30,9 @@ Welcome to **UNIFORGE** — the next-generation Universal Engineering OS and Pol
 ---
 
 ## 🚀 Quick Links
-- 📖 [Contributing Guide](https://github.com/uniforge-os/Universal-Engineering-OS/blob/main/CONTRIBUTING.md)
-- 🛡️ [Security Policy](https://github.com/uniforge-os/Universal-Engineering-OS/blob/main/SECURITY.md)
-- 📜 [Governance Model & RFC Process](https://github.com/uniforge-os/Universal-Engineering-OS/blob/main/GOVERNANCE.md)
-- 🤝 [Code of Conduct](https://github.com/uniforge-os/Universal-Engineering-OS/blob/main/CODE_OF_CONDUCT.md)
+- 📖 [Contributing Guide](https://github.com/1nsharma-labs/Universal-Engineering-OS/blob/main/CONTRIBUTING.md)
+- 🛡️ [Security Policy](https://github.com/1nsharma-labs/Universal-Engineering-OS/blob/main/SECURITY.md)
+- 📜 [Governance Model & RFC Process](https://github.com/1nsharma-labs/Universal-Engineering-OS/blob/main/GOVERNANCE.md)
+- 🤝 [Code of Conduct](https://github.com/1nsharma-labs/Universal-Engineering-OS/blob/main/CODE_OF_CONDUCT.md)
 - 💖 [Sponsor UNIFORGE](https://github.com/sponsors/uniforge-os)
 

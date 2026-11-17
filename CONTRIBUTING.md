@@ -26,7 +26,7 @@ Thank you for your interest in contributing to **UNIFORGE** — the open-source 
 ### Quick Bootstrap
 ```bash
 # 1. Fork & clone the repository
-git clone https://github.com/uniforge-os/Universal-Engineering-OS.git
+git clone https://github.com/1nsharma-labs/Universal-Engineering-OS.git
 cd Universal-Engineering-OS
 
 # 2. Initialize environment templates and inspect local toolchains
