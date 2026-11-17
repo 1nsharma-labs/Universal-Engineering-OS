@@ -29,8 +29,8 @@ services:
 
   control-plane:
     build:
-      context: ../00-universal-control-plane
-      dockerfile: orchestrator-api/Dockerfile
+      context: ..
+      dockerfile: 00-universal-control-plane/orchestrator-api/Dockerfile
     container_name: uniforge-cloud-control-plane
     environment:
       UNIFORGE_ENV: cloud-production

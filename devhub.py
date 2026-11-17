@@ -261,6 +261,12 @@ def cmd_workbench(args):
     if not wb_dir.exists():
         print(f"[ERROR] UNIFORGE AI Workbench not found at {wb_dir}")
         sys.exit(1)
+    if args.compose:
+        cmd = ["docker", "compose", "-f", "apps/uniforge-workbench/docker-compose.workbench.yml"]
+        if args.profile:
+            cmd.extend(["--profile", args.profile])
+        cmd.extend(["up", "-d", "--build"])
+        sys.exit(run_cmd(cmd))
     npm_bin = "npm.cmd" if platform.system() == "Windows" else "npm"
     if args.prod:
         rc = run_cmd([npm_bin, "run", "build"], cwd=wb_dir)
@@ -416,6 +422,8 @@ def main():
 
     p_wb = sub.add_parser("workbench", help="Launch UNIFORGE AI Workbench (port 5173)")
     p_wb.add_argument("--prod", action="store_true", help="Build and run in production preview mode")
+    p_wb.add_argument("--compose", action="store_true", help="Launch full Docker Compose microservices composition stack")
+    p_wb.add_argument("--profile", default="", choices=["", "ai", "rag", "storage", "observability", "full"], help="Docker Compose profile")
     p_wb.set_defaults(func=cmd_workbench)
     sub.add_parser("test", help="Run automated pytest verification suite").set_defaults(func=cmd_test)
     sub.add_parser("validate", help="Validate syntax of all JSON & YAML configs").set_defaults(func=cmd_validate)

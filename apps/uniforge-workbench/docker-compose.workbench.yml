@@ -1,38 +1,251 @@
 # ==============================================================================
-# UNIFORGE AI Workbench + Control Plane — Production Stack
+# UNIFORGE AI Workbench — Full Microservices Production Composition Stack
+# ==============================================================================
+# Usage:
+#   Core Stack (Workbench + Control Plane + PostgreSQL pgvector + Redis):
+#     docker compose -f apps/uniforge-workbench/docker-compose.workbench.yml up -d --build
+#
+#   With Local AI (Ollama):
+#     docker compose -f apps/uniforge-workbench/docker-compose.workbench.yml --profile ai up -d --build
+#
+#   With Vector RAG & S3 Artifact Storage (Qdrant + MinIO):
+#     docker compose -f apps/uniforge-workbench/docker-compose.workbench.yml --profile rag --profile storage up -d --build
+#
+#   Full Enterprise Ecosystem (Everything + Prometheus + Grafana):
+#     docker compose -f apps/uniforge-workbench/docker-compose.workbench.yml --profile full up -d --build
 # ==============================================================================
 name: uniforge-workbench-production
 
-services:
-  uniforge-control-plane:
-    build:
-      context: ../..
-      dockerfile: 00-universal-control-plane/orchestrator-api/Dockerfile
-    container_name: uniforge-control-plane
-    ports:
-      - "7000:7000"
-    environment:
-      CONTROL_PLANE_PORT: "7000"
-      UNIFORGE_ENV: production
-    restart: unless-stopped
-    networks:
-      - uniforge-prod-net
+x-common-env: &common-env
+  UNIFORGE_ENV: production
+  TZ: UTC
 
+services:
+  # ----------------------------------------------------------------------------
+  # 1. Frontend: UNIFORGE AI Workbench v2 (Nginx + React/TS Production Bundle)
+  # ----------------------------------------------------------------------------
   uniforge-workbench:
     build:
       context: .
       dockerfile: Dockerfile
       target: production
+    image: uniforge/workbench:2.1.0
     container_name: uniforge-workbench
     ports:
-      - "5173:5173"
+      - "${WORKBENCH_PORT:-5173}:5173"
     depends_on:
-      - uniforge-control-plane
+      uniforge-control-plane:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:5173/"]
+      interval: 15s
+      timeout: 3s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
     restart: unless-stopped
     networks:
-      - uniforge-prod-net
+      - uniforge-edge
+      - uniforge-internal
+
+  # ----------------------------------------------------------------------------
+  # 2. Control Plane: FastAPI Orchestrator, 5-Layer Software Factory, Core OS Layer
+  # ----------------------------------------------------------------------------
+  uniforge-control-plane:
+    build:
+      context: ../..
+      dockerfile: 00-universal-control-plane/orchestrator-api/Dockerfile
+    image: uniforge/control-plane:2.1.0
+    container_name: uniforge-control-plane
+    ports:
+      - "${CONTROL_PLANE_PORT:-7000}:7000"
+    environment:
+      <<: *common-env
+      CONTROL_PLANE_PORT: "7000"
+      DATABASE_URL: "postgresql://${POSTGRES_USER:-uniforge}:${POSTGRES_PASSWORD:-uniforge_dev_pass}@uniforge-postgres:5432/${POSTGRES_DB:-uniforge_os}"
+      REDIS_URL: "redis://uniforge-redis:6379/0"
+      QDRANT_URL: "http://uniforge-qdrant:6333"
+      MINIO_ENDPOINT: "http://uniforge-minio:9000"
+      OLLAMA_API_BASE_URL: "${OLLAMA_API_BASE_URL:-http://uniforge-ollama:11434}"
+      OPENAI_API_KEY: "${OPENAI_API_KEY:-}"
+      ANTHROPIC_API_KEY: "${ANTHROPIC_API_KEY:-}"
+      GOOGLE_GENERATIVE_AI_API_KEY: "${GOOGLE_GENERATIVE_AI_API_KEY:-}"
+      DEEPSEEK_API_KEY: "${DEEPSEEK_API_KEY:-}"
+      GROQ_API_KEY: "${GROQ_API_KEY:-}"
+      OPEN_ROUTER_API_KEY: "${OPEN_ROUTER_API_KEY:-}"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      uniforge-postgres:
+        condition: service_healthy
+      uniforge-redis:
+        condition: service_healthy
+    volumes:
+      - uniforge_workspaces:/app/workspaces
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:7000/api/v1/status"]
+      interval: 15s
+      timeout: 5s
+      start_period: 10s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 2G
+    restart: unless-stopped
+    networks:
+      - uniforge-edge
+      - uniforge-internal
+
+  # ----------------------------------------------------------------------------
+  # 3. Shared Data Layer: PostgreSQL 16 + pgvector (Multi-Tenant RLS Schema)
+  # ----------------------------------------------------------------------------
+  uniforge-postgres:
+    image: pgvector/pgvector:pg16
+    container_name: uniforge-postgres
+    environment:
+      <<: *common-env
+      POSTGRES_USER: ${POSTGRES_USER:-uniforge}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-uniforge_dev_pass}
+      POSTGRES_DB: ${POSTGRES_DB:-uniforge_os}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - uniforge_pgdata:/var/lib/postgresql/data
+      - ../../cloud/db/multi_tenant_schema.sql:/docker-entrypoint-initdb.d/01-uniforge-schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-uniforge} -d ${POSTGRES_DB:-uniforge_os}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - uniforge-internal
+
+  # ----------------------------------------------------------------------------
+  # 4. Event Bus, Session Broker & Job Queue: Redis 7
+  # ----------------------------------------------------------------------------
+  uniforge-redis:
+    image: redis:7-alpine
+    container_name: uniforge-redis
+    command: ["redis-server", "--appendonly", "yes", "--maxmemory", "256mb", "--maxmemory-policy", "allkeys-lru"]
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - uniforge_redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - uniforge-internal
+
+  # ----------------------------------------------------------------------------
+  # 5. Local AI LLM Engine: Ollama (Profile: ai | full)
+  # ----------------------------------------------------------------------------
+  uniforge-ollama:
+    image: ollama/ollama:latest
+    container_name: uniforge-ollama
+    profiles: ["ai", "full"]
+    ports:
+      - "${OLLAMA_PORT:-11434}:11434"
+    volumes:
+      - uniforge_ollama:/root/.ollama
+    restart: unless-stopped
+    networks:
+      - uniforge-internal
+
+  # ----------------------------------------------------------------------------
+  # 6. Dedicated Vector Store for RAG Brain: Qdrant (Profile: rag | full)
+  # ----------------------------------------------------------------------------
+  uniforge-qdrant:
+    image: qdrant/qdrant:latest
+    container_name: uniforge-qdrant
+    profiles: ["rag", "full"]
+    ports:
+      - "${QDRANT_PORT:-6333}:6333"
+    volumes:
+      - uniforge_qdrant:/qdrant/storage
+    restart: unless-stopped
+    networks:
+      - uniforge-internal
+
+  # ----------------------------------------------------------------------------
+  # 7. S3-Compatible Artifact Storage: MinIO (Profile: storage | full)
+  # ----------------------------------------------------------------------------
+  uniforge-minio:
+    image: minio/minio:latest
+    container_name: uniforge-minio
+    profiles: ["storage", "full"]
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-uniforge_admin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-uniforge_minio_secret}
+    ports:
+      - "${MINIO_API_PORT:-9000}:9000"
+      - "${MINIO_CONSOLE_PORT:-9001}:9001"
+    volumes:
+      - uniforge_minio:/data
+    restart: unless-stopped
+    networks:
+      - uniforge-edge
+      - uniforge-internal
+
+  # ----------------------------------------------------------------------------
+  # 8. Observability Stack: Prometheus + Grafana (Profile: observability | full)
+  # ----------------------------------------------------------------------------
+  uniforge-prometheus:
+    image: prom/prometheus:latest
+    container_name: uniforge-prometheus
+    profiles: ["observability", "full"]
+    ports:
+      - "${PROMETHEUS_PORT:-9090}:9090"
+    volumes:
+      - ../../12-observability-and-logs/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - uniforge_prometheus:/prometheus
+    restart: unless-stopped
+    networks:
+      - uniforge-edge
+      - uniforge-internal
+
+  uniforge-grafana:
+    image: grafana/grafana:latest
+    container_name: uniforge-grafana
+    profiles: ["observability", "full"]
+    ports:
+      - "${GRAFANA_PORT:-3001}:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:-uniforge_grafana}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+    depends_on:
+      - uniforge-prometheus
+    volumes:
+      - uniforge_grafana:/var/lib/grafana
+    restart: unless-stopped
+    networks:
+      - uniforge-edge
+      - uniforge-internal
+
+volumes:
+  uniforge_workspaces:
+  uniforge_pgdata:
+  uniforge_redis:
+  uniforge_ollama:
+  uniforge_qdrant:
+  uniforge_minio:
+  uniforge_prometheus:
+  uniforge_grafana:
 
 networks:
-  uniforge-prod-net:
+  uniforge-edge:
     driver: bridge
-
+  uniforge-internal:
+    driver: bridge
+    internal: true
